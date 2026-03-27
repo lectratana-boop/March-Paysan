@@ -1,0 +1,3568 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🏪 MarchéPaysan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --secondary: #FF8F00;
+            --secondary-light: #FFB300;
+            --bg: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #212121;
+            --text-light: #757575;
+            --border: #E0E0E0;
+            --danger: #D32F2F;
+            --success: #388E3C;
+            --warning: #F57F17;
+            --info: #1976D2;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ====== SPLASH SCREEN ====== */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-logo {
+            font-size: 80px;
+            animation: bounceIn 1s;
+        }
+
+        .splash-title {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 16px;
+            animation: fadeInUp 1s 0.3s both;
+        }
+
+        .splash-subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-top: 8px;
+            animation: fadeInUp 1s 0.5s both;
+        }
+
+        .splash-loader {
+            margin-top: 40px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* ====== APP CONTAINER ====== */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--bg);
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        /* ====== PAGES ====== */
+        .page {
+            display: none;
+            min-height: calc(100vh - 70px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* ====== TOP BAR ====== */
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .top-bar-subtitle {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .notification-badge {
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-badge .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* ====== BOTTOM NAV ====== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border: none;
+            background: none;
+            color: var(--text-light);
+            font-size: 10px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item .nav-icon {
+            font-size: 22px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
+        .nav-item span {
+            font-weight: 600;
+        }
+
+        /* ====== HOME PAGE ====== */
+        .search-bar {
+            margin: 16px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--white);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary);
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        .location-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 20px;
+            margin-bottom: 16px;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .section-title {
+            padding: 0 20px;
+            margin: 20px 0 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title .see-all {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            padding: 0 16px;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 4px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+        }
+
+        .category-item:hover, .category-item.active {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .category-item .cat-icon {
+            font-size: 28px;
+        }
+
+        .category-item .cat-name {
+            font-size: 10px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .category-item .cat-name-mg {
+            font-size: 9px;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        /* Product Cards */
+        .products-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 0 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .products-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            min-width: 160px;
+            max-width: 160px;
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            scroll-snap-align: start;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card .product-image {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+        }
+
+        .product-card .product-image .product-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--success);
+            color: white;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .product-card .product-info {
+            padding: 10px;
+        }
+
+        .product-card .product-name {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .product-card .product-name-mg {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .product-card .product-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .product-card .product-seller {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 16px 20px;
+        }
+
+        .products-grid .product-card {
+            min-width: unset;
+            max-width: unset;
+        }
+
+        /* Top Sellers */
+        .seller-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin: 0 16px 8px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .seller-card:hover {
+            transform: translateX(4px);
+        }
+
+        .seller-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+        }
+
+        .seller-info {
+            flex: 1;
+        }
+
+        .seller-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .seller-stats {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .seller-rating {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ====== PRODUCT DETAIL ====== */
+        .product-detail-image {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+        }
+
+        .product-detail-content {
+            padding: 20px;
+        }
+
+        .product-detail-name {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .product-detail-name-mg {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .product-detail-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .product-detail-price {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .product-detail-stock {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .detail-seller-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: #F1F8E9;
+            border-radius: var(--radius-sm);
+        }
+
+        .detail-seller-card .seller-avatar {
+            width: 50px;
+            height: 50px;
+            font-size: 28px;
+        }
+
+        .detail-seller-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .detail-seller-actions button {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .detail-seller-actions button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--white);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quantity-value {
+            font-size: 20px;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .quantity-unit {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .total-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 16px 20px;
+            position: sticky;
+            bottom: 70px;
+            background: var(--bg);
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: #E8F5E9;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        /* ====== FORMS ====== */
+        .form-container {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .form-label .required {
+            color: var(--danger);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--white);
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23757575' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item.checked {
+            border-color: var(--primary);
+            background: #E8F5E9;
+            color: var(--primary);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-item.selected {
+            border-color: var(--primary);
+            background: #E8F5E9;
+        }
+
+        .radio-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .radio-item.selected .radio-dot {
+            border-color: var(--primary);
+        }
+
+        .radio-item.selected .radio-dot::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .photo-upload {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .photo-upload-btn {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 24px;
+            color: var(--text-light);
+        }
+
+        .photo-upload-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .photo-upload-btn span {
+            font-size: 9px;
+            margin-top: 2px;
+        }
+
+        .photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-sm);
+            background: #E8F5E9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            position: relative;
+        }
+
+        .photo-preview .remove-photo {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--danger);
+            color: white;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ====== MY PRODUCTS ====== */
+        .product-list-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 16px;
+            margin: 0 16px 10px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .product-list-item:hover {
+            transform: translateX(4px);
+        }
+
+        .product-list-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .product-list-info {
+            flex: 1;
+        }
+
+        .product-list-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .product-list-details {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        .product-list-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            font-size: 11px;
+        }
+
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-online {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+
+        .status-paused {
+            background: #FFF3E0;
+            color: var(--warning);
+        }
+
+        .status-sold {
+            background: #FFEBEE;
+            color: var(--danger);
+        }
+
+        .product-list-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .product-list-actions button {
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .product-list-actions button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .product-list-actions .btn-comment {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ====== ORDERS ====== */
+        .order-tabs {
+            display: flex;
+            padding: 0 16px;
+            margin-bottom: 16px;
+            gap: 8px;
+        }
+
+        .order-tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: var(--white);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .order-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .order-tab .tab-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        .order-card {
+            margin: 0 16px 12px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #F1F8E9;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .order-number {
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .order-date {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .order-card-body {
+            padding: 14px 16px;
+        }
+
+        .order-client {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .order-client-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .order-product {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .order-amount {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ====== FORUM ====== */
+        .forum-tabs {
+            display: flex;
+            padding: 12px 16px;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .forum-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .forum-tab {
+            padding: 8px 16px;
+            border: none;
+            background: var(--white);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            color: var(--text-light);
+        }
+
+        .forum-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .forum-post {
+            margin: 0 16px 12px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .forum-post:hover {
+            transform: translateY(-2px);
+        }
+
+        .forum-post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px 8px;
+        }
+
+        .forum-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+        }
+
+        .forum-author-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .forum-post-time {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .forum-post-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .tag-question {
+            background: #E3F2FD;
+            color: var(--info);
+        }
+
+        .tag-astuce {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+
+        .tag-urgence {
+            background: #FFEBEE;
+            color: var(--danger);
+        }
+
+        .tag-succes {
+            background: #FFF8E1;
+            color: var(--warning);
+        }
+
+        .forum-post-content {
+            padding: 4px 16px 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .forum-post-image {
+            margin: 0 16px 12px;
+            height: 180px;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .forum-post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .forum-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            background: none;
+            font-size: 13px;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .forum-action-btn:hover {
+            background: #F5F5F5;
+            color: var(--primary);
+        }
+
+        .forum-action-btn.liked {
+            color: var(--danger);
+        }
+
+        .forum-resolved {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            margin: 0 16px 10px;
+            background: #E8F5E9;
+            border-radius: 16px;
+            font-size: 11px;
+            color: var(--success);
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* Forum Detail */
+        .forum-reply {
+            margin: 0 16px 10px;
+            padding: 12px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--primary);
+        }
+
+        .forum-reply.expert {
+            border-left-color: var(--secondary);
+            background: #FFFDE7;
+        }
+
+        .forum-reply-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .forum-reply-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+        }
+
+        .expert-badge {
+            padding: 2px 6px;
+            background: var(--secondary);
+            color: white;
+            font-size: 9px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .forum-reply-content {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .forum-reply-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .reply-input-bar {
+            position: sticky;
+            bottom: 70px;
+            background: var(--white);
+            padding: 10px 16px;
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .reply-input-bar input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .reply-input-bar input:focus {
+            border-color: var(--primary);
+        }
+
+        .reply-send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* New Forum Post */
+        .post-type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .post-type-item {
+            padding: 12px 8px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+        }
+
+        .post-type-item.selected {
+            border-color: var(--primary);
+            background: #E8F5E9;
+        }
+
+        .post-type-item .type-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        /* ====== PROFILE ====== */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 12px;
+            border: 3px solid rgba(255,255,255,0.4);
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .profile-location {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .profile-type {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            margin: -20px 16px 16px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .profile-stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .profile-menu {
+            padding: 0 16px;
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--white);
+            margin-bottom: 8px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .profile-menu-item:hover {
+            transform: translateX(4px);
+            background: #F1F8E9;
+        }
+
+        .profile-menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .profile-menu-text {
+            flex: 1;
+        }
+
+        .profile-menu-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-menu-subtitle {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .profile-menu-arrow {
+            color: var(--text-light);
+        }
+
+        /* ====== INSCRIPTION ====== */
+        .register-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .register-icon {
+            font-size: 60px;
+            margin-bottom: 12px;
+        }
+
+        .register-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .register-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .step-dot.active {
+            background: var(--primary);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .step-dot.completed {
+            background: var(--primary-light);
+        }
+
+        /* ====== COMMENT MODAL ====== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 5000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            animation: fadeIn 0.2s;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            border-radius: 20px 20px 0 0;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 12px auto;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 16px 20px;
+        }
+
+        /* Comment */
+        .comment-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .comment-text {
+            font-size: 13px;
+            color: var(--text);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .comment-input-bar {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .comment-input-bar input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        /* ====== TOAST ====== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--text);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            transition: transform 0.3s;
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* ====== FAB ====== */
+        .fab {
+            position: fixed;
+            bottom: 85px;
+            right: calc(50% - 220px);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+            transition: all 0.3s;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* ====== EMPTY STATE ====== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        /* ====== COUNTER BADGE ====== */
+        .counter-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            border-radius: 10px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* ====== ANIMATIONS ====== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ====== SCROLLBAR ====== */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 480px) {
+            .app-container {
+                max-width: 100%;
+            }
+            .fab {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-screen" id="splashScreen">
+    <div class="splash-logo">🏪</div>
+    <div class="splash-title">MarchéPaysan</div>
+    <div class="splash-subtitle">Tsena ho an'ny Tantsaha 🌾</div>
+    <div class="splash-loader"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- APP -->
+<div class="app-container" id="app">
+
+    <!-- ==================== PAGE: ACCUEIL ==================== -->
+    <div class="page active" id="page-home">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <div>
+                    <h1>🏪 MarchéPaysan</h1>
+                    <div class="top-bar-subtitle">Tsena ho an'ny Tantsaha</div>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="notification-badge" onclick="showToast('3 nouvelles notifications', 'info')">
+                    🔔
+                    <span class="badge">3</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Rechercher un produit... / Hitady vokatra..." id="searchInput" oninput="filterProducts()">
+        </div>
+
+        <div class="location-bar">
+            📍 <span>Antananarivo, Madagascar (5 km)</span>
+        </div>
+
+        <div class="section-title">
+            Catégories / Sokajy
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="section-title" style="margin-top: 24px;">
+            🔥 Produits du jour / Vokatra androany
+            <span class="see-all" onclick="showAllProducts()">Voir tout →</span>
+        </div>
+
+        <div class="products-scroll" id="productsScroll">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="section-title" style="margin-top: 24px;">
+            🌟 Meilleurs vendeurs / Mpivarotra tsara
+        </div>
+
+        <div id="topSellers">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="section-title" style="margin-top: 24px;">
+            📦 Tous les produits / Vokatra rehetra
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Filled by JS -->
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: PRODUCT DETAIL ==================== -->
+    <div class="page" id="page-product-detail">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="goBack()">←</button>
+                <h1>Détail produit</h1>
+            </div>
+        </div>
+
+        <div class="product-detail-image" id="detailImage">🍅</div>
+
+        <div class="product-detail-content">
+            <div class="product-detail-name" id="detailName">Tomates</div>
+            <div class="product-detail-name-mg" id="detailNameMg">Voatabia</div>
+            <div class="product-detail-rating" id="detailRating">
+                ⭐⭐⭐⭐⭐ <span>(23 avis / hevitra)</span>
+            </div>
+            <div class="product-detail-price" id="detailPrice">500 Ar / kg</div>
+            <div class="product-detail-stock" id="detailStock">📦 Stock : 50 kg disponibles</div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">🧑‍🌾 Vendeur / Mpivarotra</div>
+                <div class="detail-seller-card">
+                    <div class="seller-avatar">👨‍🌾</div>
+                    <div>
+                        <div class="seller-name" id="detailSellerName">Rakoto Jean</div>
+                        <div class="seller-stats">⭐ 4.9 • Membre depuis 2023</div>
+                        <div class="detail-seller-actions">
+                            <button onclick="showToast('Appel en cours...', 'success')">📞 Appeler</button>
+                            <button onclick="showToast('Message envoyé !', 'success')">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">📝 Description / Mombamomba</div>
+                <div class="product-description" id="detailDescription">
+                    Produits frais cultivés sans produits chimiques, récoltés ce matin même. Livraison possible dans un rayon de 10 km.
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">📦 Quantité / Habetsahany</div>
+                <div class="quantity-selector">
+                    <button class="quantity-btn" onclick="changeQty(-1)">−</button>
+                    <div>
+                        <div class="quantity-value" id="qtyValue">5</div>
+                        <div class="quantity-unit" id="qtyUnit">kg</div>
+                    </div>
+                    <button class="quantity-btn" onclick="changeQty(1)">+</button>
+                    <div class="total-price" id="totalPrice">Total : 2 500 Ar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="openCommentModal('order')">💬 Commander</button>
+            <button class="btn btn-primary" onclick="showToast('✅ Ajouté au panier !', 'success')">🛒 Ajouter</button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: INSCRIPTION ==================== -->
+    <div class="page" id="page-register">
+        <div class="register-header">
+            <div class="register-icon">🧑‍🌾</div>
+            <div class="register-title">Créer mon compte</div>
+            <div class="register-subtitle">Hanokatra kaonty / Inscription vendeur</div>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step-dot active" id="step1"></div>
+            <div class="step-dot" id="step2"></div>
+            <div class="step-dot" id="step3"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="form-container" id="registerStep1">
+            <div class="form-group">
+                <label class="form-label">📸 Photo de profil</label>
+                <div class="photo-upload">
+                    <div class="photo-upload-btn" onclick="showToast('📸 Caméra ouverte !', 'info')">
+                        📷
+                        <span>Ajouter</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Nom complet <span class="required">*</span></label>
+                <input class="form-input" type="text" placeholder="Ex: Rakoto Jean" id="regName">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Téléphone <span class="required">*</span></label>
+                <input class="form-input" type="tel" placeholder="Ex: 034 XX XXX XX" id="regPhone">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Village / Tanàna</label>
+                <input class="form-input" type="text" placeholder="Ex: Ambohimanga" id="regVillage">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Région / Faritra <span class="required">*</span></label>
+                <select class="form-select" id="regRegion">
+                    <option value="">-- Choisir une région --</option>
+                    <option>Analamanga</option>
+                    <option>Vakinankaratra</option>
+                    <option>Itasy</option>
+                    <option>Bongolava</option>
+                    <option>Haute Matsiatra</option>
+                    <option>Amoron'i Mania</option>
+                    <option>Vatovavy-Fitovinany</option>
+                    <option>Ihorombe</option>
+                    <option>Atsimo-Atsinanana</option>
+                    <option>Atsinanana</option>
+                    <option>Analanjirofo</option>
+                    <option>Alaotra-Mangoro</option>
+                    <option>Boeny</option>
+                    <option>Sofia</option>
+                    <option>Betsiboka</option>
+                    <option>Melaky</option>
+                    <option>Atsimo-Andrefana</option>
+                    <option>Androy</option>
+                    <option>Anosy</option>
+                    <option>Menabe</option>
+                    <option>DIANA</option>
+                    <option>SAVA</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary btn-full" onclick="nextStep(2)">Suivant → Manaraka</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-container" id="registerStep2" style="display:none;">
+            <div class="form-group">
+                <label class="form-label">Type de producteur / Karazam-pambolena</label>
+                <div class="checkbox-group" id="producerTypes">
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🥬 Maraîcher / Mpamboly legioma</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🌾 Céréalier / Mpamboly vary</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🐄 Éleveur / Mpiompy</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🌳 Arboriculteur / Mpamboly hazo</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🐟 Pisciculteur / Mpampiompy trondro</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🐝 Apiculteur / Mpitrandraka tantely</div>
+                    <div class="checkbox-item" onclick="toggleCheck(this)">🔄 Mixte / Mifangaro</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📍 Localisation GPS</label>
+                <button class="btn btn-secondary btn-full" onclick="showToast('📍 Position GPS enregistrée !', 'success')">
+                    📍 Détecter ma position / Hahitana ny toerana
+                </button>
+                <div class="form-hint">Votre position aidera les acheteurs proches à vous trouver</div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-secondary" style="flex:1" onclick="nextStep(1)">← Retour</button>
+                <button class="btn btn-primary" style="flex:1" onclick="nextStep(3)">Suivant →</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-container" id="registerStep3" style="display:none;">
+            <div style="text-align:center; padding: 20px;">
+                <div style="font-size:80px;">🎉</div>
+                <h2 style="margin: 16px 0 8px;">Tonga soa!</h2>
+                <h2>Bienvenue !</h2>
+                <p style="color: var(--text-light); margin-top: 8px;">
+                    Votre compte vendeur est prêt.<br>
+                    Ny kaontinao dia efa vonona.
+                </p>
+                <p style="color: var(--text-light); margin-top: 12px; font-size: 13px;">
+                    Vous pouvez maintenant publier vos produits et commencer à vendre !
+                </p>
+            </div>
+
+            <button class="btn btn-primary btn-full" onclick="completeRegistration()" style="margin-top: 16px;">
+                🚀 Commencer à vendre / Hanomboka hivarotra
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: PUBLIER PRODUIT ==================== -->
+    <div class="page" id="page-add-product">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="navigateTo('page-my-products')">←</button>
+                <h1>Publier un produit</h1>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label class="form-label">📸 Photos du produit (max 3)</label>
+                <div class="photo-upload" id="productPhotos">
+                    <div class="photo-upload-btn" onclick="addProductPhoto()">
+                        📷
+                        <span>Ajouter</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Catégorie / Sokajy <span class="required">*</span></label>
+                <select class="form-select" id="productCategory" onchange="updateProductList()">
+                    <option value="">-- Choisir une catégorie --</option>
+                    <option value="legumes">🥬 Légumes / Legioma</option>
+                    <option value="fruits">🍎 Fruits / Voankazo</option>
+                    <option value="cereales">🌾 Céréales / Vary sy katsaka</option>
+                    <option value="tubercules">🥔 Tubercules / Voanjo sy mangahazo</option>
+                    <option value="epices">🌶️ Épices / Fanafody</option>
+                    <option value="viande">🥩 Viande / Hena</option>
+                    <option value="volaille">🐔 Volaille / Akoho</option>
+                    <option value="poisson">🐟 Poisson / Trondro</option>
+                    <option value="lait">🥛 Produits laitiers / Ronono</option>
+                    <option value="oeufs">🥚 Œufs / Atody</option>
+                    <option value="miel">🍯 Miel / Tantely</option>
+                    <option value="herbes">🌿 Herbes / Anana</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Nom du produit / Anaran'ny vokatra <span class="required">*</span></label>
+                <select class="form-select" id="productName">
+                    <option value="">-- Choisir d'abord une catégorie --</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Quantité / Habetsahany <span class="required">*</span></label>
+                    <input class="form-input" type="number" placeholder="Ex: 50" id="productQty">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Unité / Fatra</label>
+                    <select class="form-select" id="productUnit">
+                        <option>kg</option>
+                        <option>sacs / gony</option>
+                        <option>tas / antontany</option>
+                        <option>pièce / isa</option>
+                        <option>botte / fehezana</option>
+                        <option>litre / litatra</option>
+                        <option>tête / loha</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Prix / Vidiny <span class="required">*</span></label>
+                    <input class="form-input" type="number" placeholder="Ex: 2000" id="productPrice">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Par / Isaky ny</label>
+                    <select class="form-select" id="productPriceUnit">
+                        <option>kg</option>
+                        <option>sac / gony</option>
+                        <option>tas / antontany</option>
+                        <option>pièce / isa</option>
+                        <option>botte / fehezana</option>
+                        <option>litre / litatra</option>
+                        <option>tête / loha</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Qualité / Kalitao</label>
+                <div class="radio-group">
+                    <div class="radio-item selected" onclick="selectRadio(this)">
+                        <div class="radio-dot"></div>
+                        <span>⭐ Premium (1er choix / Voalohany)</span>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <div class="radio-dot"></div>
+                        <span>✅ Standard (2ème choix / Faharoa)</span>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <div class="radio-dot"></div>
+                        <span>📦 Tout venant / Tsotra</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Disponible jusqu'au / Misy hatramin'ny</label>
+                <input class="form-input" type="date" id="productExpiry">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Négociable ? / Azo ivarotana ?</label>
+                <div style="display:flex; gap:10px;">
+                    <div class="checkbox-item checked" onclick="toggleNegotiable(this, true)" id="negYes">✅ OUI / ENY</div>
+                    <div class="checkbox-item" onclick="toggleNegotiable(this, false)" id="negNo">❌ NON / TSIA</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description / Mombamomba azy</label>
+                <textarea class="form-textarea" placeholder="Décrivez votre produit... / Lazao ny momba ny vokatrao..." id="productDesc"></textarea>
+            </div>
+
+            <button class="btn btn-primary btn-full" onclick="publishProduct()" style="margin-top: 8px;">
+                📤 Publier / Hamoaka
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: MES PRODUITS ==================== -->
+    <div class="page" id="page-my-products">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="navigateTo('page-profile')">←</button>
+                <div>
+                    <h1>Mes Produits</h1>
+                    <div class="top-bar-subtitle">Ny vokatr'ahy</div>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="back-btn" onclick="navigateTo('page-add-product')">+</button>
+            </div>
+        </div>
+
+        <div style="padding: 16px;">
+            <div style="display:flex; gap:8px; margin-bottom:16px;">
+                <button class="order-tab active" onclick="filterMyProducts('all', this)">Tous (<span id="countAll">0</span>)</button>
+                <button class="order-tab" onclick="filterMyProducts('online', this)">✅ En ligne</button>
+                <button class="order-tab" onclick="filterMyProducts('paused', this)">⏸️ En pause</button>
+            </div>
+        </div>
+
+        <div id="myProductsList">
+            <!-- Filled by JS -->
+        </div>
+
+        <button class="fab" onclick="navigateTo('page-add-product')">+</button>
+    </div>
+
+    <!-- ==================== PAGE: MES COMMANDES ==================== -->
+    <div class="page" id="page-orders">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="navigateTo('page-profile')">←</button>
+                <div>
+                    <h1>Mes Commandes</h1>
+                    <div class="top-bar-subtitle">Ny baiko'ahy</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-tabs">
+            <button class="order-tab active" onclick="filterOrders('new', this)">
+                🆕 Nouvelles <span class="tab-badge" id="newOrdersBadge">3</span>
+            </button>
+            <button class="order-tab" onclick="filterOrders('progress', this)">📦 En cours</button>
+            <button class="order-tab" onclick="filterOrders('done', this)">✅ Terminées</button>
+        </div>
+
+        <div id="ordersList">
+            <!-- Filled by JS -->
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: FORUM ==================== -->
+    <div class="page" id="page-forum">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <div>
+                    <h1>🗣️ Forum Paysans</h1>
+                    <div class="top-bar-subtitle">Serasera ho an'ny Tantsaha</div>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="back-btn" onclick="navigateTo('page-new-post')">✏️</button>
+            </div>
+        </div>
+
+        <div class="forum-tabs">
+            <button class="forum-tab active" onclick="filterForum('all', this)">📋 Tous</button>
+            <button class="forum-tab" onclick="filterForum('question', this)">❓ Questions</button>
+            <button class="forum-tab" onclick="filterForum('astuce', this)">💡 Astuces</button>
+            <button class="forum-tab" onclick="filterForum('urgence', this)">🚨 Urgences</button>
+            <button class="forum-tab" onclick="filterForum('succes', this)">🎉 Succès</button>
+        </div>
+
+        <div id="forumPosts">
+            <!-- Filled by JS -->
+        </div>
+
+        <button class="fab" onclick="navigateTo('page-new-post')">✏️</button>
+    </div>
+
+    <!-- ==================== PAGE: FORUM POST DETAIL ==================== -->
+    <div class="page" id="page-forum-detail">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="navigateTo('page-forum')">←</button>
+                <h1>Discussion</h1>
+            </div>
+        </div>
+
+        <div id="forumDetailContent">
+            <!-- Filled by JS -->
+        </div>
+
+        <div id="forumReplies">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="reply-input-bar">
+            <input type="text" placeholder="Votre réponse... / Ny valinao..." id="replyInput">
+            <button class="reply-send-btn" onclick="addReply()">▶</button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: NEW FORUM POST ==================== -->
+    <div class="page" id="page-new-post">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="back-btn" onclick="navigateTo('page-forum')">←</button>
+                <h1>Nouvelle publication</h1>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label class="form-label">Type de publication</label>
+                <div class="post-type-selector">
+                    <div class="post-type-item selected" onclick="selectPostType(this, 'question')">
+                        <div class="type-icon">❓</div>
+                        Question
+                    </div>
+                    <div class="post-type-item" onclick="selectPostType(this, 'astuce')">
+                        <div class="type-icon">💡</div>
+                        Astuce
+                    </div>
+                    <div class="post-type-item" onclick="selectPostType(this, 'urgence')">
+                        <div class="type-icon">🚨</div>
+                        Urgence
+                    </div>
+                    <div class="post-type-item" onclick="selectPostType(this, 'succes')">
+                        <div class="type-icon">🎉</div>
+                        Succès
+                    </div>
+                    <div class="post-type-item" onclick="selectPostType(this, 'photo')">
+                        <div class="type-icon">📸</div>
+                        Photo
+                    </div>
+                    <div class="post-type-item" onclick="selectPostType(this, 'resultat')">
+                        <div class="type-icon">📊</div>
+                        Résultat
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Catégorie / Sokajy</label>
+                <select class="form-select" id="postCategory">
+                    <option>🥬 Maraîchage / Fambolena legioma</option>
+                    <option>🌾 Céréales / Vary sy katsaka</option>
+                    <option>🐄 Élevage / Fiompiana</option>
+                    <option>🌳 Arboriculture / Fambolena hazo</option>
+                    <option>💧 Irrigation / Fampidirana rano</option>
+                    <option>💰 Commerce / Varotra</option>
+                    <option>🚜 Équipement / Fitaovana</option>
+                    <option>🌿 Bio / Biolojika</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Titre / Lohateny <span class="required">*</span></label>
+                <input class="form-input" type="text" placeholder="De quoi s'agit-il ?" id="postTitle">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description / Mombamomba <span class="required">*</span></label>
+                <textarea class="form-textarea" placeholder="Décrivez en détail... / Lazao amin'ny antsipiriany..." id="postContent" style="min-height:120px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📸 Photos (optionnel)</label>
+                <div class="photo-upload">
+                    <div class="photo-upload-btn" onclick="showToast('📸 Photo ajoutée !', 'info')">
+                        📷
+                        <span>Ajouter</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📍 Localisation / Toerana (optionnel)</label>
+                <button class="btn btn-secondary btn-full btn-sm" onclick="showToast('📍 Position ajoutée !', 'success')">
+                    📍 Ajouter ma position
+                </button>
+            </div>
+
+            <button class="btn btn-primary btn-full" onclick="publishPost()" style="margin-top: 8px;">
+                📤 Publier / Hamoaka
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: PROFILE ==================== -->
+    <div class="page" id="page-profile">
+        <div class="profile-header">
+            <div class="profile-avatar">👨‍🌾</div>
+            <div class="profile-name" id="profileName">Rakoto Jean</div>
+            <div class="profile-location">📍 Ambohimanga, Analamanga</div>
+            <div class="profile-type">🧑‍🌾 Maraîcher • Éleveur</div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="profileProducts">5</div>
+                <div class="profile-stat-label">Produits / Vokatra</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="profileSales">28</div>
+                <div class="profile-stat-label">Ventes / Varotra</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-value">⭐ 4.8</div>
+                <div class="profile-stat-label">Note / Naoty</div>
+            </div>
+        </div>
+
+        <div class="profile-menu">
+            <div class="profile-menu-item" onclick="navigateTo('page-my-products')">
+                <div class="profile-menu-icon" style="background:#E8F5E9;">📦</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Mes Produits / Ny vokatr'ahy</div>
+                    <div class="profile-menu-subtitle">Gérer mes produits en vente</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="navigateTo('page-orders')">
+                <div class="profile-menu-icon" style="background:#E3F2FD;">📋</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Mes Commandes / Ny baiko'ahy</div>
+                    <div class="profile-menu-subtitle">Voir les commandes reçues</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="navigateTo('page-add-product')">
+                <div class="profile-menu-icon" style="background:#F1F8E9;">➕</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Publier un produit / Hamoaka vokatra</div>
+                    <div class="profile-menu-subtitle">Ajouter un nouveau produit</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="navigateTo('page-register')">
+                <div class="profile-menu-icon" style="background:#FFF3E0;">⚙️</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Mon Compte / Kaonty</div>
+                    <div class="profile-menu-subtitle">Modifier mes informations</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="showToast('📊 Statistiques bientôt disponibles !', 'info')">
+                <div class="profile-menu-icon" style="background:#F3E5F5;">📊</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Statistiques / Antontan'isa</div>
+                    <div class="profile-menu-subtitle">Voir mes performances</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="showToast('🔧 Paramètres', 'info')">
+                <div class="profile-menu-icon" style="background:#EFEBE9;">🔧</div>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Paramètres / Fandrindrana</div>
+                    <div class="profile-menu-subtitle">Langue, notifications, aide</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+        </div>
+
+        <div style="padding: 20px 16px; text-align:center;">
+            <button class="btn btn-danger btn-full" onclick="showToast('👋 Déconnexion...', 'error')" style="max-width: 200px; margin: 0 auto;">
+                🚪 Déconnexion
+            </button>
+            <p style="font-size:11px; color:var(--text-light); margin-top:12px;">MarchéPaysan v1.0 🌾</p>
+        </div>
+    </div>
+
+    <!-- ==================== BOTTOM NAVIGATION ==================== -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('page-home', this)" id="nav-home">
+            <span class="nav-icon">🏠</span>
+            <span>Accueil</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('page-forum', this)" id="nav-forum">
+            <span class="nav-icon">🗣️</span>
+            <span>Forum</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('page-add-product', this)" id="nav-sell">
+            <span class="nav-icon">➕</span>
+            <span>Vendre</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('page-orders', this)" id="nav-orders">
+            <span class="nav-icon">📋</span>
+            <span>Commandes</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('page-profile', this)" id="nav-profile">
+            <span class="nav-icon">👤</span>
+            <span>Profil</span>
+        </button>
+    </nav>
+</div>
+
+<!-- ==================== COMMENT / ORDER MODAL ==================== -->
+<div class="modal-overlay" id="commentModal">
+    <div class="modal-content">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">💬 Commentaires</div>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Filled dynamically -->
+        </div>
+        <div class="comment-input-bar">
+            <input type="text" placeholder="Écrire un commentaire... / Manoratra hevitra..." id="commentInput">
+            <button class="reply-send-btn" onclick="addComment()">▶</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const productDatabase = {
+    legumes: [
+        { fr: "Tomates", mg: "Voatabia", icon: "🍅" },
+        { fr: "Oignons", mg: "Tongolo", icon: "🧅" },
+        { fr: "Carottes", mg: "Karaoty", icon: "🥕" },
+        { fr: "Choux", mg: "Laisoa", icon: "🥬" },
+        { fr: "Haricots verts", mg: "Tsaramaso maitso", icon: "🫘" },
+        { fr: "Poivrons", mg: "Poavro", icon: "🫑" },
+        { fr: "Aubergines", mg: "Baranjely", icon: "🍆" },
+        { fr: "Concombres", mg: "Konkomba", icon: "🥒" },
+        { fr: "Courgettes", mg: "Korzety", icon: "🥒" },
+        { fr: "Salade / Laitue", mg: "Salady", icon: "🥬" },
+        { fr: "Piments", mg: "Sakay", icon: "🌶️" },
+        { fr: "Petits pois", mg: "Petipoa", icon: "🟢" },
+        { fr: "Brèdes", mg: "Anana", icon: "🥬" },
+        { fr: "Cresson", mg: "Anandrano", icon: "🌿" }
+    ],
+    fruits: [
+        { fr: "Mangues", mg: "Manga", icon: "🥭" },
+        { fr: "Bananes", mg: "Akondro", icon: "🍌" },
+        { fr: "Ananas", mg: "Mananasy", icon: "🍍" },
+        { fr: "Litchis", mg: "Letchi", icon: "🔴" },
+        { fr: "Oranges", mg: "Voasary", icon: "🍊" },
+        { fr: "Papayes", mg: "Papay", icon: "🟠" },
+        { fr: "Avocats", mg: "Zavoka", icon: "🥑" },
+        { fr: "Corossol", mg: "Voantsojy", icon: "🟢" },
+        { fr: "Pommes", mg: "Paoma", icon: "🍎" },
+        { fr: "Fraises", mg: "Frezy", icon: "🍓" },
+        { fr: "Pastèques", mg: "Voatango", icon: "🍉" }
+    ],
+    cereales: [
+        { fr: "Riz blanc", mg: "Vary fotsy", icon: "🍚" },
+        { fr: "Riz rouge", mg: "Vary mena", icon: "🌾" },
+        { fr: "Riz paddy", mg: "Vary akotry", icon: "🌾" },
+        { fr: "Maïs", mg: "Katsaka", icon: "🌽" },
+        { fr: "Blé", mg: "Ble", icon: "🌾" },
+        { fr: "Sorgho", mg: "Ampemby", icon: "🌾" }
+    ],
+    tubercules: [
+        { fr: "Manioc", mg: "Mangahazo", icon: "🥔" },
+        { fr: "Patates douces", mg: "Vomanga", icon: "🍠" },
+        { fr: "Pommes de terre", mg: "Ovy", icon: "🥔" },
+        { fr: "Ignames", mg: "Oviala", icon: "🥔" },
+        { fr: "Arachides", mg: "Voanjo", icon: "🥜" },
+        { fr: "Taro", mg: "Saonjo", icon: "🥔" }
+    ],
+    epices: [
+        { fr: "Vanille", mg: "Vanila", icon: "🟤" },
+        { fr: "Cannelle", mg: "Kanely", icon: "🟫" },
+        { fr: "Girofle", mg: "Jirofo", icon: "🟤" },
+        { fr: "Poivre", mg: "Dipoavatra", icon: "⚫" },
+        { fr: "Curcuma", mg: "Tamotamo", icon: "🟡" },
+        { fr: "Gingembre", mg: "Sakamalao", icon: "🫚" },
+        { fr: "Piment fort", mg: "Sakay masiaka", icon: "🌶️" }
+    ],
+    viande: [
+        { fr: "Bœuf", mg: "Hena omby", icon: "🥩" },
+        { fr: "Porc", mg: "Hena kisoa", icon: "🥩" },
+        { fr: "Mouton", mg: "Hena ondry", icon: "🐑" },
+        { fr: "Chèvre", mg: "Hena osy", icon: "🐐" }
+    ],
+    volaille: [
+        { fr: "Poulet vivant", mg: "Akoho velona", icon: "🐔" },
+        { fr: "Poulet abattu", mg: "Akoho voavono", icon: "🍗" },
+        { fr: "Canard", mg: "Gana", icon: "🦆" },
+        { fr: "Dinde", mg: "Vorontsiloza", icon: "🦃" },
+        { fr: "Oie", mg: "Gisa", icon: "🪿" }
+    ],
+    poisson: [
+        { fr: "Tilapia", mg: "Tilapia", icon: "🐟" },
+        { fr: "Carpe", mg: "Karpa", icon: "🐟" },
+        { fr: "Crevettes", mg: "Makamba", icon: "🦐" },
+        { fr: "Anguilles", mg: "Amalona", icon: "🐍" }
+    ],
+    lait: [
+        { fr: "Lait frais", mg: "Ronono vaovao", icon: "🥛" },
+        { fr: "Yaourt", mg: "Yaorta", icon: "🥛" },
+        { fr: "Fromage", mg: "Fromazy", icon: "🧀" },
+        { fr: "Beurre", mg: "Dibera", icon: "🧈" }
+    ],
+    oeufs: [
+        { fr: "Œufs de poule", mg: "Atodin'akoho", icon: "🥚" },
+        { fr: "Œufs de cane", mg: "Atodin-gana", icon: "🥚" },
+        { fr: "Œufs de caille", mg: "Atodin-papelika", icon: "🥚" }
+    ],
+    miel: [
+        { fr: "Miel pur", mg: "Tantely madio", icon: "🍯" },
+        { fr: "Cire d'abeille", mg: "Savodin-tantely", icon: "🟡" }
+    ],
+    herbes: [
+        { fr: "Persil", mg: "Persily", icon: "🌿" },
+        { fr: "Coriandre", mg: "Koriandra", icon: "🌿" },
+        { fr: "Basilic", mg: "Basilika", icon: "🌿" },
+        { fr: "Menthe", mg: "Menta", icon: "🌿" },
+        { fr: "Citronnelle", mg: "Veromanitra", icon: "🌿" },
+        { fr: "Moringa", mg: "Ananambo", icon: "🌿" }
+    ]
+};
+
+const categories = [
+    { icon: "🥬", name: "Légumes", mg: "Legioma", key: "legumes" },
+    { icon: "🍎", name: "Fruits", mg: "Voankazo", key: "fruits" },
+    { icon: "🌾", name: "Céréales", mg: "Vary", key: "cereales" },
+    { icon: "🥔", name: "Tubercules", mg: "Mangahazo", key: "tubercules" },
+    { icon: "🌶️", name: "Épices", mg: "Fanafody", key: "epices" },
+    { icon: "🥩", name: "Viande", mg: "Hena", key: "viande" },
+    { icon: "🐔", name: "Volaille", mg: "Akoho", key: "volaille" },
+    { icon: "🐟", name: "Poisson", mg: "Trondro", key: "poisson" },
+    { icon: "🥛", name: "Lait", mg: "Ronono", key: "lait" },
+    { icon: "🥚", name: "Œufs", mg: "Atody", key: "oeufs" },
+    { icon: "🍯", name: "Miel", mg: "Tantely", key: "miel" },
+    { icon: "🌿", name: "Herbes", mg: "Anana", key: "herbes" }
+];
+
+// Sample products for display
+let sampleProducts = [
+    { id: 1, icon: "🍅", name: "Tomates", mg: "Voatabia", price: 2000, unit: "kg", qty: 50, seller: "Rakoto J.", rating: 4.8, views: 23, category: "legumes", status: "online", quality: "Premium", desc: "Tomates fraîches bio récoltées ce matin. Sans pesticides.", negotiable: true },
+    { id: 2, icon: "🧅", name: "Oignons", mg: "Tongolo", price: 3000, unit: "kg", qty: 200, seller: "Rasoa M.", rating: 4.5, views: 45, category: "legumes", status: "online", quality: "Standard", desc: "Oignons de qualité, bien secs.", negotiable: true },
+    { id: 3, icon: "🌽", name: "Maïs", mg: "Katsaka", price: 1500, unit: "kg", qty: 500, seller: "Rabe P.", rating: 4.2, views: 12, category: "cereales", status: "online", quality: "Standard", desc: "Maïs sec de bonne qualité.", negotiable: false },
+    { id: 4, icon: "🥭", name: "Mangues", mg: "Manga", price: 1000, unit: "kg", qty: 100, seller: "Noro F.", rating: 4.9, views: 67, category: "fruits", status: "online", quality: "Premium", desc: "Mangues sucrées et juteuses.", negotiable: true },
+    { id: 5, icon: "🍚", name: "Riz blanc", mg: "Vary fotsy", price: 2500, unit: "kg", qty: 1000, seller: "Hery R.", rating: 4.7, views: 89, category: "cereales", status: "online", quality: "Premium", desc: "Riz de qualité supérieure.", negotiable: true },
+    { id: 6, icon: "🥕", name: "Carottes", mg: "Karaoty", price: 2500, unit: "kg", qty: 30, seller: "Lala S.", rating: 4.3, views: 15, category: "legumes", status: "online", quality: "Standard", desc: "Carottes fraîches du jour.", negotiable: false },
+    { id: 7, icon: "🐔", name: "Poulet vivant", mg: "Akoho velona", price: 15000, unit: "pièce", qty: 20, seller: "Tiana K.", rating: 4.6, views: 34, category: "volaille", status: "online", quality: "Premium", desc: "Poulets gasy de plein air.", negotiable: true },
+    { id: 8, icon: "🍯", name: "Miel pur", mg: "Tantely madio", price: 20000, unit: "litre", qty: 10, seller: "Solo H.", rating: 5.0, views: 56, category: "miel", status: "online", quality: "Premium", desc: "Miel pur de la forêt.", negotiable: false },
+    { id: 9, icon: "🍌", name: "Bananes", mg: "Akondro", price: 1500, unit: "tas", qty: 40, seller: "Faly T.", rating: 4.4, views: 28, category: "fruits", status: "online", quality: "Standard", desc: "Bananes mûres et sucrées.", negotiable: true },
+    { id: 10, icon: "🥛", name: "Lait frais", mg: "Ronono vaovao", price: 3000, unit: "litre", qty: 25, seller: "Bema R.", rating: 4.8, views: 41, category: "lait", status: "online", quality: "Premium", desc: "Lait frais du matin.", negotiable: false }
+];
+
+let myProducts = [
+    { id: 101, icon: "🍅", name: "Tomates", mg: "Voatabia", price: 2000, unit: "kg", qty: 50, status: "online", views: 23 },
+    { id: 102, icon: "🧅", name: "Oignons", mg: "Tongolo", price: 3000, unit: "kg", qty: 200, status: "online", views: 45 },
+    { id: 103, icon: "🌽", name: "Maïs", mg: "Katsaka", price: 1500, unit: "kg", qty: 500, status: "paused", views: 12 },
+    { id: 104, icon: "🥕", name: "Carottes", mg: "Karaoty", price: 2500, unit: "kg", qty: 30, status: "online", views: 8 },
+    { id: 105, icon: "🐔", name: "Poulet", mg: "Akoho", price: 15000, unit: "pièce", qty: 10, status: "online", views: 18 }
+];
+
+let orders = [
+    { id: "CMD-045", client: "Aina Razaf.", clientIcon: "👩", product: "20 kg Tomates", amount: 40000, time: "Il y a 2 heures", status: "new" },
+    { id: "CMD-046", client: "Restaurant Chez Marie", clientIcon: "🏪", product: "50 kg Oignons", amount: 150000, time: "Il y a 30 min", status: "new" },
+    { id: "CMD-047", client: "Hôtel Colbert", clientIcon: "🏨", product: "100 kg Riz", amount: 250000, time: "Il y a 1 heure", status: "new" },
+    { id: "CMD-040", client: "Soa Mirana", clientIcon: "👩", product: "5 Poulets", amount: 75000, time: "Hier", status: "progress" },
+    { id: "CMD-038", client: "Epicerie Tana", clientIcon: "🏪", product: "30 kg Carottes", amount: 75000, time: "Il y a 3 jours", status: "done" },
+    { id: "CMD-035", client: "Faly Rasoa", clientIcon: "👨", product: "10 kg Mangues", amount: 10000, time: "Il y a 5 jours", status: "done" }
+];
+
+let forumPosts = [
+    {
+        id: 1, author: "Rakoto Jean", avatar: "👨‍🌾", time: "Il y a 2h",
+        type: "question", category: "#Maraîchage",
+        title: "Taches noires sur mes tomates",
+        content: "Mes tomates ont des taches noires sur les feuilles depuis 3 jours. Quelqu'un peut m'aider ? J'ai essayé d'arroser moins mais ça ne change rien.",
+        image: "🍅",
+        likes: 25, replies: 12, shares: 5, resolved: true, liked: false,
+        replyList: [
+            { author: "Dr. Rasoa", avatar: "👩‍🏫", expert: true, content: "C'est le mildiou ! Voici ce qu'il faut faire :\n1. Arracher les feuilles touchées\n2. Traiter avec de la bouillie bordelaise\n3. Espacer les plants\n4. Arroser au pied, jamais les feuilles", likes: 18, time: "Il y a 1h" },
+            { author: "Hery M.", avatar: "👨‍🌾", expert: false, content: "J'ai eu le même problème l'an dernier. Le conseil de Dr. Rasoa est excellent !", likes: 5, time: "Il y a 45min" }
+        ]
+    },
+    {
+        id: 2, author: "Noro Faly", avatar: "👩‍🌾", time: "Il y a 5h",
+        type: "astuce", category: "#Bio #Astuce",
+        title: "Éloigner les pucerons naturellement",
+        content: "ASTUCE : Pour éloigner les pucerons, plantez du basilic à côté de vos tomates ! Ça marche très bien chez moi depuis 2 saisons. Le basilic repousse aussi les moustiques.",
+        image: "🌿",
+        likes: 45, replies: 8, shares: 23, resolved: false, liked: false,
+        replyList: [
+            { author: "Solo R.", avatar: "👨‍🌾", expert: false, content: "Merci pour l'astuce ! Je vais essayer dans mon jardin.", likes: 3, time: "Il y a 3h" }
+        ]
+    },
+    {
+        id: 3, author: "Tiana Koto", avatar: "👨‍🌾", time: "Il y a 1h",
+        type: "urgence", category: "#Urgence #Ravageur",
+        title: "Chenilles légionnaires à Antsirabe !",
+        content: "ALERTE : Des chenilles légionnaires ont été repérées dans plusieurs champs de maïs dans la zone d'Antsirabe. Protégez vos champs ! Surveillez surtout les jeunes plants.",
+        image: "🐛",
+        likes: 67, replies: 32, shares: 89, resolved: false, liked: false,
+        replyList: [
+            { author: "Dr. Ravo", avatar: "👩‍🏫", expert: true, content: "Utilisez du Bt (Bacillus thuringiensis) en pulvérisation. C'est bio et très efficace contre les chenilles légionnaires.", likes: 25, time: "Il y a 30min" }
+        ]
+    },
+    {
+        id: 4, author: "Bema Ranto", avatar: "👨‍🌾", time: "Il y a 8h",
+        type: "succes", category: "#Succès #Riz",
+        title: "Record : 6 tonnes de riz par hectare !",
+        content: "🎉 Je suis fier de partager que j'ai atteint 6 tonnes de riz par hectare cette saison grâce au SRI (Système de Riziculture Intensifiée). Merci à tous pour vos conseils sur ce forum !",
+        image: "🌾",
+        likes: 120, replies: 45, shares: 67, resolved: false, liked: false,
+        replyList: [
+            { author: "Rakoto J.", avatar: "👨‍🌾", expert: false, content: "Félicitations Bema ! C'est incroyable ! Tu peux nous partager ta méthode en détail ?", likes: 8, time: "Il y a 6h" },
+            { author: "Prof. Andry", avatar: "👨‍🏫", expert: true, content: "Excellent résultat ! Le SRI est vraiment la voie à suivre. Bravo !", likes: 15, time: "Il y a 5h" }
+        ]
+    },
+    {
+        id: 5, author: "Lala Soa", avatar: "👩‍🌾", time: "Il y a 1 jour",
+        type: "question", category: "#Élevage",
+        title: "Quelle race de poule pour la ponte ?",
+        content: "Je veux commencer l'élevage de poules pondeuses. Quelle race me conseillez-vous pour Madagascar ? J'ai un budget limité et je cherche une race qui pond bien.",
+        image: "🐔",
+        likes: 18, replies: 15, shares: 4, resolved: false, liked: false,
+        replyList: [
+            { author: "Tiana K.", avatar: "👨‍🌾", expert: false, content: "Je te conseille la race locale améliorée. Elles s'adaptent bien au climat et pondent correctement.", likes: 6, time: "Il y a 20h" }
+        ]
+    }
+];
+
+let comments = {};
+let currentProduct = null;
+let currentPostId = null;
+let selectedPostType = 'question';
+let currentQty = 5;
+let currentPrice = 500;
+let navigationHistory = ['page-home'];
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('splashScreen').classList.add('hidden');
+    }, 2000);
+
+    renderCategories();
+    renderProducts();
+    renderTopSellers();
+    renderAllProducts();
+    renderMyProducts();
+    renderOrders('new');
+    renderForumPosts('all');
+});
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+function navigateTo(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    navigationHistory.push(pageId);
+    window.scrollTo(0, 0);
+
+    // Update bottom nav
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navMap = {
+        'page-home': 'nav-home',
+        'page-forum': 'nav-forum',
+        'page-add-product': 'nav-sell',
+        'page-orders': 'nav-orders',
+        'page-profile': 'nav-profile',
+        'page-new-post': 'nav-forum',
+        'page-forum-detail': 'nav-forum',
+        'page-my-products': 'nav-profile',
+        'page-register': 'nav-profile',
+        'page-product-detail': 'nav-home'
+    };
+    const navId = navMap[pageId];
+    if (navId) document.getElementById(navId)?.classList.add('active');
+}
+
+function switchTab(pageId, el) {
+    navigateTo(pageId);
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function goBack() {
+    navigationHistory.pop();
+    const prev = navigationHistory[navigationHistory.length - 1] || 'page-home';
+    navigateTo(prev);
+}
+
+// ============================================================
+// RENDER: CATEGORIES
+// ============================================================
+
+function renderCategories() {
+    const grid = document.getElementById('categoriesGrid');
+    grid.innerHTML = categories.map(cat => `
+        <div class="category-item" onclick="filterByCategory('${cat.key}')">
+            <div class="cat-icon">${cat.icon}</div>
+            <div class="cat-name">${cat.name}</div>
+            <div class="cat-name-mg">${cat.mg}</div>
+        </div>
+    `).join('');
+}
+
+function filterByCategory(key) {
+    document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const filtered = sampleProducts.filter(p => p.category === key);
+    if (filtered.length > 0) {
+        renderAllProducts(filtered);
+        showToast(`${categories.find(c => c.key === key)?.name} - ${filtered.length} produits`, 'success');
+    } else {
+        showToast('Aucun produit dans cette catégorie', 'info');
+    }
+}
+
+// ============================================================
+// RENDER: PRODUCTS (Home Scroll)
+// ============================================================
+
+function renderProducts() {
+    const scroll = document.getElementById('productsScroll');
+    const featured = sampleProducts.slice(0, 5);
+    scroll.innerHTML = featured.map(p => `
+        <div class="product-card" onclick="showProductDetail(${p.id})">
+            <div class="product-image" style="background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
+                ${p.icon}
+                <span class="product-badge">${p.quality}</span>
+            </div>
+            <div class="product-info">
+                <div class="product-name">${p.name}</div>
+                <div class="product-name-mg">${p.mg}</div>
+                <div class="product-price">${p.price.toLocaleString()} Ar/${p.unit}</div>
+                <div class="product-seller">⭐${p.rating} • ${p.seller}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderAllProducts(list) {
+    const grid = document.getElementById('productsGrid');
+    const products = list || sampleProducts;
+    grid.innerHTML = products.map(p => `
+        <div class="product-card" onclick="showProductDetail(${p.id})">
+            <div class="product-image" style="background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
+                ${p.icon}
+                <span class="product-badge">${p.quality}</span>
+            </div>
+            <div class="product-info">
+                <div class="product-name">${p.name}</div>
+                <div class="product-name-mg">${p.mg}</div>
+                <div class="product-price">${p.price.toLocaleString()} Ar/${p.unit}</div>
+                <div class="product-seller">⭐${p.rating} • ${p.seller} • 👁${p.views}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showAllProducts() {
+    document.getElementById('productsGrid').scrollIntoView({ behavior: 'smooth' });
+}
+
+function filterProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    if (query.length === 0) {
+        renderAllProducts();
+        return;
+    }
+    const filtered = sampleProducts.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.mg.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query)
+    );
+    renderAllProducts(filtered);
+}
+
+// ============================================================
+// RENDER: TOP SELLERS
+// ============================================================
+
+function renderTopSellers() {
+    const sellers = [
+        { name: "Rakoto Jean", icon: "👨‍🌾", rating: "⭐4.9", sales: "52 ventes" },
+        { name: "Noro Faly", icon: "👩‍🌾", rating: "⭐4.8", sales: "38 ventes" },
+        { name: "Hery Rabe", icon: "👨‍🌾", rating: "⭐4.7", sales: "45 ventes" }
+    ];
+    const container = document.getElementById('topSellers');
+    container.innerHTML = sellers.map(s => `
+        <div class="seller-card" onclick="showToast('Profil de ${s.name}', 'info')">
+            <div class="seller-avatar">${s.icon}</div>
+            <div class="seller-info">
+                <div class="seller-name">${s.name}</div>
+                <div class="seller-stats">${s.rating} • ${s.sales}</div>
+            </div>
+            <div class="seller-rating">${s.rating}</div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// PRODUCT DETAIL
+// ============================================================
+
+function showProductDetail(id) {
+    currentProduct = sampleProducts.find(p => p.id === id);
+    if (!currentProduct) return;
+
+    document.getElementById('detailImage').textContent = currentProduct.icon;
+    document.getElementById('detailName').textContent = currentProduct.name;
+    document.getElementById('detailNameMg').textContent = currentProduct.mg;
+    document.getElementById('detailPrice').textContent = `${currentProduct.price.toLocaleString()} Ar / ${currentProduct.unit}`;
+    document.getElementById('detailStock').textContent = `📦 Stock : ${currentProduct.qty} ${currentProduct.unit} disponibles`;
+    document.getElementById('detailSellerName').textContent = currentProduct.seller;
+    document.getElementById('detailDescription').textContent = currentProduct.desc;
+
+    currentQty = 5;
+    currentPrice = currentProduct.price;
+    updateQtyDisplay();
+
+    navigateTo('page-product-detail');
+}
+
+function changeQty(delta) {
+    currentQty = Math.max(1, currentQty + delta);
+    if (currentProduct && currentQty > currentProduct.qty) {
+        currentQty = currentProduct.qty;
+        showToast('Stock maximum atteint !', 'error');
+    }
+    updateQtyDisplay();
+}
+
+function updateQtyDisplay() {
+    document.getElementById('qtyValue').textContent = currentQty;
+    document.getElementById('qtyUnit').textContent = currentProduct?.unit || 'kg';
+    document.getElementById('totalPrice').textContent = `Total : ${(currentQty * currentPrice).toLocaleString()} Ar`;
+}
+
+// ============================================================
+// MY PRODUCTS
+// ============================================================
+
+function renderMyProducts(filter) {
+    const list = document.getElementById('myProductsList');
+    let products = myProducts;
+    if (filter === 'online') products = myProducts.filter(p => p.status === 'online');
+    else if (filter === 'paused') products = myProducts.filter(p => p.status === 'paused');
+
+    document.getElementById('countAll').textContent = myProducts.length;
+
+    if (products.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📦</div>
+                <div class="empty-state-title">Aucun produit</div>
+                <div class="empty-state-text">Tsy misy vokatra eto. Commencez à publier !</div>
+                <button class="btn btn-primary" onclick="navigateTo('page-add-product')">➕ Ajouter un produit</button>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = products.map(p => `
+        <div class="product-list-item">
+            <div class="product-list-icon">${p.icon}</div>
+            <div class="product-list-info">
+                <div class="product-list-name">${p.name} / ${p.mg}</div>
+                <div class="product-list-details">${p.qty} ${p.unit} • ${p.price.toLocaleString()} Ar/${p.unit}</div>
+                <div class="product-list-status">
+                    <span class="status-badge ${p.status === 'online' ? 'status-online' : 'status-paused'}">
+                        ${p.status === 'online' ? '✅ En ligne' : '⏸️ En pause'}
+                    </span>
+                    <span>• 👁 ${p.views} vues</span>
+                </div>
+                <div class="product-list-actions">
+                    <button onclick="event.stopPropagation(); showToast('✏️ Modification...', 'info')">✏️ Modifier</button>
+                    <button onclick="event.stopPropagation(); toggleProductStatus(${p.id})">${p.status === 'online' ? '⏸️ Pause' : '▶️ Activer'}</button>
+                    <button onclick="event.stopPropagation(); deleteProduct(${p.id})">🗑️</button>
+                    <button class="btn-comment" onclick="event.stopPropagation(); openCommentModal('product-${p.id}')">💬</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterMyProducts(filter, el) {
+    document.querySelectorAll('#page-my-products .order-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderMyProducts(filter);
+}
+
+function toggleProductStatus(id) {
+    const product = myProducts.find(p => p.id === id);
+    if (product) {
+        product.status = product.status === 'online' ? 'paused' : 'online';
+        renderMyProducts();
+        showToast(product.status === 'online' ? '✅ Produit activé !' : '⏸️ Produit en pause', 'success');
+    }
+}
+
+function deleteProduct(id) {
+    if (confirm('Supprimer ce produit ? / Hamafa ity vokatra ity ?')) {
+        myProducts = myProducts.filter(p => p.id !== id);
+        renderMyProducts();
+        showToast('🗑️ Produit supprimé !', 'error');
+    }
+}
+
+// ============================================================
+// PUBLISH PRODUCT
+// ============================================================
+
+function updateProductList() {
+    const category = document.getElementById('productCategory').value;
+    const select = document.getElementById('productName');
+    select.innerHTML = '<option value="">-- Choisir un produit --</option>';
+
+    if (category && productDatabase[category]) {
+        productDatabase[category].forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.fr;
+            option.textContent = `${p.icon} ${p.fr} / ${p.mg}`;
+            option.dataset.icon = p.icon;
+            option.dataset.mg = p.mg;
+            select.appendChild(option);
+        });
+    }
+}
+
+function publishProduct() {
+    const category = document.getElementById('productCategory').value;
+    const nameSelect = document.getElementById('productName');
+    const name = nameSelect.value;
+    const qty = document.getElementById('productQty').value;
+    const price = document.getElementById('productPrice').value;
+
+    if (!category || !name || !qty || !price) {
+        showToast('❌ Veuillez remplir tous les champs obligatoires !', 'error');
+        return;
+    }
+
+    const selectedOption = nameSelect.options[nameSelect.selectedIndex];
+    const icon = selectedOption.dataset.icon || '📦';
+    const mg = selectedOption.dataset.mg || '';
+    const unit = document.getElementById('productUnit').value;
+
+    const newProduct = {
+        id: Date.now(),
+        icon: icon,
+        name: name,
+        mg: mg,
+        price: parseInt(price),
+        unit: unit.split(' / ')[0],
+        qty: parseInt(qty),
+        status: 'online',
+        views: 0
+    };
+
+    myProducts.push(newProduct);
+
+    // Also add to sample products for marketplace
+    sampleProducts.push({
+        ...newProduct,
+        seller: "Rakoto J.",
+        rating: 4.8,
+        category: category,
+        quality: "Standard",
+        desc: document.getElementById('productDesc').value || "Produit frais",
+        negotiable: true
+    });
+
+    renderMyProducts();
+    renderAllProducts();
+    renderProducts();
+    document.getElementById('profileProducts').textContent = myProducts.length;
+
+    showToast('✅ Produit publié avec succès ! / Vokatra navoaka !', 'success');
+    navigateTo('page-my-products');
+
+    // Reset form
+    document.getElementById('productCategory').value = '';
+    document.getElementById('productName').innerHTML = '<option value="">-- Choisir d\'abord une catégorie --</option>';
+    document.getElementById('productQty').value = '';
+    document.getElementById('productPrice').value = '';
+    document.getElementById('productDesc').value = '';
+}
+
+function addProductPhoto() {
+    const container = document.getElementById('productPhotos');
+    const previews = container.querySelectorAll('.photo-preview');
+    if (previews.length >= 3) {
+        showToast('Maximum 3 photos !', 'error');
+        return;
+    }
+
+    const icons = ['📸', '🖼️', '🌄'];
+    const preview = document.createElement('div');
+    preview.className = 'photo-preview';
+    preview.innerHTML = `
+        ${icons[previews.length]}
+        <button class="remove-photo" onclick="this.parentElement.remove()">✕</button>
+    `;
+    container.insertBefore(preview, container.lastElementChild);
+    showToast('📸 Photo ajoutée !', 'success');
+}
+
+// ============================================================
+// ORDERS
+// ============================================================
+
+function renderOrders(filter) {
+    const list = document.getElementById('ordersList');
+    const filtered = orders.filter(o => o.status === filter);
+
+    const newCount = orders.filter(o => o.status === 'new').length;
+    document.getElementById('newOrdersBadge').textContent = newCount;
+
+    if (filtered.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📋</div>
+                <div class="empty-state-title">Aucune commande</div>
+                <div class="empty-state-text">Tsy misy baiko eto</div>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = filtered.map(o => `
+        <div class="order-card">
+            <div class="order-card-header">
+                <div class="order-number">${o.status === 'new' ? '🆕' : o.status === 'progress' ? '📦' : '✅'} ${o.id}</div>
+                <div class="order-date">${o.time}</div>
+            </div>
+            <div class="order-card-body">
+                <div class="order-client">
+                    <span style="font-size:24px;">${o.clientIcon}</span>
+                    <span class="order-client-name">${o.client}</span>
+                </div>
+                <div class="order-product">📦 ${o.product}</div>
+                <div class="order-amount">${o.amount.toLocaleString()} Ar</div>
+            </div>
+            ${o.status === 'new' ? `
+                <div class="order-actions">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="acceptOrder('${o.id}')">✅ Accepter / Ekena</button>
+                    <button class="btn btn-danger btn-sm" style="flex:1;" onclick="rejectOrder('${o.id}')">❌ Refuser / Lavina</button>
+                </div>
+            ` : o.status === 'progress' ? `
+                <div class="order-actions">
+                    <button class="btn btn-primary btn-sm" style="flex:1;" onclick="completeOrder('${o.id}')">✅ Livré / Tonga</button>
+                    <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="showToast('📞 Appel...', 'info')">📞 Appeler</button>
+                </div>
+            ` : `
+                <div class="order-actions">
+                    <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="showToast('⭐ Merci !', 'success')">⭐ Voir l'avis</button>
+                </div>
+            `}
+        </div>
+    `).join('');
+}
+
+function filterOrders(filter, el) {
+    document.querySelectorAll('.order-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderOrders(filter);
+}
+
+function acceptOrder(id) {
+    const order = orders.find(o => o.id === id);
+    if (order) {
+        order.status = 'progress';
+        renderOrders('new');
+        showToast('✅ Commande acceptée ! / Baiko nekena !', 'success');
+    }
+}
+
+function rejectOrder(id) {
+    if (confirm('Refuser cette commande ? / Handà ity baiko ity ?')) {
+        orders = orders.filter(o => o.id !== id);
+        renderOrders('new');
+        showToast('❌ Commande refusée', 'error');
+    }
+}
+
+function completeOrder(id) {
+    const order = orders.find(o => o.id === id);
+    if (order) {
+        order.status = 'done';
+        renderOrders('progress');
+        showToast('✅ Commande terminée ! / Baiko vita !', 'success');
+        const sales = parseInt(document.getElementById('profileSales').textContent) + 1;
+        document.getElementById('profileSales').textContent = sales;
+    }
+}
+
+// ============================================================
+// FORUM
+// ============================================================
+
+function renderForumPosts(filter) {
+    const container = document.getElementById('forumPosts');
+    let posts = forumPosts;
+    if (filter !== 'all') {
+        posts = forumPosts.filter(p => p.type === filter);
+    }
+
+    container.innerHTML = posts.map(p => `
+        <div class="forum-post" onclick="showForumDetail(${p.id})">
+            <div class="forum-post-header">
+                <div class="forum-avatar">${p.avatar}</div>
+                <div>
+                    <div class="forum-author-name">${p.author}</div>
+                    <div class="forum-post-time">${p.time} • ${p.category}</div>
+                </div>
+                <span class="forum-post-tag tag-${p.type}">
+                    ${p.type === 'question' ? '❓ Question' : p.type === 'astuce' ? '💡 Astuce' : p.type === 'urgence' ? '🚨 Urgence' : '🎉 Succès'}
+                </span>
+            </div>
+            <div class="forum-post-content">
+                <strong>${p.title}</strong><br>
+                ${p.content.length > 120 ? p.content.substring(0, 120) + '...' : p.content}
+            </div>
+            ${p.image ? `<div class="forum-post-image">${p.image}</div>` : ''}
+            ${p.resolved ? '<div class="forum-resolved">✅ Résolu / Voavaha</div>' : ''}
+            <div class="forum-post-actions">
+                <button class="forum-action-btn ${p.liked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleLike(${p.id})">
+                    ${p.liked ? '❤️' : '👍'} ${p.likes}
+                </button>
+                <button class="forum-action-btn">💬 ${p.replies}</button>
+                <button class="forum-action-btn" onclick="event.stopPropagation(); showToast('🔄 Partagé !', 'success')">🔄 ${p.shares}</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterForum(type, el) {
+    document.querySelectorAll('.forum-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderForumPosts(type);
+}
+
+function toggleLike(postId) {
+    const post = forumPosts.find(p => p.id === postId);
+    if (post) {
+        post.liked = !post.liked;
+        post.likes += post.liked ? 1 : -1;
+        renderForumPosts('all');
+    }
+}
+
+function showForumDetail(id) {
+    currentPostId = id;
+    const post = forumPosts.find(p => p.id === id);
+    if (!post) return;
+
+    const content = document.getElementById('forumDetailContent');
+    content.innerHTML = `
+        <div class="forum-post" style="margin: 0; border-radius: 0; box-shadow: none;">
+            <div class="forum-post-header">
+                <div class="forum-avatar">${post.avatar}</div>
+                <div>
+                    <div class="forum-author-name">${post.author}</div>
+                    <div class="forum-post-time">${post.time} • ${post.category}</div>
+                </div>
+                <span class="forum-post-tag tag-${post.type}">
+                    ${post.type === 'question' ? '❓' : post.type === 'astuce' ? '💡' : post.type === 'urgence' ? '🚨' : '🎉'}
+                </span>
+            </div>
+            <div class="forum-post-content">
+                <strong style="font-size:16px;">${post.title}</strong><br><br>
+                ${post.content}
+            </div>
+            ${post.image ? `<div class="forum-post-image">${post.image}</div>` : ''}
+            ${post.resolved ? '<div class="forum-resolved">✅ Résolu / Voavaha</div>' : ''}
+            <div class="forum-post-actions">
+                <button class="forum-action-btn ${post.liked ? 'liked' : ''}" onclick="toggleLike(${post.id}); showForumDetail(${post.id});">
+                    ${post.liked ? '❤️' : '👍'} ${post.likes}
+                </button>
+                <button class="forum-action-btn">💬 ${post.replyList.length}</button>
+                <button class="forum-action-btn" onclick="showToast('🔄 Partagé !', 'success')">🔄 ${post.shares}</button>
+            </div>
+        </div>
+    `;
+
+    const replies = document.getElementById('forumReplies');
+    replies.innerHTML = `
+        <div class="section-title" style="margin-top:8px;">📋 Réponses (${post.replyList.length})</div>
+        ${post.replyList.map(r => `
+            <div class="forum-reply ${r.expert ? 'expert' : ''}">
+                <div class="forum-reply-header">
+                    <div class="forum-reply-avatar">${r.avatar}</div>
+                    <strong style="font-size:13px;">${r.author}</strong>
+                    ${r.expert ? '<span class="expert-badge">⭐ Expert</span>' : ''}
+                    <span style="font-size:11px; color:var(--text-light); margin-left:auto;">${r.time}</span>
+                </div>
+                <div class="forum-reply-content">${r.content.replace(/\n/g, '<br>')}</div>
+                <div class="forum-reply-actions">
+                    <button class="forum-action-btn" onclick="showToast('👍 Merci !', 'success')" style="font-size:12px;">👍 ${r.likes}</button>
+                    <button class="forum-action-btn" style="font-size:12px;">✅ Utile</button>
+                </div>
+            </div>
+        `).join('')}
+    `;
+
+    navigateTo('page-forum-detail');
+}
+
+function addReply() {
+    const input = document.getElementById('replyInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const post = forumPosts.find(p => p.id === currentPostId);
+    if (post) {
+        post.replyList.push({
+            author: "Rakoto Jean",
+            avatar: "👨‍🌾",
+            expert: false,
+            content: text,
+            likes: 0,
+            time: "À l'instant"
+        });
+        post.replies = post.replyList.length;
+        input.value = '';
+        showForumDetail(currentPostId);
+        showToast('✅ Réponse publiée !', 'success');
+    }
+}
+
+function selectPostType(el, type) {
+    document.querySelectorAll('.post-type-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPostType = type;
+}
+
+function publishPost() {
+    const title = document.getElementById('postTitle').value.trim();
+    const content = document.getElementById('postContent').value.trim();
+
+    if (!title || !content) {
+        showToast('❌ Titre et description requis !', 'error');
+        return;
+    }
+
+    const typeIcons = { question: '❓', astuce: '💡', urgence: '🚨', succes: '🎉', photo: '📸', resultat: '📊' };
+
+    forumPosts.unshift({
+        id: Date.now(),
+        author: "Rakoto Jean",
+        avatar: "👨‍🌾",
+        time: "À l'instant",
+        type: selectedPostType,
+        category: document.getElementById('postCategory').value.split('/')[0].trim(),
+        title: title,
+        content: content,
+        image: null,
+        likes: 0,
+        replies: 0,
+        shares: 0,
+        resolved: false,
+        liked: false,
+        replyList: []
+    });
+
+    renderForumPosts('all');
+    showToast('✅ Publication créée ! / Lahatsoratra navoaka !', 'success');
+    navigateTo('page-forum');
+
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postContent').value = '';
+}
+
+// ============================================================
+// REGISTRATION
+// ============================================================
+
+function nextStep(step) {
+    document.getElementById('registerStep1').style.display = step === 1 ? 'block' : 'none';
+    document.getElementById('registerStep2').style.display = step === 2 ? 'block' : 'none';
+    document.getElementById('registerStep3').style.display = step === 3 ? 'block' : 'none';
+
+    document.getElementById('step1').className = `step-dot ${step === 1 ? 'active' : step > 1 ? 'completed' : ''}`;
+    document.getElementById('step2').className = `step-dot ${step === 2 ? 'active' : step > 2 ? 'completed' : ''}`;
+    document.getElementById('step3').className = `step-dot ${step === 3 ? 'active' : ''}`;
+
+    if (step === 2) {
+        const name = document.getElementById('regName').value;
+        const phone = document.getElementById('regPhone').value;
+        if (!name || !phone) {
+            showToast('❌ Nom et téléphone requis !', 'error');
+            nextStep(1);
+            return;
+        }
+    }
+}
+
+function completeRegistration() {
+    const name = document.getElementById('regName').value || 'Rakoto Jean';
+    document.getElementById('profileName').textContent = name;
+    showToast(`🎉 Bienvenue ${name} ! Tonga soa !`, 'success');
+    navigateTo('page-home');
+}
+
+// ============================================================
+// COMMENT MODAL
+// ============================================================
+
+function openCommentModal(context) {
+    const modal = document.getElementById('commentModal');
+    const title = document.getElementById('modalTitle');
+    const body = document.getElementById('modalBody');
+
+    if (context === 'order') {
+        title.textContent = '📦 Commander / Hanafatra';
+        body.innerHTML = `
+            <div style="text-align:center; padding: 10px 0;">
+                <div style="font-size:50px;">${currentProduct?.icon || '📦'}</div>
+                <h3 style="margin: 8px 0;">${currentProduct?.name || 'Produit'}</h3>
+                <p style="color:var(--text-light);">${currentProduct?.mg || ''}</p>
+                <div style="font-size:20px; font-weight:700; color:var(--primary); margin: 12px 0;">
+                    ${currentQty} ${currentProduct?.unit || 'kg'} = ${(currentQty * currentPrice).toLocaleString()} Ar
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">💬 Message au vendeur</label>
+                <textarea class="form-textarea" placeholder="Bonjour, je voudrais commander..." id="orderMessage" style="min-height:60px;">Bonjour, je suis intéressé par votre ${currentProduct?.name || 'produit'}. Est-ce que la livraison est possible ?</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">📞 Mon téléphone</label>
+                <input class="form-input" type="tel" placeholder="034 XX XXX XX" value="034 00 000 00">
+            </div>
+            <button class="btn btn-primary btn-full" onclick="confirmOrder()">✅ Confirmer la commande / Hanamarina</button>
+        `;
+    } else {
+        title.textContent = '💬 Commentaires / Hevitra';
+        const productComments = comments[context] || [];
+        body.innerHTML = productComments.length > 0 ? productComments.map(c => `
+            <div class="comment-item">
+                <div class="comment-avatar">${c.avatar}</div>
+                <div class="comment-content">
+                    <div class="comment-author">${c.author}</div>
+                    <div class="comment-text">${c.text}</div>
+                    <div class="comment-time">${c.time}</div>
+                </div>
+            </div>
+        `).join('') : `
+            <div style="text-align:center; padding:20px; color:var(--text-light);">
+                <div style="font-size:40px;">💬</div>
+                <p>Aucun commentaire. Soyez le premier !</p>
+                <p style="font-size:12px;">Tsy mbola misy hevitra. Ianao no voalohany !</p>
+            </div>
+        `;
+    }
+
+    modal.classList.add('show');
+    modal.dataset.context = context;
+}
+
+function closeModal() {
+    document.getElementById('commentModal').classList.remove('show');
+}
+
+function addComment() {
+    const input = document.getElementById('commentInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const context = document.getElementById('commentModal').dataset.context;
+    if (!comments[context]) comments[context] = [];
+
+    comments[context].push({
+        author: "Rakoto Jean",
+        avatar: "👨‍🌾",
+        text: text,
+        time: "À l'instant"
+    });
+
+    input.value = '';
+    openCommentModal(context);
+    showToast('💬 Commentaire ajouté !', 'success');
+}
+
+function confirmOrder() {
+    closeModal();
+    showToast('✅ Commande envoyée au vendeur ! / Baiko nalefa !', 'success');
+
+    // Add to orders
+    orders.unshift({
+        id: `CMD-${String(Math.floor(Math.random() * 900) + 100)}`,
+        client: "Vous",
+        clientIcon: "👤",
+        product: `${currentQty} ${currentProduct?.unit || 'kg'} ${currentProduct?.name || 'Produit'}`,
+        amount: currentQty * currentPrice,
+        time: "À l'instant",
+        status: "new"
+    });
+
+    document.getElementById('newOrdersBadge').textContent = orders.filter(o => o.status === 'new').length;
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+
+function toggleCheck(el) {
+    el.classList.toggle('checked');
+}
+
+function selectRadio(el) {
+    el.closest('.radio-group').querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+function toggleNegotiable(el, value) {
+    document.getElementById('negYes').classList.toggle('checked', value);
+    document.getElementById('negNo').classList.toggle('checked', !value);
+}
+
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('commentModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+</script>
+
+</body>
+</html>
