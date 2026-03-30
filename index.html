@@ -3,287 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MadaMarket - Marketplace Madagascar</title>
+<title>MadaMarket</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
---bg:#0a0a1a;--bg2:#12122a;--bg3:#1a1a3e;--bg4:#252550;
---primary:#7c5cfc;--primary2:#9b7dff;--secondary:#00cec9;
---success:#00b894;--warning:#fdcb6e;--danger:#e17055;
---text:#e8e8ff;--text2:#a0a0c0;--gold:#ffd700;
---radius:12px;--shadow:0 4px 20px rgba(0,0,0,.4);
-}
-body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-button{cursor:pointer;border:none;border-radius:var(--radius);padding:10px 20px;font-size:14px;font-weight:600;transition:.3s}
-button:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+:root{--bg:#0a0a1a;--bg2:#12122a;--bg3:#1a1a3e;--bg4:#252550;--pri:#7c5cfc;--pri2:#9b7dff;--sec:#00cec9;--ok:#00b894;--warn:#fdcb6e;--err:#e17055;--txt:#e8e8ff;--txt2:#a0a0c0;--gold:#ffd700;--r:12px;--sh:0 4px 20px rgba(0,0,0,.4)}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+button{cursor:pointer;border:none;border-radius:var(--r);padding:10px 20px;font-size:14px;font-weight:600;transition:.3s}
+button:hover{transform:translateY(-2px)}
 button:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
-input,textarea,select{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:12px 16px;color:var(--text);font-size:14px;width:100%;margin-bottom:12px;transition:.3s}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 10px rgba(124,92,252,.3)}
-.btn-primary{background:linear-gradient(135deg,var(--primary),#5a3fd4);color:#fff}
-.btn-success{background:linear-gradient(135deg,var(--success),#00a381);color:#fff}
-.btn-danger{background:linear-gradient(135deg,var(--danger),#d63031);color:#fff}
-.btn-warning{background:linear-gradient(135deg,var(--warning),#f0b429);color:#222}
-.btn-secondary{background:linear-gradient(135deg,var(--secondary),#00a8a3);color:#fff}
-.btn-sm{padding:6px 14px;font-size:12px}
-.btn-xs{padding:4px 10px;font-size:11px}
-.btn-block{width:100%;display:block}
+input,textarea,select{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:12px 16px;color:var(--txt);font-size:14px;width:100%;margin-bottom:12px}
+input:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 10px rgba(124,92,252,.3)}
+.bp{background:linear-gradient(135deg,var(--pri),#5a3fd4);color:#fff}
+.bs{background:linear-gradient(135deg,var(--ok),#00a381);color:#fff}
+.bd{background:linear-gradient(135deg,var(--err),#d63031);color:#fff}
+.bw{background:linear-gradient(135deg,var(--warn),#f0b429);color:#222}
+.bt{background:linear-gradient(135deg,var(--sec),#00a8a3);color:#fff}
+.sm{padding:6px 14px;font-size:12px}
+.xs{padding:4px 10px;font-size:11px}
+.bk{width:100%;display:block}
 .hidden{display:none!important}
-.badge{background:var(--danger);color:#fff;border-radius:50%;font-size:11px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
-.card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:20px;margin-bottom:16px;transition:.3s}
-.card:hover{border-color:var(--primary);box-shadow:0 0 20px rgba(124,92,252,.15)}
+.badge{background:var(--err);color:#fff;border-radius:50%;font-size:11px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:20px;margin-bottom:16px}
 .tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.tag-pending{background:rgba(253,203,110,.15);color:var(--warning)}
-.tag-approved{background:rgba(0,184,148,.15);color:var(--success)}
-.tag-rejected{background:rgba(225,112,85,.15);color:var(--danger)}
-.flex{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.flex-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.text-center{text-align:center}
-.mt-1{margin-top:8px}.mt-2{margin-top:16px}.mt-3{margin-top:24px}
-.mb-1{margin-bottom:8px}.mb-2{margin-bottom:16px}.mb-3{margin-bottom:24px}
-.stars-display{color:var(--gold)}
-label.fl{font-size:12px;color:var(--text2);display:block;margin-bottom:4px}
+.tp{background:rgba(253,203,110,.15);color:var(--warn)}
+.ta{background:rgba(0,184,148,.15);color:var(--ok)}
+.tr{background:rgba(225,112,85,.15);color:var(--err)}
+.fx{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.tc{text-align:center}
+.mt2{margin-top:16px}.mt3{margin-top:24px}.mb2{margin-bottom:16px}
+.sd{color:var(--gold)}
+label.fl{font-size:12px;color:var(--txt2);display:block;margin-bottom:4px}
 
-/* ===== AUTH ===== */
-#auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a1a 0%,#1a1040 50%,#0a0a1a 100%);padding:16px}
-.auth-box{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:36px;width:100%;max-width:420px;box-shadow:var(--shadow)}
-.auth-box h1{text-align:center;margin-bottom:8px;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:26px}
-.auth-box .sub{text-align:center;color:var(--text2);margin-bottom:20px;font-size:13px}
-.auth-tabs{display:flex;margin-bottom:20px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--bg4)}
-.auth-tabs div{flex:1;padding:12px;text-align:center;background:var(--bg);color:var(--text2);cursor:pointer;font-weight:600;transition:.3s;font-size:14px}
-.auth-tabs div.active{background:var(--primary);color:#fff}
-.amsg{padding:14px;border-radius:var(--radius);margin-bottom:14px;font-size:13px;text-align:center;line-height:1.6}
-.amsg.ok{background:rgba(0,184,148,.15);color:var(--success);border:1px solid rgba(0,184,148,.3)}
-.amsg.err{background:rgba(225,112,85,.15);color:var(--danger);border:1px solid rgba(225,112,85,.3)}
-.amsg.warn{background:rgba(253,203,110,.15);color:var(--warning);border:1px solid rgba(253,203,110,.3)}
+/* AUTH */
+#auth{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a1a,#1a1040,#0a0a1a);padding:16px}
+.abox{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:32px;width:100%;max-width:400px;box-shadow:var(--sh)}
+.abox h1{text-align:center;margin-bottom:6px;background:linear-gradient(135deg,var(--pri2),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:24px}
+.abox .sub{text-align:center;color:var(--txt2);margin-bottom:18px;font-size:13px}
+.atabs{display:flex;margin-bottom:18px;border-radius:var(--r);overflow:hidden;border:1px solid var(--bg4)}
+.atabs div{flex:1;padding:12px;text-align:center;background:var(--bg);color:var(--txt2);cursor:pointer;font-weight:600;font-size:14px;transition:.3s}
+.atabs div.active{background:var(--pri);color:#fff}
+.amsg{padding:14px;border-radius:var(--r);margin-bottom:14px;font-size:13px;text-align:center;line-height:1.6}
+.amsg.ok{background:rgba(0,184,148,.15);color:var(--ok);border:1px solid rgba(0,184,148,.3)}
+.amsg.err{background:rgba(225,112,85,.15);color:var(--err);border:1px solid rgba(225,112,85,.3)}
+.amsg.warn{background:rgba(253,203,110,.15);color:var(--warn);border:1px solid rgba(253,203,110,.3)}
 
-/* ===== HEADER ===== */
-header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 16px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.hdr{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;gap:6px}
-.logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+/* HEADER */
+header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 16px;position:sticky;top:0;z-index:100}
+.hdr{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px;gap:6px}
+.logo{font-size:17px;font-weight:800;background:linear-gradient(135deg,var(--pri2),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
 .nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
 .nav::-webkit-scrollbar{display:none}
-.nav button{background:transparent;color:var(--text2);padding:7px 10px;font-size:11px;border-radius:8px;position:relative;white-space:nowrap}
-.nav button:hover{background:var(--bg3);color:var(--text);transform:none}
-.nav button.active{background:var(--primary);color:#fff}
-.nav button .nb{position:absolute;top:-4px;right:-4px;font-size:9px;min-width:18px;height:18px;background:var(--danger);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;animation:pulse2 1s infinite}
-@keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.nav button{background:transparent;color:var(--txt2);padding:6px 10px;font-size:11px;border-radius:8px;position:relative;white-space:nowrap}
+.nav button:hover{background:var(--bg3);color:var(--txt);transform:none}
+.nav button.active{background:var(--pri);color:#fff}
+.nav button .nb{position:absolute;top:-4px;right:-4px;font-size:8px;min-width:16px;height:16px;background:var(--err);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;animation:pls 1s infinite}
+@keyframes pls{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
 .hr{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.avatar{width:32px;height:32px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;color:#fff}
-.bell{position:relative;background:transparent;color:var(--text2);font-size:18px;padding:6px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-.bell:hover{background:var(--bg3);color:var(--text)}
-.bell .badge{position:absolute;top:-4px;right:-4px;font-size:9px;min-width:18px;height:18px;animation:pulse2 1s infinite}
-.bell-ring{animation:ring .6s ease}
+.av{width:30px;height:30px;border-radius:50%;background:var(--pri);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;color:#fff}
+.bell{position:relative;background:transparent;color:var(--txt2);font-size:18px;padding:6px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.bell:hover{background:var(--bg3);color:var(--txt)}
+.bell .badge{position:absolute;top:-4px;right:-4px;font-size:8px;min-width:16px;height:16px;animation:pls 1s infinite}
 @keyframes ring{0%{transform:rotate(0)}15%{transform:rotate(20deg)}30%{transform:rotate(-20deg)}45%{transform:rotate(15deg)}60%{transform:rotate(-15deg)}75%{transform:rotate(5deg)}100%{transform:rotate(0)}}
 
-/* ===== NOTIF FLASH ===== */
-.nflash{position:fixed;top:76px;right:16px;background:var(--bg2);border:2px solid var(--gold);border-radius:var(--radius);padding:16px 20px;box-shadow:0 8px 40px rgba(255,215,0,.2);z-index:300;animation:slideIn .4s ease;max-width:360px;cursor:pointer}
-.nflash:hover{border-color:var(--primary)}
-@keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(120%);opacity:0}}
+/* URGENT NOTIF - IMPOSSIBLE TO MISS */
+#urgentNotif{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9000;background:rgba(10,10,26,.92);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.urgent-box{background:var(--bg2);border:3px solid var(--gold);border-radius:20px;padding:30px;max-width:420px;width:90%;text-align:center;animation:popIn .4s ease;box-shadow:0 0 60px rgba(255,215,0,.3)}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.urgent-icon{font-size:60px;color:var(--gold);margin-bottom:12px;animation:shake .5s infinite}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.urgent-title{font-size:20px;font-weight:800;color:var(--gold);margin-bottom:8px}
+.urgent-detail{color:var(--txt2);font-size:13px;margin-bottom:16px;line-height:1.5}
 
-/* ===== NOTIF DROPDOWN ===== */
-.ndrop{position:absolute;top:calc(100% + 8px);right:-40px;width:340px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);box-shadow:var(--shadow);z-index:200;max-height:500px;overflow-y:auto}
-.ndrop h3{padding:14px 16px;border-bottom:1px solid var(--bg4);font-size:14px;margin:0}
-.nitem{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:10px;align-items:flex-start;cursor:pointer;transition:.2s}
+/* SMALL FLASH */
+.nflash{position:fixed;top:70px;right:16px;background:var(--bg2);border:2px solid var(--gold);border-radius:var(--r);padding:14px 18px;box-shadow:0 8px 40px rgba(255,215,0,.25);z-index:300;animation:sIn .3s ease;max-width:340px;cursor:pointer}
+@keyframes sIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes sOut{from{transform:translateX(0);opacity:1}to{transform:translateX(120%);opacity:0}}
+
+/* NOTIF DROPDOWN */
+.ndrop{position:absolute;top:calc(100% + 8px);right:-30px;width:320px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);box-shadow:var(--sh);z-index:200;max-height:480px;overflow-y:auto}
+.ndrop h3{padding:12px 14px;border-bottom:1px solid var(--bg4);font-size:13px;margin:0}
+.nitem{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:8px;align-items:flex-start;cursor:pointer;transition:.2s}
 .nitem:hover{background:var(--bg3)}
-.nico{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
-.nico.blue{background:rgba(124,92,252,.2);color:var(--primary2)}
-.nico.green{background:rgba(0,184,148,.2);color:var(--success)}
-.nico.orange{background:rgba(253,203,110,.2);color:var(--warning)}
-.nico.red{background:rgba(225,112,85,.2);color:var(--danger)}
-.ntxt{font-size:12px;line-height:1.4}.ntxt small{color:var(--text2);display:block;margin-top:3px}
+.nico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
+.nico.or{background:rgba(253,203,110,.2);color:var(--warn)}
+.nico.bl{background:rgba(124,92,252,.2);color:var(--pri2)}
+.nico.rd{background:rgba(225,112,85,.2);color:var(--err)}
+.nico.gn{background:rgba(0,184,148,.2);color:var(--ok)}
+.ntxt{font-size:11px;line-height:1.4}.ntxt small{color:var(--txt2);display:block;margin-top:2px}
 
-/* ===== MAIN ===== */
+/* MAIN */
 main{max-width:1400px;margin:0 auto;padding:20px}
-.pg-title{font-size:20px;font-weight:700;margin-bottom:4px}
-.pg-sub{color:var(--text2);font-size:12px;margin-bottom:20px}
+.pgt{font-size:20px;font-weight:700;margin-bottom:4px}
+.pgs{color:var(--txt2);font-size:12px;margin-bottom:20px}
 
-/* ===== STATS ===== */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px}
-.st{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:14px;text-align:center}
-.st .ico{font-size:20px;margin-bottom:4px}
-.st .val{font-size:22px;font-weight:800}
-.st .lbl{color:var(--text2);font-size:10px;margin-top:2px}
-.st.purple .ico,.st.purple .val{color:var(--primary2)}
-.st.teal .ico,.st.teal .val{color:var(--secondary)}
-.st.green .ico,.st.green .val{color:var(--success)}
-.st.gold .ico,.st.gold .val{color:var(--gold)}
-.st.red .ico,.st.red .val{color:var(--danger)}
+/* STATS */
+.sts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.stt{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:14px;text-align:center}
+.stt .si{font-size:20px;margin-bottom:3px}.stt .sv{font-size:22px;font-weight:800}.stt .sl{color:var(--txt2);font-size:10px;margin-top:2px}
 
-/* ===== ADMIN TABS ===== */
-.atabs{display:flex;gap:3px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--bg4);padding-bottom:6px}
-.atabs::-webkit-scrollbar{display:none}
-.atab{padding:8px 12px;border-radius:8px 8px 0 0;background:transparent;color:var(--text2);font-size:11px;font-weight:600;white-space:nowrap}
-.atab:hover{background:var(--bg3);color:var(--text);transform:none}
-.atab.active{background:var(--bg3);color:var(--primary2);border-bottom:2px solid var(--primary)}
-.atab .badge{margin-left:4px;font-size:9px;min-width:16px;height:16px}
+/* ADMIN TABS */
+.ats{display:flex;gap:3px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--bg4);padding-bottom:6px}
+.ats::-webkit-scrollbar{display:none}
+.at{padding:8px 12px;border-radius:8px 8px 0 0;background:transparent;color:var(--txt2);font-size:11px;font-weight:600;white-space:nowrap}
+.at:hover{background:var(--bg3);color:var(--txt);transform:none}
+.at.active{background:var(--bg3);color:var(--pri2);border-bottom:2px solid var(--pri)}
+.at .badge{margin-left:3px;font-size:8px;min-width:14px;height:14px}
 
-/* ===== TABLE ===== */
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bg4);font-size:11px}
-th{color:var(--text2);font-weight:600;background:var(--bg3);white-space:nowrap}
-tr:hover td{background:rgba(124,92,252,.04)}
+/* TABLE */
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bg4);font-size:11px}
+th{color:var(--txt2);font-weight:600;background:var(--bg3);white-space:nowrap}
 
-/* ===== PRODUCTS ===== */
+/* PRODUCTS */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.pcard{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);overflow:hidden;transition:.3s}
-.pcard:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow)}
-.pimg{height:120px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--text2);position:relative}
-.pinfo{padding:12px}.pinfo h3{font-size:13px;margin-bottom:3px}
-.pinfo .price{color:var(--secondary);font-size:16px;font-weight:800;margin:4px 0}
-.pinfo .seller{color:var(--text2);font-size:10px}
+.pc{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);overflow:hidden;transition:.3s}
+.pc:hover{border-color:var(--pri);transform:translateY(-3px);box-shadow:var(--sh)}
+.pimg{height:110px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--txt2);position:relative}
+.pi{padding:12px}.pi h3{font-size:13px;margin-bottom:3px}.pi .pr{color:var(--sec);font-size:16px;font-weight:800;margin:4px 0}
 
-/* ===== FORUM ===== */
-.post{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.cmt{background:var(--bg3);border-radius:8px;padding:10px;margin:6px 0 6px 16px;border-left:3px solid var(--primary);font-size:12px}
+/* FORUM */
+.po{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.cm{background:var(--bg3);border-radius:8px;padding:8px;margin:4px 0 4px 16px;border-left:3px solid var(--pri);font-size:12px}
 
-/* ===== PROFILE ===== */
-.prof{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:30px;text-align:center;max-width:550px;margin:0 auto}
-.prof-av{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin:0 auto 12px;color:#fff}
-.pbar{background:var(--bg);border-radius:20px;height:20px;overflow:hidden;margin:10px 0}
-.pfill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--gold));display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;min-width:30px;color:#fff;transition:.5s}
+/* PROFILE */
+.prof{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:28px;text-align:center;max-width:500px;margin:0 auto}
+.pav{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--sec));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;margin:0 auto 10px;color:#fff}
+.pbar{background:var(--bg);border-radius:20px;height:18px;overflow:hidden;margin:8px 0}
+.pfill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pri),var(--gold));display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;min-width:28px;color:#fff;transition:.5s}
 
-/* ===== ROULETTE ===== */
-#rl-ov{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.rl-t{font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--warning));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.rl-w{position:relative;height:300px;overflow:hidden;border:2px solid var(--gold);border-radius:var(--radius);background:var(--bg2);width:100%;max-width:380px;margin-bottom:16px}
-.rl-p{position:absolute;top:50%;left:0;right:0;height:50px;margin-top:-25px;background:rgba(255,215,0,.1);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);z-index:2;pointer-events:none}
-.rl-ns{position:absolute;top:0;left:0;right:0}
-.rl-n{height:50px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;border-bottom:1px solid var(--bg4)}
-.rl-n.win{background:linear-gradient(90deg,rgba(255,215,0,.2),rgba(124,92,252,.2));color:var(--gold);font-size:18px}
-.rl-res{font-size:16px;color:var(--gold);font-weight:700;animation:pulse 1s infinite}
-.rl-tm{background:var(--bg3);border-radius:var(--radius);padding:12px;font-size:12px;color:var(--text2);margin-bottom:12px}
-.rl-tm .time{font-size:28px;font-weight:800;color:var(--secondary);display:block;margin-top:4px;font-family:monospace}
+/* ROULETTE */
+#rlov{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rlw{position:relative;height:300px;overflow:hidden;border:2px solid var(--gold);border-radius:var(--r);background:var(--bg2);width:100%;max-width:360px;margin-bottom:14px}
+.rlp{position:absolute;top:50%;left:0;right:0;height:50px;margin-top:-25px;background:rgba(255,215,0,.1);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);z-index:2;pointer-events:none}
+.rln{position:absolute;top:0;left:0;right:0}.rlnm{height:50px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;border-bottom:1px solid var(--bg4)}
+.rlnm.win{background:linear-gradient(90deg,rgba(255,215,0,.2),rgba(124,92,252,.2));color:var(--gold);font-size:18px}
+.rltm{background:var(--bg3);border-radius:var(--r);padding:12px;font-size:12px;color:var(--txt2);margin-bottom:10px}
+.rltm .time{font-size:26px;font-weight:800;color:var(--sec);display:block;margin-top:4px;font-family:monospace}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @keyframes confetti{0%{transform:translateY(-100vh) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .confetti{position:fixed;z-index:10000;animation:confetti 3s ease-in-out forwards}
-.withdraw-glow{animation:glow 2s infinite}
-@keyframes glow{0%,100%{box-shadow:0 0 5px var(--gold)}50%{box-shadow:0 0 25px var(--gold),0 0 50px rgba(255,215,0,.3)}}
-.demo-btn{background:linear-gradient(135deg,var(--gold),#ff6b6b);color:#000;font-size:15px;padding:12px 24px;border-radius:16px;font-weight:800;animation:pulse 2s infinite;margin:16px auto;display:block}
+.wglow{animation:glow 2s infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 5px var(--gold)}50%{box-shadow:0 0 25px var(--gold)}}
+.dbtn{background:linear-gradient(135deg,var(--gold),#ff6b6b);color:#000;font-size:15px;padding:12px 24px;border-radius:16px;font-weight:800;animation:pulse 2s infinite;margin:14px auto;display:block}
 
-@media(max-width:768px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.pgrid{grid-template-columns:1fr}
-main{padding:12px}
-.auth-box{padding:20px}
-.ndrop{right:-80px;width:280px}
-.hdr{padding:0 4px}
-.logo{font-size:14px}
-.nav button{padding:5px 7px;font-size:10px}
-.nflash{right:8px;left:8px;max-width:none}
-.prof{padding:20px}
-}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+@media(max-width:768px){.sts{grid-template-columns:repeat(2,1fr)}.pgrid{grid-template-columns:1fr}main{padding:12px}.abox{padding:20px}.ndrop{right:-80px;width:270px}.hdr{padding:0 4px}.logo{font-size:13px}.nav button{padding:5px 6px;font-size:9px}.nflash{right:8px;left:8px;max-width:none}.prof{padding:18px}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- ===== AUTH ===== -->
-<div id="auth-page">
-<div class="auth-box">
+<div id="auth">
+<div class="abox">
 <h1><i class="fas fa-store"></i> MadaMarket</h1>
 <p class="sub">Marketplace Madagascar</p>
 <div id="amsg"></div>
-<div class="auth-tabs">
-<div class="active" onclick="authTab('login')">Connexion</div>
-<div onclick="authTab('register')">Inscription</div>
+<div class="atabs">
+<div class="active" onclick="aTab('login')">Connexion</div>
+<div onclick="aTab('register')">Inscription</div>
 </div>
-
 <div id="f-login">
 <label class="fl"><i class="fas fa-phone"></i> Téléphone</label>
 <input type="tel" id="l-ph" placeholder="034 XX XXX XX">
 <label class="fl"><i class="fas fa-lock"></i> Mot de passe</label>
 <input type="password" id="l-pw" placeholder="Votre mot de passe">
-<button class="btn-primary btn-block" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
+<button class="bp bk" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
 </div>
-
 <div id="f-reg" class="hidden">
-<div style="background:var(--bg3);border-radius:var(--radius);padding:12px;margin-bottom:14px;font-size:11px;color:var(--text2);line-height:1.6">
-<i class="fas fa-info-circle" style="color:var(--secondary)"></i>
-<strong>Inscription en 3 étapes:</strong><br>
-1️⃣ Remplissez le formulaire ci-dessous<br>
-2️⃣ L'admin valide votre compte (notification instantanée)<br>
-3️⃣ Connectez-vous avec votre téléphone et mot de passe
+<div style="background:var(--bg3);border-radius:var(--r);padding:12px;margin-bottom:14px;font-size:11px;color:var(--txt2);line-height:1.6">
+<i class="fas fa-info-circle" style="color:var(--sec)"></i> <strong>3 étapes:</strong><br>
+1️⃣ Remplissez ce formulaire<br>
+2️⃣ L'admin reçoit une alerte instantanée et valide<br>
+3️⃣ Connectez-vous avec téléphone + mot de passe
 </div>
 <label class="fl"><i class="fas fa-user"></i> Nom complet *</label>
-<input type="text" id="r-name" placeholder="Votre nom complet">
+<input id="r-nm" placeholder="Votre nom">
 <label class="fl"><i class="fas fa-phone"></i> Téléphone *</label>
 <input type="tel" id="r-ph" placeholder="034 XX XXX XX">
 <label class="fl"><i class="fas fa-lock"></i> Mot de passe *</label>
 <input type="password" id="r-pw" placeholder="Choisissez un mot de passe">
 <label class="fl"><i class="fas fa-map-marker-alt"></i> Ville *</label>
-<input type="text" id="r-city" placeholder="Ex: Antananarivo">
+<input id="r-ci" placeholder="Ex: Antananarivo">
 <label class="fl"><i class="fas fa-home"></i> Quartier *</label>
-<input type="text" id="r-qtr" placeholder="Ex: Analakely">
-<button class="btn-primary btn-block" onclick="doRegister()"><i class="fas fa-user-plus"></i> S'inscrire</button>
+<input id="r-qt" placeholder="Ex: Analakely">
+<button class="bp bk" onclick="doReg()"><i class="fas fa-user-plus"></i> S'inscrire</button>
+</div>
+<div style="margin-top:14px;text-align:center;border-top:1px solid var(--bg4);padding-top:10px">
+<button class="xs bd" onclick="resetAll()" style="opacity:.5;font-size:10px"><i class="fas fa-trash"></i> Réinitialiser</button>
+</div>
+</div>
 </div>
 
-<div style="margin-top:16px;text-align:center;border-top:1px solid var(--bg4);padding-top:12px">
-<button class="btn-xs btn-danger" onclick="resetAll()" style="opacity:.5;font-size:10px"><i class="fas fa-trash"></i> Réinitialiser le site</button>
-</div>
-</div>
-</div>
-
-<!-- ===== APP ===== -->
 <div id="app" class="hidden">
 <header>
 <div class="hdr">
 <div class="logo"><i class="fas fa-store"></i> MadaMarket</div>
 <div class="nav" id="nav"></div>
 <div class="hr">
-<div style="white-space:nowrap;font-size:12px"><i class="fas fa-star" style="color:var(--gold)"></i> <span id="h-stars">0</span></div>
-<div style="position:relative" id="bell-w">
-<button class="bell" id="bell-b" onclick="toggleNotif()"><i class="fas fa-bell"></i><span class="badge hidden" id="b-badge">0</span></button>
+<div style="white-space:nowrap;font-size:11px"><i class="fas fa-star" style="color:var(--gold)"></i> <span id="hst">0</span></div>
+<div style="position:relative" id="bw">
+<button class="bell" id="bb" onclick="tglN()"><i class="fas fa-bell"></i><span class="badge hidden" id="bbg">0</span></button>
 <div class="ndrop hidden" id="ndrop"></div>
 </div>
-<div class="avatar" id="h-av">A</div>
-<span id="h-name" style="font-size:12px"></span>
-<button class="btn-xs btn-danger" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+<div class="av" id="hav">A</div>
+<span id="hnm" style="font-size:11px"></span>
+<button class="xs bd" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
 </div>
 </div>
 </header>
 <main id="ct"></main>
 </div>
 
-<!-- ===== ROULETTE OVERLAY ===== -->
-<div id="rl-ov" class="hidden">
-<div style="text-align:center;width:100%;max-width:400px;padding:16px">
-<div class="rl-t"><i class="fas fa-trophy"></i> JACKPOT ROULETTE</div>
-<div style="color:var(--text2);margin-bottom:20px;font-size:13px">20 Étoiles à gagner!</div>
-<div class="rl-w"><div class="rl-p"></div><div class="rl-ns" id="rl-ns"></div></div>
-<div id="rl-st" style="font-size:14px;margin-top:12px"></div>
+<div id="rlov" class="hidden">
+<div style="text-align:center;width:100%;max-width:380px;padding:14px">
+<div style="font-size:24px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--warn));-webkit-background-clip:text;-webkit-text-fill-color:transparent"><i class="fas fa-trophy"></i> JACKPOT</div>
+<div style="color:var(--txt2);margin-bottom:16px;font-size:13px">20⭐ à gagner!</div>
+<div class="rlw"><div class="rlp"></div><div class="rln" id="rln"></div></div>
+<div id="rlst" style="font-size:14px"></div>
 </div>
 </div>
 
-<div id="flash-box"></div>
+<div id="flashBox"></div>
+<div id="urgentBox"></div>
 
 <script>
-// ============ STORAGE ============
+// ===== STORAGE =====
 const D={
 g(k){try{return JSON.parse(localStorage.getItem('mm_'+k))||[]}catch{return[]}},
 s(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))},
 gv(k){try{return JSON.parse(localStorage.getItem('mm_'+k))}catch{return null}},
 sv(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))}
 };
-function id(){return Date.now().toString(36)+Math.random().toString(36).substr(2,6)}
-function fd(d){if(!d)return'-';return new Date(d).toLocaleString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
-function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function mdT(){const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+3*3600000)}
-function ci(c){return{Électronique:'laptop',Vêtements:'tshirt',Maison:'home',Alimentation:'utensils',Services:'handshake'}[c]||'box'}
-function np(p){return(p||'').replace(/[\s\-\.]/g,'')}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,6);
+const fd=d=>d?new Date(d).toLocaleString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'-';
+const esc=s=>{if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML};
+const np=p=>(p||'').replace(/[\s\-\.]/g,'');
+const ci=c=>({Électronique:'laptop',Vêtements:'tshirt',Maison:'home',Alimentation:'utensils',Services:'handshake'}[c]||'box');
+const mdT=()=>{const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+3*3600000)};
 
-// ============ STATE ============
+// ===== STATE =====
 let U=null,pg='accueil',at='notifs',lastPC=-1;
 
-// ============ INIT ============
+// ===== SOUND =====
+function playSound(type){
+try{
+const ctx=new(window.AudioContext||window.webkitAudioContext)();
+const osc=ctx.createOscillator();
+const gain=ctx.createGain();
+osc.connect(gain);gain.connect(ctx.destination);
+gain.gain.value=0.3;
+if(type==='alert'){
+osc.frequency.value=800;osc.type='sine';
+osc.start();osc.frequency.linearRampToValueAtTime(1200,ctx.currentTime+0.1);
+osc.frequency.linearRampToValueAtTime(800,ctx.currentTime+0.2);
+osc.frequency.linearRampToValueAtTime(1200,ctx.currentTime+0.3);
+gain.gain.linearRampToValueAtTime(0,ctx.currentTime+0.5);
+osc.stop(ctx.currentTime+0.5);
+}else{
+osc.frequency.value=523;osc.type='sine';osc.start();
+gain.gain.linearRampToValueAtTime(0,ctx.currentTime+0.2);
+osc.stop(ctx.currentTime+0.2);
+}
+}catch(e){}
+}
+
+// ===== INIT =====
 function init(){
 let u=D.g('users');
-const adm={id:'admin001',name:'Admin',phone:'0340000000',city:'Antananarivo',quartier:'Centre',password:'admin123',role:'admin',status:'approved',stars:0,isActive:true,withdrawReq:false,regAt:new Date().toISOString()};
 const ai=u.findIndex(x=>x.id==='admin001'||x.role==='admin');
+const adm={id:'admin001',name:'Admin',phone:'0340000000',city:'Antananarivo',quartier:'Centre',password:'admin123',role:'admin',status:'approved',stars:0,isActive:true,withdrawReq:false,regAt:new Date().toISOString()};
 if(ai>=0){u[ai].password='admin123';u[ai].phone='0340000000';u[ai].role='admin';u[ai].status='approved'}
 else u.push(adm);
 D.s('users',u);
@@ -292,9 +282,77 @@ D.s('users',u);
 
 function resetAll(){if(!confirm('⚠️ Supprimer TOUTES les données?'))return;Object.keys(localStorage).forEach(k=>{if(k.startsWith('mm_'))localStorage.removeItem(k)});location.reload()}
 
-// ============ AUTH ============
-function authTab(t){
-document.querySelectorAll('.auth-tabs div').forEach((d,i)=>d.classList.toggle('active',t==='login'?i===0:i===1));
+// ===== CROSS-TAB INSTANT NOTIFICATION =====
+window.addEventListener('storage',function(e){
+if(!e.key||!e.key.startsWith('mm_'))return;
+if(!U||U.role!=='admin')return;
+
+// Something changed in another tab! Check immediately
+const p=pc();
+if(p.total>lastPC&&lastPC>=0){
+playSound('alert');
+showUrgentNotif(p);
+if(pg==='admin')render();
+}
+lastPC=p.total;
+updateBadge();
+buildNav();
+});
+
+// ===== ALSO POLL (backup for same-tab) =====
+setInterval(()=>{
+if(!U||U.role!=='admin')return;
+const p=pc();
+if(p.total!==lastPC){
+if(p.total>lastPC&&lastPC>=0){
+playSound('alert');
+showUrgentNotif(p);
+if(pg==='admin')render();
+}
+lastPC=p.total;
+updateBadge();
+buildNav();
+}
+},800);
+
+// ===== URGENT NOTIFICATION =====
+function showUrgentNotif(p){
+let parts=[];
+if(p.reg)parts.push(`👤 ${p.reg} inscription(s)`);
+if(p.prod)parts.push(`📦 ${p.prod} produit(s)`);
+if(p.cmt)parts.push(`💬 ${p.cmt} commentaire(s)`);
+if(p.ord)parts.push(`🛒 ${p.ord} commande(s)`);
+if(p.wdr)parts.push(`💰 ${p.wdr} retrait(s)`);
+
+const box=document.getElementById('urgentBox');
+box.innerHTML=`<div id="urgentNotif">
+<div class="urgent-box">
+<div class="urgent-icon">🔔</div>
+<div class="urgent-title">NOUVELLE NOTIFICATION!</div>
+<div class="urgent-detail">${parts.join('<br>')}<br><br>Action requise immédiatement</div>
+<button class="bw" onclick="closeUrgent();go('admin');at='${p.reg?'inscriptions':p.prod?'produits':p.cmt?'forum':p.ord?'commandes':'etoiles'}';render()" style="font-size:16px;padding:14px 30px">
+<i class="fas fa-arrow-right"></i> GÉRER MAINTENANT
+</button>
+<div style="margin-top:10px"><button class="xs" style="background:transparent;color:var(--txt2)" onclick="closeUrgent()">Fermer</button></div>
+</div>
+</div>`;
+
+// Auto close after 15s
+setTimeout(closeUrgent,15000);
+}
+
+function closeUrgent(){document.getElementById('urgentBox').innerHTML=''}
+
+function updateBadge(){
+const p=pc();
+const bb=document.getElementById('bbg');
+if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}
+else bb.classList.add('hidden');
+}
+
+// ===== AUTH =====
+function aTab(t){
+document.querySelectorAll('.atabs div').forEach((d,i)=>d.classList.toggle('active',t==='login'?i===0:i===1));
 document.getElementById('f-login').classList.toggle('hidden',t!=='login');
 document.getElementById('f-reg').classList.toggle('hidden',t!=='register');
 document.getElementById('amsg').innerHTML='';
@@ -303,288 +361,189 @@ document.getElementById('amsg').innerHTML='';
 function amsg(m,t){document.getElementById('amsg').innerHTML=`<div class="amsg ${t}">${m}</div>`}
 
 function doLogin(){
-const ph=np(document.getElementById('l-ph').value);
-const pw=document.getElementById('l-pw').value;
+const ph=np(document.getElementById('l-ph').value),pw=document.getElementById('l-pw').value;
 if(!ph||!pw)return amsg('Remplissez tous les champs','err');
 const users=D.g('users');
 const u=users.find(x=>np(x.phone)===ph&&x.password===pw);
 if(!u)return amsg('❌ Téléphone ou mot de passe incorrect','err');
-if(u.status==='pending')return amsg('⏳ Votre compte est en attente de validation par l\'administrateur. Patientez...','warn');
+if(u.status==='pending')return amsg('⏳ Votre compte est en attente de validation. Patientez, l\'admin est notifié instantanément!','warn');
 if(u.status==='rejected')return amsg('❌ Inscription refusée','err');
-u.isActive=true;D.s('users',users);
-U=u;D.sv('sess',u.id);
-document.getElementById('auth-page').classList.add('hidden');
+u.isActive=true;D.s('users',users);U=u;D.sv('sess',u.id);lastPC=-1;
+document.getElementById('auth').classList.add('hidden');
 document.getElementById('app').classList.remove('hidden');
-lastPC=-1;
 render();
 }
 
-function doRegister(){
-const name=document.getElementById('r-name').value.trim();
-const ph=np(document.getElementById('r-ph').value);
-const pw=document.getElementById('r-pw').value;
-const city=document.getElementById('r-city').value.trim();
-const qtr=document.getElementById('r-qtr').value.trim();
-if(!name||!ph||!pw||!city||!qtr)return amsg('Remplissez tous les champs *','err');
-if(ph.length<8)return amsg('Numéro de téléphone invalide','err');
-if(pw.length<4)return amsg('Mot de passe trop court (min 4)','err');
+function doReg(){
+const nm=document.getElementById('r-nm').value.trim(),ph=np(document.getElementById('r-ph').value),pw=document.getElementById('r-pw').value,ci=document.getElementById('r-ci').value.trim(),qt=document.getElementById('r-qt').value.trim();
+if(!nm||!ph||!pw||!ci||!qt)return amsg('Remplissez tous les champs *','err');
+if(ph.length<8)return amsg('Numéro invalide','err');
+if(pw.length<4)return amsg('Mot de passe min 4 caractères','err');
 let users=D.g('users');
 if(users.find(x=>np(x.phone)===ph))return amsg('Ce numéro est déjà inscrit','err');
-users.push({id:id(),name,phone:ph,password:pw,city,quartier:qtr,role:'user',status:'pending',stars:0,isActive:false,withdrawReq:false,regAt:new Date().toISOString()});
+users.push({id:uid(),name:nm,phone:ph,password:pw,city:ci,quartier:qt,role:'user',status:'pending',stars:0,isActive:false,withdrawReq:false,regAt:new Date().toISOString()});
 D.s('users',users);
-amsg(`✅ <strong>Inscription envoyée!</strong><br><br>📱 L'administrateur recevra une notification immédiate.<br>⏳ Après validation, connectez-vous avec:<br><strong>Téléphone:</strong> ${esc(ph)}<br><strong>Mot de passe:</strong> votre mot de passe choisi`,'ok');
-['r-name','r-ph','r-pw','r-city','r-qtr'].forEach(x=>document.getElementById(x).value='');
+amsg(`✅ <strong>Inscription envoyée!</strong><br><br>🔔 L'admin reçoit une <strong>alerte instantanée</strong>.<br>📱 Après validation, connectez-vous avec:<br><strong>Tél:</strong> ${esc(ph)}<br><strong>MDP:</strong> votre mot de passe choisi`,'ok');
+['r-nm','r-ph','r-pw','r-ci','r-qt'].forEach(x=>document.getElementById(x).value='');
 }
 
 function doLogout(){
 if(U){let u=D.g('users');let x=u.find(a=>a.id===U.id);if(x){x.isActive=false;D.s('users',u)}}
 U=null;D.sv('sess',null);lastPC=-1;
 document.getElementById('app').classList.add('hidden');
-document.getElementById('auth-page').classList.remove('hidden');
+document.getElementById('auth').classList.remove('hidden');
 document.getElementById('amsg').innerHTML='';
 document.getElementById('l-ph').value='';document.getElementById('l-pw').value='';
 }
 
 function restore(){
 const sid=D.gv('sess');if(!sid)return;
-const u=D.g('users').find(x=>x.id===sid);
-if(u&&u.status==='approved'){u.isActive=true;let all=D.g('users');let f=all.find(x=>x.id===sid);if(f)f.isActive=true;D.s('users',all);U=u;
-document.getElementById('auth-page').classList.add('hidden');document.getElementById('app').classList.remove('hidden');lastPC=-1;render()}
+let users=D.g('users');const u=users.find(x=>x.id===sid);
+if(u&&u.status==='approved'){u.isActive=true;D.s('users',users);U=u;lastPC=-1;
+document.getElementById('auth').classList.add('hidden');document.getElementById('app').classList.remove('hidden');render()}
 }
 
-// ============ PENDING ============
+// ===== PENDING =====
 function pc(){
 const u=D.g('users'),p=D.g('products'),c=D.g('comments'),o=D.g('orders');
-const r={reg:u.filter(x=>x.status==='pending'&&x.role!=='admin').length,
-prod:p.filter(x=>x.status==='pending').length,
-cmt:c.filter(x=>x.status==='pending').length,
-ord:o.filter(x=>x.status==='pending').length,
-wdr:u.filter(x=>x.withdrawReq).length};
-r.total=r.reg+r.prod+r.cmt+r.ord+r.wdr;
-return r;
+const r={reg:u.filter(x=>x.status==='pending'&&x.role!=='admin').length,prod:p.filter(x=>x.status==='pending').length,cmt:c.filter(x=>x.status==='pending').length,ord:o.filter(x=>x.status==='pending').length,wdr:u.filter(x=>x.withdrawReq).length};
+r.total=r.reg+r.prod+r.cmt+r.ord+r.wdr;return r;
 }
 
-// ============ POLLING EVERY 1.5s ============
-setInterval(()=>{
-if(!U||U.role!=='admin')return;
-const p=pc();
-const bb=document.getElementById('b-badge');
-if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}
-else bb.classList.add('hidden');
-
-if(lastPC>=0&&p.total>lastPC){
-// NEW notification! Flash + bell ring
-const bell=document.getElementById('bell-b');
-bell.classList.remove('bell-ring');void bell.offsetWidth;bell.classList.add('bell-ring');
-flashNotif(p);
-// Auto refresh admin page
-if(pg==='admin')render();
-}
-lastPC=p.total;
-// Update nav badges
-buildNav();
-},1500);
-
-function flashNotif(p){
-let parts=[];
-if(p.reg)parts.push(`👤 ${p.reg} inscription(s)`);
-if(p.prod)parts.push(`📦 ${p.prod} produit(s)`);
-if(p.cmt)parts.push(`💬 ${p.cmt} commentaire(s)`);
-if(p.ord)parts.push(`🛒 ${p.ord} commande(s)`);
-if(p.wdr)parts.push(`💰 ${p.wdr} retrait(s)`);
-
-const fl=document.createElement('div');
-fl.className='nflash';
-fl.onclick=()=>{pg='admin';at='notifs';render();fl.remove()};
-fl.innerHTML=`<div class="flex" style="gap:10px">
-<div style="font-size:28px">🔔</div>
-<div><div style="font-weight:700;font-size:14px;color:var(--gold)">Nouvelle notification!</div>
-<div style="font-size:12px;color:var(--text2);margin-top:4px">${parts.join(' • ')}</div>
-<div style="font-size:10px;color:var(--primary2);margin-top:4px">Cliquez pour gérer →</div></div></div>`;
-document.getElementById('flash-box').appendChild(fl);
-setTimeout(()=>{if(fl.parentNode){fl.style.animation='slideOut .4s ease forwards';setTimeout(()=>fl.remove(),500)}},5000);
-}
-
-// ============ NAV ============
+// ===== NAV =====
 function buildNav(){
-const isA=U&&U.role==='admin';
-const p=isA?pc():{total:0};
-let tabs=[
-{id:'accueil',ic:'home',lb:'Accueil'},
-{id:'produits',ic:'box',lb:'Produits'},
-{id:'forum',ic:'comments',lb:'Forum'},
-{id:'profil',ic:'user',lb:'Profil'},
-{id:'roulette',ic:'dice',lb:'Roulette'}
-];
+const isA=U&&U.role==='admin';const p=isA?pc():{total:0};
+let tabs=[{id:'accueil',ic:'home',lb:'Accueil'},{id:'produits',ic:'box',lb:'Produits'},{id:'forum',ic:'comments',lb:'Forum'},{id:'profil',ic:'user',lb:'Profil'},{id:'roulette',ic:'dice',lb:'Roulette'}];
 if(isA)tabs.push({id:'admin',ic:'shield-alt',lb:'Admin',bd:p.total});
-let h='';
-tabs.forEach(t=>{
-h+=`<button class="${pg===t.id?'active':''}" onclick="go('${t.id}')"><i class="fas fa-${t.ic}"></i> ${t.lb}`;
-if(t.bd&&t.bd>0)h+=`<span class="nb">${t.bd}</span>`;
-h+='</button>';
-});
+let h='';tabs.forEach(t=>{h+=`<button class="${pg===t.id?'active':''}" onclick="go('${t.id}')"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.bd&&t.bd>0)h+=`<span class="nb">${t.bd}</span>`;h+='</button>'});
 document.getElementById('nav').innerHTML=h;
 }
 
 function go(p){pg=p;document.getElementById('ndrop').classList.add('hidden');render()}
 
-// ============ RENDER ============
+// ===== RENDER =====
 function render(){
 if(!U)return;
 const users=D.g('users');const f=users.find(x=>x.id===U.id);
 if(f){U.stars=f.stars;U.withdrawReq=f.withdrawReq}
-document.getElementById('h-av').textContent=U.name.charAt(0).toUpperCase();
-document.getElementById('h-name').textContent=U.name;
-document.getElementById('h-stars').textContent=U.stars||0;
-document.getElementById('bell-w').style.display=U.role==='admin'?'block':'none';
-if(U.role==='admin'){const p=pc();const bb=document.getElementById('b-badge');if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden');if(lastPC<0)lastPC=p.total;}
-buildNav();
-const ct=document.getElementById('ct');
-switch(pg){
-case'accueil':rAccueil(ct);break;case'produits':rProduits(ct);break;
-case'forum':rForum(ct);break;case'profil':rProfil(ct);break;
-case'roulette':rRL(ct);break;case'admin':rAdmin(ct);break;
-default:rAccueil(ct);
-}
+document.getElementById('hav').textContent=U.name.charAt(0).toUpperCase();
+document.getElementById('hnm').textContent=U.name;
+document.getElementById('hst').textContent=U.stars||0;
+document.getElementById('bw').style.display=U.role==='admin'?'block':'none';
+if(U.role==='admin'){const p=pc();const bb=document.getElementById('bbg');if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden');if(lastPC<0)lastPC=p.total}
+buildNav();const ct=document.getElementById('ct');
+({accueil:rAcc,produits:rProd,forum:rFor,profil:rProf,roulette:rRoul,admin:rAdm}[pg]||rAcc)(ct);
 }
 
-// ============ NOTIF DROPDOWN ============
-function toggleNotif(){const d=document.getElementById('ndrop');d.classList.toggle('hidden');if(!d.classList.contains('hidden'))renderND()}
-document.addEventListener('click',e=>{const w=document.getElementById('bell-w');if(w&&!w.contains(e.target))document.getElementById('ndrop').classList.add('hidden')});
+// ===== NOTIF DROPDOWN =====
+function tglN(){const d=document.getElementById('ndrop');d.classList.toggle('hidden');if(!d.classList.contains('hidden'))rND()}
+document.addEventListener('click',e=>{const w=document.getElementById('bw');if(w&&!w.contains(e.target))document.getElementById('ndrop').classList.add('hidden')});
 
-function renderND(){
+function rND(){
 const p=pc();let h='<h3>🔔 Notifications</h3>';
-if(!p.total){h+='<div class="nitem"><div class="ntxt" style="text-align:center;color:var(--success);width:100%;padding:8px">✅ Aucune notification</div></div>'}
+if(!p.total)h+='<div class="nitem"><div class="ntxt tc" style="width:100%;padding:8px;color:var(--ok)">✅ Aucune</div></div>';
 else{
-if(p.reg)h+=`<div class="nitem" onclick="go('admin');at='inscriptions';render();toggleNotif()"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div class="ntxt"><strong>${p.reg} inscription(s)</strong> en attente<small>Cliquez pour valider</small></div></div>`;
-if(p.prod)h+=`<div class="nitem" onclick="go('admin');at='produits';render();toggleNotif()"><div class="nico blue"><i class="fas fa-box"></i></div><div class="ntxt"><strong>${p.prod} produit(s)</strong><small>Cliquez pour approuver</small></div></div>`;
-if(p.cmt)h+=`<div class="nitem" onclick="go('admin');at='forum';render();toggleNotif()"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div class="ntxt"><strong>${p.cmt} commentaire(s)</strong><small>Modérer insultes/spam</small></div></div>`;
-if(p.ord)h+=`<div class="nitem" onclick="go('admin');at='commandes';render();toggleNotif()"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div class="ntxt"><strong>${p.ord} commande(s)</strong><small>Ventes à approuver</small></div></div>`;
-if(p.wdr)h+=`<div class="nitem" onclick="go('admin');at='etoiles';render();toggleNotif()"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div class="ntxt"><strong>${p.wdr} retrait(s)</strong><small>Étoiles à valider</small></div></div>`;
+if(p.reg)h+=`<div class="nitem" onclick="go('admin');at='inscriptions';render();tglN()"><div class="nico or"><i class="fas fa-user-clock"></i></div><div class="ntxt"><strong>${p.reg} inscription(s)</strong><small>Valider maintenant</small></div></div>`;
+if(p.prod)h+=`<div class="nitem" onclick="go('admin');at='produits';render();tglN()"><div class="nico bl"><i class="fas fa-box"></i></div><div class="ntxt"><strong>${p.prod} produit(s)</strong><small>Approuver</small></div></div>`;
+if(p.cmt)h+=`<div class="nitem" onclick="go('admin');at='forum';render();tglN()"><div class="nico rd"><i class="fas fa-comment-dots"></i></div><div class="ntxt"><strong>${p.cmt} commentaire(s)</strong><small>Modérer</small></div></div>`;
+if(p.ord)h+=`<div class="nitem" onclick="go('admin');at='commandes';render();tglN()"><div class="nico gn"><i class="fas fa-shopping-cart"></i></div><div class="ntxt"><strong>${p.ord} commande(s)</strong><small>Approuver</small></div></div>`;
+if(p.wdr)h+=`<div class="nitem" onclick="go('admin');at='etoiles';render();tglN()"><div class="nico or"><i class="fas fa-money-bill-wave"></i></div><div class="ntxt"><strong>${p.wdr} retrait(s)</strong><small>Valider</small></div></div>`;
 }
 document.getElementById('ndrop').innerHTML=h;
 }
 
-// ============ ACCUEIL ============
-function rAccueil(ct){
+// ===== ACCUEIL =====
+function rAcc(ct){
 const users=D.g('users'),prods=D.g('products'),orders=D.g('orders');
-let h='<h1 class="pg-title">Tableau de Bord</h1><p class="pg-sub">Bienvenue '+esc(U.name)+'!</p><div class="stats">';
+let h='<h1 class="pgt">Tableau de Bord</h1><p class="pgs">Bienvenue '+esc(U.name)+'</p><div class="sts">';
 if(U.role==='admin'){const p=pc();
-h+=`<div class="st red"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="val">${p.reg}</div><div class="lbl">Inscriptions</div></div>
-<div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${p.prod}</div><div class="lbl">Produits</div></div>
-<div class="st teal"><div class="ico"><i class="fas fa-users"></i></div><div class="val">${users.filter(u=>u.role!=='admin').length}</div><div class="lbl">Membres</div></div>
-<div class="st green"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${p.ord}</div><div class="lbl">Commandes</div></div>
-<div class="st gold"><div class="ico"><i class="fas fa-comment-dots"></i></div><div class="val">${p.cmt}</div><div class="lbl">Commentaires</div></div>`;
+h+=`<div class="stt" style="border-color:${p.reg?'var(--err)':''}"><div class="si" style="color:var(--err)"><i class="fas fa-user-clock"></i></div><div class="sv" style="color:var(--err)">${p.reg}</div><div class="sl">Inscriptions</div></div>
+<div class="stt"><div class="si" style="color:var(--pri2)"><i class="fas fa-box"></i></div><div class="sv" style="color:var(--pri2)">${p.prod}</div><div class="sl">Produits</div></div>
+<div class="stt"><div class="si" style="color:var(--sec)"><i class="fas fa-users"></i></div><div class="sv" style="color:var(--sec)">${users.filter(u=>u.role!=='admin').length}</div><div class="sl">Membres</div></div>
+<div class="stt"><div class="si" style="color:var(--ok)"><i class="fas fa-shopping-cart"></i></div><div class="sv" style="color:var(--ok)">${p.ord}</div><div class="sl">Commandes</div></div>
+<div class="stt"><div class="si" style="color:var(--gold)"><i class="fas fa-comment-dots"></i></div><div class="sv" style="color:var(--gold)">${p.cmt}</div><div class="sl">Commentaires</div></div>`;
 }else{
-h+=`<div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${prods.filter(p=>p.userId===U.id).length}</div><div class="lbl">Mes Produits</div></div>
-<div class="st teal"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${orders.filter(o=>o.buyerId===U.id).length}</div><div class="lbl">Mes Commandes</div></div>
-<div class="st gold"><div class="ico"><i class="fas fa-star"></i></div><div class="val">${U.stars||0}</div><div class="lbl">Étoiles</div></div>
-<div class="st green"><div class="ico"><i class="fas fa-check-circle"></i></div><div class="val">${prods.filter(p=>p.status==='approved').length}</div><div class="lbl">Dispo</div></div>`;
+h+=`<div class="stt"><div class="si" style="color:var(--pri2)"><i class="fas fa-box"></i></div><div class="sv" style="color:var(--pri2)">${prods.filter(p=>p.userId===U.id).length}</div><div class="sl">Mes Produits</div></div>
+<div class="stt"><div class="si" style="color:var(--sec)"><i class="fas fa-shopping-cart"></i></div><div class="sv" style="color:var(--sec)">${orders.filter(o=>o.buyerId===U.id).length}</div><div class="sl">Commandes</div></div>
+<div class="stt"><div class="si" style="color:var(--gold)"><i class="fas fa-star"></i></div><div class="sv" style="color:var(--gold)">${U.stars||0}</div><div class="sl">Étoiles</div></div>`;
 }
 h+='</div>';
 const rec=prods.filter(p=>p.status==='approved').slice(-4).reverse();
-h+='<h2 class="mb-2">Produits récents</h2>';
-if(rec.length){h+='<div class="pgrid">';rec.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<div class="pcard"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div></div></div>`});h+='</div>'}
-else h+='<div class="card text-center" style="color:var(--text2)">Aucun produit</div>';
+h+='<h2 class="mb2">Produits récents</h2>';
+if(rec.length){h+='<div class="pgrid">';rec.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<div class="pc"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--txt2);font-size:10px"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div></div></div>`});h+='</div>'}
+else h+='<div class="card tc" style="color:var(--txt2)">Aucun produit</div>';
 ct.innerHTML=h;
 }
 
-// ============ PRODUITS ============
-function rProduits(ct){
+// ===== PRODUITS =====
+function rProd(ct){
 const prods=D.g('products'),users=D.g('users');
-let h=`<div class="flex-between mb-2"><div><h1 class="pg-title">Produits</h1></div><button class="btn-primary btn-sm" onclick="tgl('ap')"><i class="fas fa-plus"></i> Ajouter</button></div>`;
-h+=`<div class="card hidden" id="ap"><h3 class="mb-2">Nouveau Produit</h3>
-<input id="pn" placeholder="Nom *"><textarea id="pd" placeholder="Description" rows="2"></textarea>
-<input id="pp" type="number" placeholder="Prix (Ar) *">
-<select id="pc"><option value="">Catégorie</option><option>Électronique</option><option>Vêtements</option><option>Maison</option><option>Alimentation</option><option>Services</option><option>Autre</option></select>
-<div class="flex"><button class="btn-success btn-sm" onclick="addP()"><i class="fas fa-check"></i> Soumettre</button><button class="btn-danger btn-sm" onclick="tgl('ap')"><i class="fas fa-times"></i></button></div></div>`;
+let h=`<div class="fb mb2"><h1 class="pgt">Produits</h1><button class="bp sm" onclick="tgl('ap')"><i class="fas fa-plus"></i> Ajouter</button></div>`;
+h+=`<div class="card hidden" id="ap"><h3 class="mb2">Nouveau Produit</h3><input id="pn" placeholder="Nom *"><textarea id="pd" rows="2" placeholder="Description"></textarea><input id="pp" type="number" placeholder="Prix (Ar) *"><select id="pca"><option value="">Catégorie</option><option>Électronique</option><option>Vêtements</option><option>Maison</option><option>Alimentation</option><option>Services</option><option>Autre</option></select><div class="fx"><button class="bs sm" onclick="addPr()"><i class="fas fa-check"></i> Soumettre</button><button class="bd sm" onclick="tgl('ap')"><i class="fas fa-times"></i></button></div></div>`;
 const mp=prods.filter(p=>p.userId===U.id&&p.status==='pending');
-if(mp.length){h+='<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> En attente de validation</h3><div class="pgrid mb-3">';
-mp.forEach(p=>{h+=`<div class="pcard" style="border-color:var(--warning);opacity:.7"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i><div style="position:absolute;top:6px;right:6px" class="tag tag-pending">⏳ Attente</div></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div></div></div>`});h+='</div>'}
+if(mp.length){h+='<h3 class="mb2" style="color:var(--warn)"><i class="fas fa-clock"></i> En attente</h3><div class="pgrid mb2">';mp.forEach(p=>{h+=`<div class="pc" style="border-color:var(--warn);opacity:.7"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i><div style="position:absolute;top:6px;right:6px" class="tag tp">⏳</div></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div></div></div>`});h+='</div>'}
 const ap=prods.filter(p=>p.status==='approved');
-h+='<h3 class="mb-2"><i class="fas fa-check-circle" style="color:var(--success)"></i> Disponibles</h3>';
-if(ap.length){h+='<div class="pgrid">';ap.forEach(p=>{const s=users.find(u=>u.id===p.userId);const m=p.userId===U.id;h+=`<div class="pcard"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><p style="color:var(--text2);font-size:10px">${esc(p.description||'')}</p><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div>${!m?`<button class="btn-success btn-sm mt-1" onclick="buyP('${p.id}')"><i class="fas fa-shopping-cart"></i> Acheter</button>`:''}</div></div>`});h+='</div>'}
-else h+='<div class="card text-center" style="color:var(--text2)">Aucun produit</div>';
+h+='<h3 class="mb2"><i class="fas fa-check-circle" style="color:var(--ok)"></i> Disponibles</h3>';
+if(ap.length){h+='<div class="pgrid">';ap.forEach(p=>{const s=users.find(u=>u.id===p.userId);const m=p.userId===U.id;h+=`<div class="pc"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pi"><h3>${esc(p.name)}</h3><p style="color:var(--txt2);font-size:10px">${esc(p.description||'')}</p><div class="pr">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--txt2);font-size:10px"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div>${!m?`<button class="bs sm mt2" onclick="buyP('${p.id}')"><i class="fas fa-shopping-cart"></i> Acheter</button>`:''}</div></div>`});h+='</div>'}
+else h+='<div class="card tc" style="color:var(--txt2)">Aucun</div>';
 ct.innerHTML=h;
 }
-
 function tgl(x){document.getElementById(x).classList.toggle('hidden')}
-function addP(){
-const n=document.getElementById('pn').value.trim(),d=document.getElementById('pd').value.trim(),p=document.getElementById('pp').value,c=document.getElementById('pc').value;
-if(!n||!p)return alert('Nom et prix requis!');
-let pr=D.g('products');pr.push({id:id(),userId:U.id,name:n,description:d,price:Number(p),category:c||'Autre',status:'pending',createdAt:new Date().toISOString()});D.s('products',pr);
-alert('✅ Produit soumis! Attente validation admin.');render();
-}
-function buyP(pid){
-const pr=D.g('products'),p=pr.find(x=>x.id===pid);if(!p||p.userId===U.id)return;
-if(!confirm(`Acheter "${p.name}" pour ${Number(p.price).toLocaleString()} Ar?`))return;
-let o=D.g('orders');o.push({id:id(),productId:pid,buyerId:U.id,sellerId:p.userId,productName:p.name,price:p.price,status:'pending',createdAt:new Date().toISOString()});D.s('orders',o);
-alert('✅ Commande passée!');render();
-}
+function addPr(){const n=document.getElementById('pn').value.trim(),d=document.getElementById('pd').value.trim(),p=document.getElementById('pp').value,c=document.getElementById('pca').value;if(!n||!p)return alert('Nom et prix requis!');let pr=D.g('products');pr.push({id:uid(),userId:U.id,name:n,description:d,price:Number(p),category:c||'Autre',status:'pending',createdAt:new Date().toISOString()});D.s('products',pr);alert('✅ Soumis!');render()}
+function buyP(pid){const pr=D.g('products'),p=pr.find(x=>x.id===pid);if(!p||p.userId===U.id)return;if(!confirm(`Acheter "${p.name}" pour ${Number(p.price).toLocaleString()} Ar?`))return;let o=D.g('orders');o.push({id:uid(),productId:pid,buyerId:U.id,sellerId:p.userId,productName:p.name,price:p.price,status:'pending',createdAt:new Date().toISOString()});D.s('orders',o);alert('✅ Commande passée!');render()}
 
-// ============ FORUM ============
-function rForum(ct){
+// ===== FORUM =====
+function rFor(ct){
 const posts=D.g('posts'),users=D.g('users'),cmts=D.g('comments');
-let h=`<div class="flex-between mb-2"><div><h1 class="pg-title">Forum</h1></div><button class="btn-primary btn-sm" onclick="tgl('apo')"><i class="fas fa-edit"></i> Nouveau Post</button></div>`;
-h+=`<div class="card hidden" id="apo"><h3 class="mb-2">Nouveau Post</h3><input id="pt" placeholder="Titre *"><textarea id="ptc" rows="3" placeholder="Contenu..."></textarea><div class="flex"><button class="btn-success btn-sm" onclick="addPo()"><i class="fas fa-paper-plane"></i> Publier</button><button class="btn-danger btn-sm" onclick="tgl('apo')"><i class="fas fa-times"></i></button></div></div>`;
-if(!posts.length)h+='<div class="card text-center" style="color:var(--text2)">Aucun post</div>';
+let h=`<div class="fb mb2"><h1 class="pgt">Forum</h1><button class="bp sm" onclick="tgl('apo')"><i class="fas fa-edit"></i> Post</button></div>`;
+h+=`<div class="card hidden" id="apo"><input id="ptt" placeholder="Titre *"><textarea id="ptc" rows="3" placeholder="Contenu..."></textarea><div class="fx"><button class="bs sm" onclick="addPo()"><i class="fas fa-paper-plane"></i></button><button class="bd sm" onclick="tgl('apo')"><i class="fas fa-times"></i></button></div></div>`;
+if(!posts.length)h+='<div class="card tc" style="color:var(--txt2)">Aucun post</div>';
 posts.slice().reverse().forEach(p=>{
-const a=users.find(u=>u.id===p.userId);
-const ac=cmts.filter(c=>c.postId===p.id&&c.status==='approved');
-const mc=cmts.filter(c=>c.postId===p.id&&c.status==='pending'&&c.userId===U.id);
-h+=`<div class="post"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="avatar" style="width:30px;height:30px;font-size:12px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:13px">${esc(a?a.name:'?')}</strong><div style="font-size:10px;color:var(--text2)">${fd(p.createdAt)}</div></div></div>
-<h3 style="font-size:14px;margin-bottom:4px">${esc(p.title)}</h3><div style="font-size:13px;margin-bottom:10px;color:var(--text);line-height:1.5">${esc(p.content)}</div>
-<div><strong style="font-size:11px"><i class="fas fa-comments"></i> Commentaires (${ac.length})</strong>`;
-ac.forEach(c=>{const ca=users.find(u=>u.id===c.userId);h+=`<div class="cmt"><div style="display:flex;align-items:center;gap:4px;margin-bottom:3px;font-size:10px"><div class="avatar" style="width:18px;height:18px;font-size:8px">${(ca?ca.name:'?').charAt(0)}</div><strong>${esc(ca?ca.name:'?')}</strong><span style="color:var(--text2)">${fd(c.createdAt)}</span></div>${esc(c.content)}</div>`});
-mc.forEach(c=>{h+=`<div class="cmt" style="border-left-color:var(--warning);opacity:.5"><span class="tag tag-pending" style="font-size:9px"><i class="fas fa-clock"></i> En modération</span><div style="margin-top:4px">${esc(c.content)}</div></div>`});
-h+=`</div><div style="display:flex;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--bg4)"><input id="cm-${p.id}" placeholder="Commentaire..." style="margin:0;flex:1;font-size:12px;padding:8px 12px"><button class="btn-primary btn-xs" onclick="addCm('${p.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`;
-});
-ct.innerHTML=h;
+const a=users.find(u=>u.id===p.userId);const ac=cmts.filter(c=>c.postId===p.id&&c.status==='approved');const mc=cmts.filter(c=>c.postId===p.id&&c.status==='pending'&&c.userId===U.id);
+h+=`<div class="po"><div class="fx" style="margin-bottom:8px"><div class="av" style="width:28px;height:28px;font-size:10px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:12px">${esc(a?a.name:'?')}</strong><div style="font-size:9px;color:var(--txt2)">${fd(p.createdAt)}</div></div></div>
+<h3 style="font-size:13px;margin-bottom:4px">${esc(p.title)}</h3><div style="font-size:12px;margin-bottom:8px;line-height:1.5">${esc(p.content)}</div>
+<div><strong style="font-size:10px"><i class="fas fa-comments"></i> (${ac.length})</strong>`;
+ac.forEach(c=>{const ca=users.find(u=>u.id===c.userId);h+=`<div class="cm"><div class="fx" style="gap:4px;margin-bottom:2px;font-size:9px"><div class="av" style="width:16px;height:16px;font-size:7px">${(ca?ca.name:'?').charAt(0)}</div><strong>${esc(ca?ca.name:'?')}</strong></div>${esc(c.content)}</div>`});
+mc.forEach(c=>{h+=`<div class="cm" style="border-left-color:var(--warn);opacity:.5"><span class="tag tp" style="font-size:9px">⏳ Modération</span><div style="margin-top:2px">${esc(c.content)}</div></div>`});
+h+=`</div><div class="fx" style="margin-top:6px;padding-top:6px;border-top:1px solid var(--bg4)"><input id="cm-${p.id}" placeholder="Commentaire..." style="margin:0;flex:1;padding:8px;font-size:11px"><button class="bp xs" onclick="addCm('${p.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`;
+});ct.innerHTML=h;
 }
+function addPo(){const t=document.getElementById('ptt').value.trim(),c=document.getElementById('ptc').value.trim();if(!t||!c)return alert('Requis!');let p=D.g('posts');p.push({id:uid(),userId:U.id,title:t,content:c,createdAt:new Date().toISOString()});D.s('posts',p);render()}
+function addCm(pid){const el=document.getElementById('cm-'+pid);const t=el.value.trim();if(!t)return;let c=D.g('comments');c.push({id:uid(),postId:pid,userId:U.id,content:t,status:'pending',createdAt:new Date().toISOString()});D.s('comments',c);el.value='';alert('💬 Soumis! Attente modération.');render()}
 
-function addPo(){const t=document.getElementById('pt').value.trim(),c=document.getElementById('ptc').value.trim();if(!t||!c)return alert('Requis!');let p=D.g('posts');p.push({id:id(),userId:U.id,title:t,content:c,createdAt:new Date().toISOString()});D.s('posts',p);render()}
-function addCm(pid){const el=document.getElementById('cm-'+pid);const t=el.value.trim();if(!t)return;let c=D.g('comments');c.push({id:id(),postId:pid,userId:U.id,content:t,status:'pending',createdAt:new Date().toISOString()});D.s('comments',c);el.value='';alert('💬 Soumis! Attente modération.');render()}
-
-// ============ PROFIL ============
-function rProfil(ct){
+// ===== PROFIL =====
+function rProf(ct){
 const u=D.g('users').find(x=>x.id===U.id);if(u){U.stars=u.stars;U.withdrawReq=u.withdrawReq}
-document.getElementById('h-stars').textContent=U.stars||0;
+document.getElementById('hst').textContent=U.stars||0;
 const pct=Math.min(100,((U.stars||0)/1000)*100),can=(U.stars||0)>=1000;
-let h=`<h1 class="pg-title text-center">Mon Profil</h1><p class="pg-sub text-center">Mes informations</p>
-<div class="prof"><div class="prof-av">${U.name.charAt(0).toUpperCase()}</div><h2>${esc(U.name)}</h2>
-<p style="color:var(--text2);margin-bottom:12px">${U.role==='admin'?'👑 Admin':'👤 Membre'}</p>
-<div class="card" style="text-align:left">
-<div style="margin-bottom:6px"><i class="fas fa-phone" style="color:var(--secondary);width:18px"></i> ${esc(U.phone)}</div>
-<div style="margin-bottom:6px"><i class="fas fa-map-marker-alt" style="color:var(--danger);width:18px"></i> ${esc(U.city||'-')}</div>
-<div style="margin-bottom:6px"><i class="fas fa-home" style="color:var(--primary2);width:18px"></i> ${esc(U.quartier||'-')}</div>
-<div><i class="fas fa-calendar" style="color:var(--success);width:18px"></i> ${fd(U.regAt)}</div></div>
-<div class="card mt-2 text-center" ${can?'style="border-color:var(--gold)"':''}>
-<h3><i class="fas fa-star stars-display"></i> Étoiles</h3>
-<div style="font-size:40px;font-weight:800;color:var(--gold);margin:10px 0">${U.stars||0}</div>
+let h=`<h1 class="pgt tc">Mon Profil</h1>
+<div class="prof"><div class="pav">${U.name.charAt(0).toUpperCase()}</div><h2>${esc(U.name)}</h2>
+<p style="color:var(--txt2);margin-bottom:10px">${U.role==='admin'?'👑 Admin':'👤 Membre'}</p>
+<div class="card" style="text-align:left"><div style="margin-bottom:6px"><i class="fas fa-phone" style="color:var(--sec);width:16px"></i> ${esc(U.phone)}</div><div style="margin-bottom:6px"><i class="fas fa-map-marker-alt" style="color:var(--err);width:16px"></i> ${esc(U.city||'-')}</div><div style="margin-bottom:6px"><i class="fas fa-home" style="color:var(--pri2);width:16px"></i> ${esc(U.quartier||'-')}</div><div><i class="fas fa-calendar" style="color:var(--ok);width:16px"></i> ${fd(U.regAt)}</div></div>
+<div class="card mt2 tc" ${can?'style="border-color:var(--gold)"':''}>
+<h3><i class="fas fa-star sd"></i> Étoiles</h3><div style="font-size:36px;font-weight:800;color:var(--gold);margin:10px 0">${U.stars||0}</div>
 <div class="pbar"><div class="pfill" style="width:${pct}%">${Math.round(pct)}%</div></div>
-<div style="color:var(--text2);font-size:11px;margin-bottom:12px">Objectif: 1000⭐</div>
-${can&&!U.withdrawReq?'<button class="btn-warning withdraw-glow" onclick="reqW()"><i class="fas fa-money-bill-wave"></i> Demander Retrait</button>':''}
-${U.withdrawReq?'<div class="tag tag-pending" style="padding:8px 16px"><i class="fas fa-clock"></i> Retrait en attente</div>':''}
-${!can?`<div style="color:var(--text2);font-size:11px">Manque ${1000-(U.stars||0)}</div>`:''}</div></div>`;
+<div style="color:var(--txt2);font-size:10px;margin-bottom:10px">Objectif: 1000⭐</div>
+${can&&!U.withdrawReq?'<button class="bw wglow" onclick="reqW()"><i class="fas fa-money-bill-wave"></i> Retrait</button>':''}
+${U.withdrawReq?'<div class="tag tp" style="padding:6px 14px"><i class="fas fa-clock"></i> En attente</div>':''}
+${!can?`<div style="color:var(--txt2);font-size:10px">Manque ${1000-(U.stars||0)}</div>`:''}</div></div>`;
 ct.innerHTML=h;
 }
 function reqW(){if(!confirm('Demander retrait?'))return;let u=D.g('users');let x=u.find(a=>a.id===U.id);if(x){x.withdrawReq=true;U.withdrawReq=true;D.s('users',u)}render()}
 
-// ============ ROULETTE ============
-function rRL(ct){
+// ===== ROULETTE =====
+function rRoul(ct){
 const hist=D.g('rHist');
-let h=`<h1 class="pg-title text-center"><i class="fas fa-dice" style="color:var(--gold)"></i> Roulette</h1>
-<p class="pg-sub text-center">Chaque heure: un gagnant de 20⭐!</p>
-<div class="card text-center" style="max-width:550px;margin:0 auto">
-<div class="rl-tm"><div>⏰ Prochain tirage</div><span class="time" id="rl-cd">--:--</span></div>
-<button class="demo-btn" onclick="startRL()"><i class="fas fa-play-circle"></i> LANCER ROULETTE</button>
-<div class="mt-3"><h3 class="mb-2"><i class="fas fa-history"></i> Historique</h3>`;
-if(hist.length){h+='<div class="tw"><table><tr><th>🏆</th><th>⭐</th><th>Date</th></tr>';hist.slice().reverse().slice(0,10).forEach(r=>{h+=`<tr><td><strong>${esc(r.name)}</strong></td><td class="stars-display">+${r.stars}</td><td>${fd(r.time)}</td></tr>`});h+='</table></div>'}
-else h+='<p style="color:var(--text2);font-size:12px">Aucun tirage</p>';
+let h=`<h1 class="pgt tc"><i class="fas fa-dice" style="color:var(--gold)"></i> Roulette</h1><p class="pgs tc">Chaque heure: 20⭐!</p>
+<div class="card tc" style="max-width:500px;margin:0 auto">
+<div class="rltm"><div>⏰ Prochain tirage</div><span class="time" id="rlcd">--:--</span></div>
+<button class="dbtn" onclick="startRL()"><i class="fas fa-play-circle"></i> LANCER</button>
+<div class="mt3"><h3 class="mb2"><i class="fas fa-history"></i> Historique</h3>`;
+if(hist.length){h+='<div class="tw"><table><tr><th>🏆</th><th>⭐</th><th>Date</th></tr>';hist.slice().reverse().slice(0,10).forEach(r=>{h+=`<tr><td><strong>${esc(r.name)}</strong></td><td class="sd">+${r.stars}</td><td>${fd(r.time)}</td></tr>`});h+='</table></div>'}
+else h+='<p style="color:var(--txt2);font-size:11px">Aucun tirage</p>';
 h+='</div></div>';ct.innerHTML=h;uCD();
 }
-
-function uCD(){const n=mdT(),el=document.getElementById('rl-cd');if(el)el.textContent=`${String(59-n.getMinutes()).padStart(2,'0')}:${String(59-n.getSeconds()).padStart(2,'0')}`}
+function uCD(){const n=mdT(),el=document.getElementById('rlcd');if(el)el.textContent=`${String(59-n.getMinutes()).padStart(2,'0')}:${String(59-n.getSeconds()).padStart(2,'0')}`}
 setInterval(uCD,1000);
 setInterval(()=>{const n=mdT();if(n.getMinutes()===0&&n.getSeconds()===0){const l=D.gv('lrl');if(l!==n.getHours()){D.sv('lrl',n.getHours());if(U)startRL()}}},1000);
 
@@ -594,172 +553,128 @@ const us=D.g('users').filter(u=>u.role!=='admin'&&u.status==='approved');
 if(us.length<1)return alert('Pas assez de membres!');if(rlR)return;rlR=true;
 document.querySelectorAll('button').forEach(b=>b.disabled=true);
 const w=us[Math.floor(Math.random()*us.length)];
-const ov=document.getElementById('rl-ov'),nd=document.getElementById('rl-ns'),st=document.getElementById('rl-st');
+const ov=document.getElementById('rlov'),nd=document.getElementById('rln'),st=document.getElementById('rlst');
 ov.classList.remove('hidden');st.innerHTML='<i class="fas fa-spinner fa-spin"></i> Tirage...';
 let nm=[];for(let i=0;i<80;i++)nm.push(us[i%us.length]);const wp=nm.length-6;nm[wp]=w;
-nd.innerHTML=nm.map((u,i)=>`<div class="rl-n" data-i="${i}">${esc(u.name)}</div>`).join('');
+nd.innerHTML=nm.map((u,i)=>`<div class="rlnm" data-i="${i}">${esc(u.name)}</div>`).join('');
 const tgt=wp*50-125,st0=Date.now();
-function an(){const t=Math.min(1,(Date.now()-st0)/7000);nd.style.transform=`translateY(-${(1-Math.pow(1-t,3))*tgt}px)`;
+(function an(){const t=Math.min(1,(Date.now()-st0)/7000);nd.style.transform=`translateY(-${(1-Math.pow(1-t,3))*tgt}px)`;
 if(t<1)requestAnimationFrame(an);
-else setTimeout(()=>{const we=nd.querySelector(`[data-i="${wp}"]`);if(we)we.classList.add('win');
-st.innerHTML=`<div class="rl-res">🎉 ${esc(w.name)} gagne 20⭐! 🎉</div>`;
+else setTimeout(()=>{nd.querySelector(`[data-i="${wp}"]`)?.classList.add('win');
+st.innerHTML=`<div style="font-size:16px;color:var(--gold);font-weight:700;animation:pulse 1s infinite">🎉 ${esc(w.name)} gagne 20⭐! 🎉</div>`;
 let all=D.g('users');let ww=all.find(u=>u.id===w.id);if(ww){ww.stars=(ww.stars||0)+20;D.s('users',all)}
 if(U&&U.id===w.id)U.stars=(U.stars||0)+20;
 let hi=D.g('rHist');hi.push({id:w.id,name:w.name,stars:20,time:new Date().toISOString()});D.s('rHist',hi);
-confetti();
-setTimeout(()=>{ov.classList.add('hidden');rlR=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);render()},5000);
-},500)}
-requestAnimationFrame(an);
+cft();setTimeout(()=>{ov.classList.add('hidden');rlR=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);render()},5000)},500)})();
 }
+function cft(){const c=['#ffd700','#7c5cfc','#00cec9','#e17055','#00b894','#fd79a8'];for(let i=0;i<50;i++){const e=document.createElement('div');e.className='confetti';e.style.cssText=`left:${Math.random()*100}vw;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'0'};animation-delay:${Math.random()*2}s;animation-duration:${2+Math.random()*2}s;`;document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
 
-function confetti(){const c=['#ffd700','#7c5cfc','#00cec9','#e17055','#00b894','#fd79a8'];for(let i=0;i<50;i++){const e=document.createElement('div');e.className='confetti';e.style.cssText=`left:${Math.random()*100}vw;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'0'};animation-delay:${Math.random()*2}s;animation-duration:${2+Math.random()*2}s;`;document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
-
-// ============ ADMIN ============
-function rAdmin(ct){
+// ===== ADMIN =====
+function rAdm(ct){
 if(U.role!=='admin'){ct.innerHTML='Accès refusé';return}
 const p=pc();
-let h='<h1 class="pg-title"><i class="fas fa-shield-alt"></i> Administration</h1><p class="pg-sub">Gestion complète</p>';
-h+=`<div class="stats">
-<div class="st red"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="val">${p.reg}</div><div class="lbl">Inscriptions</div></div>
-<div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${p.prod}</div><div class="lbl">Produits</div></div>
-<div class="st teal"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${p.ord}</div><div class="lbl">Commandes</div></div>
-<div class="st gold"><div class="ico"><i class="fas fa-comment-dots"></i></div><div class="val">${p.cmt}</div><div class="lbl">Commentaires</div></div>
-<div class="st green"><div class="ico"><i class="fas fa-money-bill-wave"></i></div><div class="val">${p.wdr}</div><div class="lbl">Retraits</div></div></div>`;
-
-const tabs=[{id:'notifs',ic:'bell',lb:'Notifications',b:p.total},{id:'inscriptions',ic:'user-clock',lb:'Inscriptions',b:p.reg},{id:'produits',ic:'box',lb:'Produits',b:p.prod},{id:'membres',ic:'users',lb:'Membres'},{id:'commandes',ic:'shopping-cart',lb:'Commandes',b:p.ord},{id:'forum',ic:'comments',lb:'Forum',b:p.cmt},{id:'etoiles',ic:'star',lb:'Étoiles',b:p.wdr}];
-h+='<div class="atabs">';tabs.forEach(t=>{h+=`<button class="atab ${at===t.id?'active':''}" onclick="at='${t.id}';render()"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.b&&t.b>0)h+=`<span class="badge">${t.b}</span>`;h+='</button>'});
-h+='</div><div id="atc"></div>';ct.innerHTML=h;
-
+let h='<h1 class="pgt"><i class="fas fa-shield-alt"></i> Admin</h1><p class="pgs">Gestion</p>';
+h+=`<div class="sts">
+<div class="stt" ${p.reg?'style="border-color:var(--err);animation:pls 1s infinite"':''}><div class="si" style="color:var(--err)"><i class="fas fa-user-clock"></i></div><div class="sv" style="color:var(--err)">${p.reg}</div><div class="sl">Inscriptions</div></div>
+<div class="stt"><div class="si" style="color:var(--pri2)"><i class="fas fa-box"></i></div><div class="sv" style="color:var(--pri2)">${p.prod}</div><div class="sl">Produits</div></div>
+<div class="stt"><div class="si" style="color:var(--sec)"><i class="fas fa-shopping-cart"></i></div><div class="sv" style="color:var(--sec)">${p.ord}</div><div class="sl">Commandes</div></div>
+<div class="stt"><div class="si" style="color:var(--gold)"><i class="fas fa-comment-dots"></i></div><div class="sv" style="color:var(--gold)">${p.cmt}</div><div class="sl">Commentaires</div></div>
+<div class="stt"><div class="si" style="color:var(--ok)"><i class="fas fa-money-bill-wave"></i></div><div class="sv" style="color:var(--ok)">${p.wdr}</div><div class="sl">Retraits</div></div></div>`;
+const tabs=[{id:'notifs',ic:'bell',lb:'Notif',b:p.total},{id:'inscriptions',ic:'user-clock',lb:'Inscrip.',b:p.reg},{id:'produits',ic:'box',lb:'Produits',b:p.prod},{id:'membres',ic:'users',lb:'Membres'},{id:'commandes',ic:'shopping-cart',lb:'Cmd',b:p.ord},{id:'forum',ic:'comments',lb:'Forum',b:p.cmt},{id:'etoiles',ic:'star',lb:'⭐',b:p.wdr}];
+h+='<div class="ats">';tabs.forEach(t=>{h+=`<button class="at ${at===t.id?'active':''}" onclick="at='${t.id}';render()"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.b&&t.b>0)h+=`<span class="badge">${t.b}</span>`;h+='</button>'});h+='</div><div id="atc"></div>';
+ct.innerHTML=h;
 const ac=document.getElementById('atc');
-switch(at){
-case'notifs':aNotifs(ac);break;case'inscriptions':aInsc(ac);break;
-case'produits':aProds(ac);break;case'membres':aMemb(ac);break;
-case'commandes':aOrds(ac);break;case'forum':aForum(ac);break;
-case'etoiles':aStars(ac);break;
-}
+({notifs:aN,inscriptions:aI,produits:aP,membres:aM,commandes:aO,forum:aF,etoiles:aS}[at]||aN)(ac);
 }
 
-function aNotifs(el){
-const p=pc();let h='<h2 class="mb-2">🔔 Notifications</h2>';
-if(!p.total){h+='<div class="card text-center" style="color:var(--success);padding:30px;font-size:15px"><i class="fas fa-check-circle" style="font-size:40px;display:block;margin-bottom:10px"></i>✅ Tout est à jour!</div>'}
+function aN(el){
+const p=pc();let h='<h2 class="mb2">🔔 Centre Notifications</h2>';
+if(!p.total)h+='<div class="card tc" style="color:var(--ok);padding:30px"><i class="fas fa-check-circle" style="font-size:40px;display:block;margin-bottom:10px"></i>✅ Tout est à jour!</div>';
 else{
-if(p.reg)h+=`<div class="card flex-between" style="border-left:4px solid var(--warning)"><div class="flex"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div><strong>${p.reg} inscription(s)</strong><div style="color:var(--text2);font-size:10px">À valider</div></div></div><button class="btn-warning btn-sm" onclick="at='inscriptions';render()">Gérer →</button></div>`;
-if(p.prod)h+=`<div class="card flex-between" style="border-left:4px solid var(--primary)"><div class="flex"><div class="nico blue"><i class="fas fa-box"></i></div><div><strong>${p.prod} produit(s)</strong><div style="color:var(--text2);font-size:10px">À approuver</div></div></div><button class="btn-primary btn-sm" onclick="at='produits';render()">Gérer →</button></div>`;
-if(p.cmt)h+=`<div class="card flex-between" style="border-left:4px solid var(--danger)"><div class="flex"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div><strong>${p.cmt} commentaire(s)</strong><div style="color:var(--text2);font-size:10px">À modérer</div></div></div><button class="btn-danger btn-sm" onclick="at='forum';render()">Modérer →</button></div>`;
-if(p.ord)h+=`<div class="card flex-between" style="border-left:4px solid var(--secondary)"><div class="flex"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div><strong>${p.ord} commande(s)</strong></div></div><button class="btn-secondary btn-sm" onclick="at='commandes';render()">Gérer →</button></div>`;
-if(p.wdr)h+=`<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div><strong>${p.wdr} retrait(s)</strong></div></div><button class="btn-warning btn-sm" onclick="at='etoiles';render()">Valider →</button></div>`;
+if(p.reg)h+=nCard('user-clock','or',`${p.reg} inscription(s)`,'Valider maintenant','inscriptions','bw');
+if(p.prod)h+=nCard('box','bl',`${p.prod} produit(s)`,'Approuver','produits','bp');
+if(p.cmt)h+=nCard('comment-dots','rd',`${p.cmt} commentaire(s)`,'Modérer','forum','bd');
+if(p.ord)h+=nCard('shopping-cart','gn',`${p.ord} commande(s)`,'Approuver','commandes','bt');
+if(p.wdr)h+=nCard('money-bill-wave','or',`${p.wdr} retrait(s)`,'Valider','etoiles','bw');
+}el.innerHTML=h;
 }
-el.innerHTML=h;
-}
+function nCard(ic,col,txt,btn,tab,cls){return`<div class="card fb" style="border-left:4px solid var(--${col==='or'?'warn':col==='bl'?'pri':col==='rd'?'err':col==='gn'?'ok':'warn'})"><div class="fx"><div class="nico ${col}"><i class="fas fa-${ic}"></i></div><strong>${txt}</strong></div><button class="${cls} sm" onclick="at='${tab}';render()">${btn} →</button></div>`}
 
-function aInsc(el){
-const users=D.g('users').filter(u=>u.role!=='admin');
-const pend=users.filter(u=>u.status==='pending');
-let h='<h2 class="mb-2">👤 Inscriptions en attente</h2>';
+function aI(el){
+const users=D.g('users').filter(u=>u.role!=='admin');const pend=users.filter(u=>u.status==='pending');
+let h='<h2 class="mb2">👤 Inscriptions</h2>';
 if(pend.length){
-pend.forEach(u=>{
-h+=`<div class="card" style="border-left:4px solid var(--warning)">
-<div class="flex-between mb-2"><div class="flex"><div class="avatar">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="font-size:10px;color:var(--text2)">${fd(u.regAt)}</div></div></div><span class="tag tag-pending">⏳ En attente</span></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-<div class="card" style="margin:0;padding:10px"><div style="color:var(--text2);font-size:10px">📱 Téléphone</div><div style="font-weight:700;color:var(--secondary)">${esc(u.phone)}</div></div>
-<div class="card" style="margin:0;padding:10px"><div style="color:var(--text2);font-size:10px">🔑 Mot de passe</div><div style="font-weight:700;color:var(--gold);font-family:monospace">${esc(u.password)}</div></div>
-<div class="card" style="margin:0;padding:10px"><div style="color:var(--text2);font-size:10px">🏙️ Ville</div><div style="font-weight:700">${esc(u.city||'-')}</div></div>
-<div class="card" style="margin:0;padding:10px"><div style="color:var(--text2);font-size:10px">🏠 Quartier</div><div style="font-weight:700">${esc(u.quartier||'-')}</div></div></div>
-<div class="flex"><button class="btn-success" onclick="valUser('${u.id}')"><i class="fas fa-check-circle"></i> Valider ce membre</button><button class="btn-danger btn-sm" onclick="rejUser('${u.id}')"><i class="fas fa-times"></i> Refuser</button></div></div>`;
-});
-}else h+='<div class="card text-center" style="color:var(--success);padding:24px"><i class="fas fa-check-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Aucune inscription en attente</div>';
-
+pend.forEach(u=>{h+=`<div class="card" style="border-left:4px solid var(--warn)">
+<div class="fb mb2"><div class="fx"><div class="av">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="font-size:9px;color:var(--txt2)">${fd(u.regAt)}</div></div></div><span class="tag tp">⏳</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+<div class="card" style="margin:0;padding:8px"><div style="color:var(--txt2);font-size:9px">📱 Tél</div><div style="font-weight:700;color:var(--sec)">${esc(u.phone)}</div></div>
+<div class="card" style="margin:0;padding:8px"><div style="color:var(--txt2);font-size:9px">🔑 MDP</div><div style="font-weight:700;color:var(--gold);font-family:monospace">${esc(u.password||'-')}</div></div>
+<div class="card" style="margin:0;padding:8px"><div style="color:var(--txt2);font-size:9px">🏙️ Ville</div><div style="font-weight:700">${esc(u.city||'-')}</div></div>
+<div class="card" style="margin:0;padding:8px"><div style="color:var(--txt2);font-size:9px">🏠 Quartier</div><div style="font-weight:700">${esc(u.quartier||'-')}</div></div></div>
+<div class="fx"><button class="bs" onclick="valU('${u.id}')"><i class="fas fa-check-circle"></i> VALIDER CE MEMBRE</button><button class="bd sm" onclick="rejU('${u.id}')"><i class="fas fa-times"></i> Refuser</button></div></div>`});
+}else h+='<div class="card tc" style="color:var(--ok);padding:20px">✅ Aucune inscription en attente</div>';
 const done=users.filter(u=>u.status!=='pending');
-if(done.length){
-h+='<h3 class="mt-3 mb-2">Membres traités</h3><div class="tw"><table><tr><th>Nom</th><th>Téléphone</th><th>Ville</th><th>Quartier</th><th>Statut</th></tr>';
-done.forEach(u=>{h+=`<tr><td>${esc(u.name)}</td><td>${esc(u.phone)}</td><td>${esc(u.city||'-')}</td><td>${esc(u.quartier||'-')}</td><td><span class="tag ${u.status==='approved'?'tag-approved':'tag-rejected'}">${u.status==='approved'?'✓':'✗'}</span></td></tr>`});
-h+='</table></div>';}
+if(done.length){h+='<h3 class="mt3 mb2">Traités</h3><div class="tw"><table><tr><th>Nom</th><th>Tél</th><th>Ville</th><th>Statut</th></tr>';done.forEach(u=>{h+=`<tr><td>${esc(u.name)}</td><td>${esc(u.phone)}</td><td>${esc(u.city||'-')}</td><td><span class="tag ${u.status==='approved'?'ta':'tr'}">${u.status==='approved'?'✓':'✗'}</span></td></tr>`});h+='</table></div>'}
 el.innerHTML=h;
 }
+function valU(uid){if(!confirm('Valider? Le membre pourra se connecter.'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.status='approved';D.s('users',u);playSound('ok')}render()}
+function rejU(uid){if(!confirm('Refuser?'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.status='rejected';D.s('users',u)}render()}
 
-function valUser(uid){
-if(!confirm('Valider ce membre? Il pourra se connecter avec son téléphone et mot de passe.'))return;
-let u=D.g('users');let x=u.find(a=>a.id===uid);
-if(x){x.status='approved';D.s('users',u)}
-render();
-}
-function rejUser(uid){if(!confirm('Refuser?'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.status='rejected';D.s('users',u)}render()}
-
-function aProds(el){
+function aP(el){
 const prods=D.g('products'),users=D.g('users');const pend=prods.filter(p=>p.status==='pending'),appr=prods.filter(p=>p.status==='approved');
-let h='<h2 class="mb-2">📦 Produits en attente</h2>';
-if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Tél</th><th>Prix</th><th>Cat.</th><th>Desc.</th><th>Date</th><th>Actions</th></tr>';
-pend.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td>${esc(s?s.phone:'?')}</td><td style="color:var(--secondary);font-weight:700">${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td><td style="max-width:120px">${esc(p.description||'-')}</td><td>${fd(p.createdAt)}</td><td><div class="flex"><button class="btn-success btn-xs" onclick="vProd('${p.id}')"><i class="fas fa-check"></i></button><button class="btn-danger btn-xs" onclick="rProd('${p.id}')"><i class="fas fa-times"></i></button></div></td></tr>`});
-h+='</table></div>'}else h+='<div class="card text-center" style="color:var(--text2)">Aucun</div>';
-h+=`<h3 class="mt-3 mb-2">Approuvés (${appr.length})</h3>`;
-if(appr.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th></tr>';appr.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()} Ar</td></tr>`});h+='</table></div>'}
+let h='<h2 class="mb2">📦 Produits</h2>';
+if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Tél</th><th>Prix</th><th>Cat.</th><th>Date</th><th>Actions</th></tr>';pend.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td>${esc(s?s.phone:'?')}</td><td style="color:var(--sec);font-weight:700">${Number(p.price).toLocaleString()}</td><td>${esc(p.category||'-')}</td><td>${fd(p.createdAt)}</td><td class="fx"><button class="bs xs" onclick="vP('${p.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rP('${p.id}')"><i class="fas fa-times"></i></button></td></tr>`});h+='</table></div>'}else h+='<div class="card tc" style="color:var(--txt2)">Aucun</div>';
+h+=`<h3 class="mt3 mb2">Approuvés (${appr.length})</h3>`;
+if(appr.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th></tr>';appr.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()}</td></tr>`});h+='</table></div>'}
 el.innerHTML=h;
 }
-function vProd(i){let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='approved';D.s('products',p)}render()}
-function rProd(i){if(!confirm('Refuser?'))return;let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='rejected';D.s('products',p)}render()}
+function vP(i){let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='approved';D.s('products',p)}render()}
+function rP(i){if(!confirm('Refuser?'))return;let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='rejected';D.s('products',p)}render()}
 
-function aMemb(el){
+function aM(el){
 const users=D.g('users').filter(u=>u.role!=='admin');
-let h='<h2 class="mb-2">👥 Tous les Membres</h2>';
-h+='<div class="card mb-2"><input type="text" id="ms" placeholder="🔍 Rechercher..." oninput="fltM()" style="margin:0"></div>';
-h+='<div class="tw"><table><tr><th>#</th><th>Nom</th><th>Tél</th><th>MDP</th><th>Ville</th><th>Quartier</th><th>Statut</th><th>⭐</th><th>En ligne</th><th>Inscrit</th></tr>';
-users.forEach((u,i)=>{h+=`<tr class="mr" data-s="${(u.name+(u.phone||'')+(u.city||'')+(u.quartier||'')).toLowerCase()}">
-<td>${i+1}</td><td><div class="flex"><div class="avatar" style="width:24px;height:24px;font-size:9px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
-<td style="color:var(--secondary)">${esc(u.phone||'-')}</td>
-<td style="font-family:monospace;color:var(--warning);font-size:10px">${u.password||'<em style="color:var(--text2)">-</em>'}</td>
-<td>${esc(u.city||'-')}</td><td>${esc(u.quartier||'-')}</td>
-<td><span class="tag ${u.status==='approved'?'tag-approved':u.status==='pending'?'tag-pending':'tag-rejected'}">${u.status==='approved'?'✓':u.status==='pending'?'⏳':'✗'}</span></td>
-<td class="stars-display"><i class="fas fa-star"></i> ${u.stars||0}</td>
-<td>${u.isActive?'<span style="color:var(--success)">●</span>':'<span style="color:var(--text2)">○</span>'}</td>
-<td>${fd(u.regAt)}</td></tr>`});
+let h='<h2 class="mb2">👥 Membres</h2><div class="card mb2"><input id="ms" placeholder="🔍 Rechercher..." oninput="fM()" style="margin:0"></div>';
+h+='<div class="tw"><table><tr><th>#</th><th>Nom</th><th>Tél</th><th>MDP</th><th>Ville</th><th>Quartier</th><th>Statut</th><th>⭐</th><th>●</th></tr>';
+users.forEach((u,i)=>{h+=`<tr class="mr" data-s="${(u.name+(u.phone||'')+(u.city||'')).toLowerCase()}"><td>${i+1}</td><td><strong>${esc(u.name)}</strong></td><td style="color:var(--sec)">${esc(u.phone||'-')}</td><td style="font-family:monospace;color:var(--warn);font-size:10px">${u.password||'-'}</td><td>${esc(u.city||'-')}</td><td>${esc(u.quartier||'-')}</td><td><span class="tag ${u.status==='approved'?'ta':u.status==='pending'?'tp':'tr'}">${u.status==='approved'?'✓':u.status==='pending'?'⏳':'✗'}</span></td><td class="sd">${u.stars||0}</td><td>${u.isActive?'<span style="color:var(--ok)">●</span>':'○'}</td></tr>`});
 h+='</table></div>';el.innerHTML=h;
 }
-function fltM(){const q=document.getElementById('ms').value.toLowerCase();document.querySelectorAll('.mr').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}
+function fM(){const q=document.getElementById('ms').value.toLowerCase();document.querySelectorAll('.mr').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}
 
-function aOrds(el){
+function aO(el){
 const ords=D.g('orders'),users=D.g('users');const pend=ords.filter(o=>o.status==='pending'),appr=ords.filter(o=>o.status==='approved');
-let h='<h2 class="mb-2">🛒 Commandes</h2>';
-if(pend.length){h+='<h3 class="mb-2" style="color:var(--warning)">En attente</h3><div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Tél</th><th>Vendeur</th><th>Tél</th><th>Prix</th><th>Date</th><th>Action</th></tr>';
-pend.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td><strong>${esc(o.productName)}</strong></td><td>${esc(b?b.name:'-')}</td><td style="color:var(--secondary)">${esc(b?b.phone:'-')}</td><td>${esc(s?s.name:'-')}</td><td style="color:var(--secondary)">${esc(s?s.phone:'-')}</td><td style="font-weight:700">${Number(o.price).toLocaleString()} Ar</td><td>${fd(o.createdAt)}</td><td><button class="btn-success btn-xs" onclick="vOrd('${o.id}')"><i class="fas fa-check"></i> Approuver</button></td></tr>`});
-h+='</table></div>'}else h+='<div class="card text-center" style="color:var(--text2)">Aucune</div>';
-h+=`<h3 class="mt-3 mb-2" style="color:var(--success)">Approuvées (${appr.length})</h3>`;
-if(appr.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th></tr>';appr.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td>${esc(o.productName)}</td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td>${Number(o.price).toLocaleString()} Ar</td></tr>`});h+='</table></div>'}
+let h='<h2 class="mb2">🛒 Commandes</h2>';
+if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Date</th><th>Action</th></tr>';pend.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td><strong>${esc(o.productName)}</strong></td><td>${esc(b?b.name:'-')}<br><small style="color:var(--sec)">${esc(b?b.phone:'')}</small></td><td>${esc(s?s.name:'-')}<br><small style="color:var(--sec)">${esc(s?s.phone:'')}</small></td><td style="font-weight:700">${Number(o.price).toLocaleString()}</td><td>${fd(o.createdAt)}</td><td><button class="bs xs" onclick="vO('${o.id}')"><i class="fas fa-check"></i> Approuver</button></td></tr>`});h+='</table></div>'}else h+='<div class="card tc" style="color:var(--txt2)">Aucune</div>';
+if(appr.length){h+=`<h3 class="mt3 mb2">Approuvées (${appr.length})</h3><div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th></tr>`;appr.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td>${esc(o.productName)}</td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td>${Number(o.price).toLocaleString()}</td></tr>`});h+='</table></div>'}
 el.innerHTML=h;
 }
-function vOrd(oid){let o=D.g('orders');let x=o.find(a=>a.id===oid);if(!x)return;x.status='approved';D.s('orders',o);
-let p=D.g('products');let pr=p.find(a=>a.id===x.productId);if(pr){pr.status='sold';D.s('products',p)}
-let u=D.g('users');let se=u.find(a=>a.id===x.sellerId),bu=u.find(a=>a.id===x.buyerId);
-if(se)se.stars=(se.stars||0)+10;if(bu)bu.stars=(bu.stars||0)+5;D.s('users',u);render()}
+function vO(oid){let o=D.g('orders');let x=o.find(a=>a.id===oid);if(!x)return;x.status='approved';D.s('orders',o);let p=D.g('products');let pr=p.find(a=>a.id===x.productId);if(pr){pr.status='sold';D.s('products',p)}let u=D.g('users');let se=u.find(a=>a.id===x.sellerId),bu=u.find(a=>a.id===x.buyerId);if(se)se.stars=(se.stars||0)+10;if(bu)bu.stars=(bu.stars||0)+5;D.s('users',u);render()}
 
-function aForum(el){
+function aF(el){
 const cmts=D.g('comments'),posts=D.g('posts'),users=D.g('users');const pend=cmts.filter(c=>c.status==='pending'),appr=cmts.filter(c=>c.status==='approved');
-let h='<h2 class="mb-2">💬 Modération Forum</h2><p class="mb-2" style="color:var(--text2);font-size:11px">⚠️ Validez avant publication pour éviter insultes/spam</p>';
-if(pend.length){h+='<h3 class="mb-2" style="color:var(--warning)">À modérer</h3>';
-pend.forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);
-h+=`<div class="card" style="border-left:4px solid var(--warning)"><div class="flex-between mb-1"><div class="flex"><div class="avatar" style="width:26px;height:26px;font-size:10px">${(a?a.name:'?').charAt(0)}</div><div><strong>${esc(a?a.name:'?')}</strong> <span style="font-size:10px;color:var(--text2)">(${esc(a?a.phone:'')})</span><div style="font-size:9px;color:var(--text2)">sur: "${esc(p?p.title:'?')}"</div></div></div><span style="font-size:9px;color:var(--text2)">${fd(c.createdAt)}</span></div>
-<div style="background:var(--bg3);padding:10px;border-radius:8px;margin:6px 0;font-size:13px">${esc(c.content)}</div>
-<div class="flex"><button class="btn-success btn-xs" onclick="vCmt('${c.id}')"><i class="fas fa-check"></i> Approuver</button><button class="btn-danger btn-xs" onclick="dCmt('${c.id}')"><i class="fas fa-trash"></i> Supprimer</button></div></div>`})}
-else h+='<div class="card text-center" style="color:var(--success)"><i class="fas fa-check-circle" style="font-size:28px;display:block;margin-bottom:6px"></i>Tout modéré ✓</div>';
-h+=`<h3 class="mt-3 mb-2">Approuvés (${appr.length})</h3>`;
-if(appr.length){h+='<div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Commentaire</th><th>Date</th></tr>';appr.slice().reverse().slice(0,10).forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);h+=`<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:180px">${esc(c.content)}</td><td>${fd(c.createdAt)}</td></tr>`});h+='</table></div>'}
+let h='<h2 class="mb2">💬 Modération</h2>';
+if(pend.length){pend.forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);
+h+=`<div class="card" style="border-left:4px solid var(--warn)"><div class="fb" style="margin-bottom:6px"><div class="fx"><div class="av" style="width:24px;height:24px;font-size:9px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:12px">${esc(a?a.name:'?')}</strong><div style="font-size:9px;color:var(--txt2)">sur "${esc(p?p.title:'?')}"</div></div></div><span style="font-size:9px;color:var(--txt2)">${fd(c.createdAt)}</span></div>
+<div style="background:var(--bg3);padding:8px;border-radius:8px;margin:4px 0;font-size:12px">${esc(c.content)}</div>
+<div class="fx"><button class="bs xs" onclick="vC('${c.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="dC('${c.id}')"><i class="fas fa-trash"></i></button></div></div>`})}
+else h+='<div class="card tc" style="color:var(--ok)">✅ Tout modéré</div>';
+if(appr.length){h+=`<h3 class="mt3 mb2">Approuvés (${appr.length})</h3><div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Texte</th></tr>`;appr.slice().reverse().slice(0,10).forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);h+=`<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:150px">${esc(c.content)}</td></tr>`});h+='</table></div>'}
 el.innerHTML=h;
 }
-function vCmt(cid){let c=D.g('comments');let x=c.find(a=>a.id===cid);if(x){x.status='approved';let u=D.g('users');let au=u.find(a=>a.id===x.userId);if(au){au.stars=(au.stars||0)+1;D.s('users',u)}}D.s('comments',c);render()}
-function dCmt(cid){if(!confirm('Supprimer?'))return;let c=D.g('comments');c=c.filter(x=>x.id!==cid);D.s('comments',c);render()}
+function vC(cid){let c=D.g('comments');let x=c.find(a=>a.id===cid);if(x){x.status='approved';let u=D.g('users');let au=u.find(a=>a.id===x.userId);if(au){au.stars=(au.stars||0)+1;D.s('users',u)}}D.s('comments',c);render()}
+function dC(cid){if(!confirm('Supprimer?'))return;let c=D.g('comments');c=c.filter(x=>x.id!==cid);D.s('comments',c);render()}
 
-function aStars(el){
+function aS(el){
 const users=D.g('users').filter(u=>u.role!=='admin');const sorted=[...users].sort((a,b)=>(b.stars||0)-(a.stars||0));const wdrs=users.filter(u=>u.withdrawReq);
-let h='<h2 class="mb-2">⭐ Étoiles</h2>';
-if(wdrs.length){h+='<h3 class="mb-2" style="color:var(--warning)">💰 Retraits</h3>';wdrs.forEach(u=>{h+=`<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="avatar">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="font-size:10px;color:var(--text2)">${esc(u.phone)}</div><div class="stars-display"><i class="fas fa-star"></i> ${u.stars||0}</div></div></div><div class="flex"><button class="btn-success btn-sm" onclick="vWdr('${u.id}')"><i class="fas fa-check"></i> Valider</button><button class="btn-danger btn-xs" onclick="rWdr('${u.id}')"><i class="fas fa-times"></i></button></div></div>`})}
-h+='<h3 class="mt-3 mb-2">Classement</h3><div class="tw"><table><tr><th>Rang</th><th>Membre</th><th>⭐</th><th>Progression</th><th>Retrait</th></tr>';
-sorted.forEach((u,i)=>{const pct=Math.min(100,((u.stars||0)/1000)*100);const m=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-h+=`<tr><td style="font-weight:700">${m}</td><td><div class="flex"><div class="avatar" style="width:22px;height:22px;font-size:9px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td><td class="stars-display" style="font-weight:700"><i class="fas fa-star"></i> ${u.stars||0}</td><td><div class="pbar" style="height:12px;width:100px;display:inline-block;margin:0"><div class="pfill" style="width:${pct}%;font-size:7px">${Math.round(pct)}%</div></div></td><td>${u.withdrawReq?'<span class="tag tag-pending">⏳</span>':(u.stars||0)>=1000?'<span class="tag tag-approved">✓</span>':'-'}</td></tr>`});
+let h='<h2 class="mb2">⭐ Étoiles</h2>';
+if(wdrs.length){h+='<h3 class="mb2">💰 Retraits</h3>';wdrs.forEach(u=>{h+=`<div class="card fb" style="border-left:4px solid var(--gold)"><div class="fx"><div class="av">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="font-size:10px;color:var(--txt2)">${esc(u.phone)}</div><div class="sd">${u.stars||0}⭐</div></div></div><div class="fx"><button class="bs sm" onclick="vW('${u.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rW('${u.id}')"><i class="fas fa-times"></i></button></div></div>`})}
+h+='<h3 class="mt3 mb2">Classement</h3><div class="tw"><table><tr><th>#</th><th>Membre</th><th>⭐</th><th>%</th></tr>';
+sorted.forEach((u,i)=>{const pct=Math.min(100,((u.stars||0)/1000)*100);h+=`<tr><td style="font-weight:700">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td><td><strong>${esc(u.name)}</strong></td><td class="sd" style="font-weight:700">${u.stars||0}</td><td><div class="pbar" style="height:10px;width:80px;display:inline-block;margin:0"><div class="pfill" style="width:${pct}%;font-size:7px">${Math.round(pct)}%</div></div></td></tr>`});
 h+='</table></div>';el.innerHTML=h;
 }
-function vWdr(uid){if(!confirm('Valider retrait? Étoiles→0'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.stars=0;x.withdrawReq=false;D.s('users',u)}render()}
-function rWdr(uid){let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.withdrawReq=false;D.s('users',u)}render()}
+function vW(uid){if(!confirm('Valider retrait? ⭐→0'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.stars=0;x.withdrawReq=false;D.s('users',u)}render()}
+function rW(uid){let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.withdrawReq=false;D.s('users',u)}render()}
 
-// ============ BOOT ============
+// ===== BOOT =====
 init();restore();
 </script>
 </body>
