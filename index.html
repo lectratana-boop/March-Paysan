@@ -1,467 +1,1660 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🏪 MarchéPaysan</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        :root{--p:#2E7D32;--pl:#4CAF50;--pd:#1B5E20;--bg:#F0F2F5;--w:#FFF;--t:#1A1A2E;--tl:#6B7280;--bd:#E5E7EB;--d:#DC2626;--ok:#16A34A;--warn:#D97706;--info:#2563EB;--sh:0 1px 3px rgba(0,0,0,.08);--shm:0 4px 6px rgba(0,0,0,.07);--shl:0 10px 15px rgba(0,0,0,.1);--r:12px;--rs:8px;--rl:16px;--sb:250px;--tb:60px;}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t);min-height:100vh;}
-        #splash{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,var(--pd),var(--p),#66BB6A);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s;}
-        #splash.hide{opacity:0;visibility:hidden;}
-        #splash .logo{font-size:72px;animation:bounce .8s;}
-        #splash h1{color:#fff;font-size:28px;margin-top:12px;}
-        #splash p{color:rgba(255,255,255,.7);font-size:13px;margin-top:4px;}
-        #splash .ld{width:36px;height:36px;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;margin-top:32px;animation:spin 1s linear infinite;}
-        #toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);padding:12px 24px;border-radius:24px;font-size:14px;font-weight:600;z-index:99998;transition:transform .3s;box-shadow:var(--shl);max-width:90%;text-align:center;color:#fff;}
-        #toast.show{transform:translateX(-50%) translateY(0);}
-        #toast.success{background:var(--ok);}#toast.error{background:var(--d);}#toast.info{background:var(--info);}#toast.warning{background:var(--warn);}
-        .auth-ov{position:fixed;inset:0;z-index:950;background:linear-gradient(135deg,rgba(27,94,32,.95),rgba(46,125,50,.9));display:none;align-items:center;justify-content:center;padding:20px;}
-        .auth-ov.show{display:flex;}
-        .auth-card{background:var(--w);border-radius:var(--rl);width:100%;max-width:440px;box-shadow:var(--shl);overflow:hidden;max-height:92vh;overflow-y:auto;}
-        .auth-hd{background:linear-gradient(135deg,var(--pd),var(--p));padding:24px;text-align:center;color:#fff;}
-        .auth-hd .ah-icon{font-size:44px;margin-bottom:6px;}.auth-hd h2{font-size:20px;}
-        .auth-bd{padding:20px;}
-        .auth-tabs{display:flex;border-bottom:2px solid var(--bd);}
-        .auth-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-weight:600;font-size:13px;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--tl);}
-        .auth-tab.active{color:var(--p);border-bottom-color:var(--p);}
-        .role-sel{display:flex;gap:8px;margin-bottom:14px;}
-        .role-c{flex:1;padding:14px 10px;border:2px solid var(--bd);border-radius:var(--r);text-align:center;cursor:pointer;transition:all .2s;}
-        .role-c.sel{border-color:var(--p);background:#E8F5E9;}
-        .role-c .rc-icon{font-size:28px;}.role-c .rc-title{font-size:12px;font-weight:700;margin-top:4px;}
-        .photo-zone{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border:3px dashed var(--bd);border-radius:var(--r);cursor:pointer;transition:all .2s;background:var(--bg);text-align:center;}
-        .photo-zone:hover{border-color:var(--p);background:#E8F5E9;}
-        .photo-zone.has{border-color:var(--ok);border-style:solid;background:#F0FDF4;}
-        .photo-zone.err{border-color:var(--d);background:#FEF2F2;}
-        .photo-prev{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid var(--p);display:none;}
-        .photo-prev.vis{display:block;}
-        .photo-ph{width:100px;height:100px;border-radius:50%;background:var(--bd);display:flex;align-items:center;justify-content:center;font-size:40px;}
-        .prod-photos{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
-        .prod-photo-add{width:90px;height:90px;border:2px dashed var(--bd);border-radius:var(--rs);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:10px;color:var(--tl);gap:2px;}
-        .prod-photo-add:hover{border-color:var(--p);background:#E8F5E9;color:var(--p);}
-        .prod-photo-item{width:90px;height:90px;border-radius:var(--rs);overflow:hidden;position:relative;border:2px solid var(--p);}
-        .prod-photo-item img{width:100%;height:100%;object-fit:cover;}
-        .prod-photo-item .ppi-del{position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:50%;background:var(--d);color:#fff;border:2px solid #fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-        .prod-photo-item .ppi-main{position:absolute;bottom:2px;left:2px;padding:1px 5px;background:var(--p);color:#fff;font-size:7px;border-radius:4px;font-weight:700;}
-        .pd-gallery{position:relative;border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
-        .pd-gallery-main{width:100%;height:260px;object-fit:cover;display:block;}
-        .pd-gallery-emoji{width:100%;height:260px;display:flex;align-items:center;justify-content:center;font-size:80px;background:linear-gradient(135deg,#E8F5E9,#C8E6C9);}
-        .pd-gallery-thumbs{display:flex;gap:6px;margin-top:8px;}
-        .pd-gallery-thumb{width:60px;height:60px;border-radius:var(--rs);overflow:hidden;cursor:pointer;border:2px solid var(--bd);object-fit:cover;}
-        .pd-gallery-thumb.active{border-color:var(--p);}
-        .pd-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-        .pd-gallery-nav.prev{left:8px;}.pd-gallery-nav.next{right:8px;}
-        .pd-gallery-count{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;}
-        .fg{margin-bottom:14px;}.fg label{display:block;font-size:11px;font-weight:700;margin-bottom:4px;}.fg label .req{color:var(--d);}
-        .fi{width:100%;padding:9px 12px;border:2px solid var(--bd);border-radius:var(--rs);font-size:13px;outline:none;transition:border-color .2s;background:var(--w);font-family:inherit;}
-        .fi:focus{border-color:var(--p);}
-        select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-        textarea.fi{min-height:70px;resize:vertical;}
-        .form-row{display:flex;gap:10px;}.form-row .fg{flex:1;}
-        .chk-grp{display:flex;flex-wrap:wrap;gap:5px;}
-        .chk{padding:6px 12px;border:2px solid var(--bd);border-radius:16px;cursor:pointer;font-size:11px;transition:all .2s;user-select:none;}
-        .chk.on{border-color:var(--p);background:#E8F5E9;color:var(--p);}
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:9px 18px;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;}
-        .btn-p{background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;}.btn-p:hover{transform:translateY(-1px);}
-        .btn-s{background:var(--w);color:var(--p);border:2px solid var(--p);}.btn-d{background:var(--d);color:#fff;}.btn-ok{background:var(--ok);color:#fff;}.btn-w{background:var(--warn);color:#fff;}
-        .btn-sm{padding:5px 12px;font-size:11px;}.btn-xs{padding:3px 9px;font-size:10px;border-radius:6px;}.btn-full{width:100%;}
-        .topbar{position:fixed;top:0;left:0;right:0;height:var(--tb);background:var(--w);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:900;box-shadow:var(--sh);}
-        .tb-brand{display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;}.tb-brand .icon{font-size:24px;}.tb-brand h1{font-size:15px;font-weight:800;color:var(--pd);}
-        .tb-search{flex:1;max-width:380px;position:relative;margin:0 6px;}.tb-search input{width:100%;padding:8px 12px 8px 32px;border:2px solid var(--bd);border-radius:18px;font-size:12px;outline:none;background:var(--bg);}.tb-search input:focus{border-color:var(--p);background:var(--w);}.tb-search .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;}
-        .tb-act{display:flex;align-items:center;gap:5px;flex-shrink:0;margin-left:auto;}
-        .ib{width:34px;height:34px;border-radius:50%;border:none;background:var(--bg);font-size:15px;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;}.ib:hover{background:#E8F5E9;}.ib .badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:var(--d);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-        .av-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--pl);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#E8F5E9;font-size:15px;}.av-btn img{width:100%;height:100%;object-fit:cover;}
-        .app{display:flex;margin-top:var(--tb);min-height:calc(100vh - var(--tb));}
-        .sidebar{width:var(--sb);background:var(--w);border-right:1px solid var(--bd);position:fixed;top:var(--tb);bottom:0;left:0;overflow-y:auto;padding:10px 0;z-index:800;transition:transform .3s;}
-        .sb-t{padding:0 14px;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--tl);letter-spacing:1px;margin:6px 0 3px;}
-        .sb-i{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:all .2s;border-left:3px solid transparent;font-size:11px;}.sb-i:hover{background:#F1F8E9;}.sb-i.on{background:#E8F5E9;border-left-color:var(--p);color:var(--p);font-weight:700;}.sb-i .si-cnt{font-size:8px;background:var(--bg);padding:1px 5px;border-radius:6px;color:var(--tl);margin-left:auto;}
-        .sb-div{height:1px;background:var(--bd);margin:6px 14px;}
-        .sb-n{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:12px;border:none;background:none;width:100%;text-align:left;color:var(--t);}.sb-n:hover{background:#F1F8E9;}.sb-n.on{background:#E8F5E9;color:var(--p);font-weight:700;}.sb-n .sn-b{margin-left:auto;background:var(--d);color:#fff;font-size:8px;padding:2px 6px;border-radius:7px;font-weight:700;}
-        .main{flex:1;margin-left:var(--sb);padding:16px;}
-        .pg{display:none;animation:fadeIn .3s;}.pg.on{display:block;}
-        .pg-hd{margin-bottom:14px;}.pg-hd h2{font-size:17px;font-weight:800;}
-        .sec-t{font-size:15px;font-weight:800;margin-bottom:10px;}
-        .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;}
-        .pc{background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);cursor:pointer;transition:transform .2s;position:relative;}.pc:hover{transform:translateY(-3px);box-shadow:var(--shm);}
-        .pc-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:44px;background:linear-gradient(135deg,#E8F5E9,#C8E6C9);position:relative;overflow:hidden;}.pc-img img{width:100%;height:100%;object-fit:cover;}
-        .pc-img .pc-badge{position:absolute;top:5px;left:5px;padding:2px 7px;border-radius:8px;font-size:8px;font-weight:700;color:#fff;z-index:2;}
-        .pc-img .pc-count{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);color:#fff;padding:2px 7px;border-radius:8px;font-size:8px;}
-        .pc-bd{padding:8px;}.pc-name{font-weight:700;font-size:12px;}.pc-mg{font-size:9px;color:var(--tl);}.pc-price{color:var(--p);font-weight:800;font-size:14px;margin:3px 0;}
-        .pc-meta{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--tl);flex-wrap:wrap;}
-        .pc-seller{display:flex;align-items:center;gap:4px;margin-top:5px;padding-top:5px;border-top:1px solid var(--bd);font-size:10px;}
-        .pill{padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;}.pill-ok{background:#E8F5E9;color:var(--ok);}.pill-pen{background:#FEF3C7;color:var(--warn);}.pill-sus{background:#FEE2E2;color:var(--d);}
-        .pd-ct{padding:16px 0;max-width:700px;}.pd-name{font-size:20px;font-weight:800;}.pd-mg{font-size:12px;color:var(--tl);}.pd-price{font-size:22px;font-weight:800;color:var(--p);margin:6px 0;}
-        .pd-sec{margin:14px 0;}.pd-st{font-size:12px;font-weight:700;margin-bottom:6px;}
-        .pd-seller{display:flex;align-items:center;gap:10px;padding:12px;background:#F1F8E9;border-radius:var(--rs);}
-        .qr{display:flex;align-items:center;gap:12px;margin:10px 0;}
-        .qb{width:34px;height:34px;border-radius:50%;border:2px solid var(--p);background:transparent;color:var(--p);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}.qb:hover{background:var(--p);color:#fff;}
-        .qv{font-size:18px;font-weight:800;min-width:32px;text-align:center;}
-        .cmt{display:flex;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd);}
-        .cmt-in{display:flex;gap:6px;margin-top:10px;}.cmt-in input{flex:1;padding:8px 12px;border:2px solid var(--bd);border-radius:18px;font-size:12px;outline:none;}.cmt-in input:focus{border-color:var(--p);}.cmt-in button{width:34px;height:34px;border-radius:50%;border:none;background:var(--p);color:#fff;font-size:14px;cursor:pointer;}
-        .mp{display:flex;gap:8px;padding:10px;background:var(--w);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:7px;align-items:center;}
-        .mp-icon{width:56px;height:56px;border-radius:var(--rs);background:linear-gradient(135deg,#E8F5E9,#C8E6C9);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden;}.mp-icon img{width:100%;height:100%;object-fit:cover;}
-        .mp-info{flex:1;}.mp-name{font-weight:700;font-size:12px;}.mp-det{font-size:10px;color:var(--tl);margin-top:1px;}
-        .mp-row{display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap;font-size:9px;}
-        .mp-btns{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}.mp-btns button{padding:3px 7px;border-radius:7px;border:1px solid var(--bd);background:var(--w);font-size:9px;cursor:pointer;}.mp-btns button:hover{background:var(--p);color:#fff;border-color:var(--p);}
-        .ot{display:flex;gap:5px;margin-bottom:12px;}.ot-b{flex:1;padding:8px;border:none;background:var(--w);border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;text-align:center;color:var(--tl);box-shadow:var(--sh);}.ot-b.on{background:var(--p);color:#fff;}
-        .oc{background:var(--w);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:8px;overflow:hidden;}.oc-hd{display:flex;justify-content:space-between;padding:8px 12px;background:#F1F8E9;border-bottom:1px solid var(--bd);font-size:12px;}.oc-bd{padding:10px 12px;}.oc-ft{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--bd);}
-        .ff-row{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap;}.ff{padding:5px 12px;border:none;background:var(--w);border-radius:14px;font-size:10px;font-weight:600;cursor:pointer;color:var(--tl);box-shadow:var(--sh);}.ff.on{background:var(--p);color:#fff;}
-        .fc{background:var(--w);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:8px;overflow:hidden;cursor:pointer;}.fc:hover{transform:translateY(-2px);}
-        .fc-hd{display:flex;align-items:center;gap:8px;padding:10px 12px 4px;}
-        .fc-bd{padding:3px 12px 8px;font-size:12px;line-height:1.4;}.fc-bd strong{display:block;font-size:13px;margin-bottom:2px;}
-        .fc-ft{display:flex;justify-content:space-around;padding:6px 12px;border-top:1px solid var(--bd);}.fc-act{display:flex;align-items:center;gap:3px;border:none;background:none;font-size:11px;color:var(--tl);cursor:pointer;padding:4px 6px;border-radius:10px;}.fc-act:hover{background:var(--bg);color:var(--p);}
-        .reply-in{display:flex;gap:5px;margin-top:12px;padding:8px;background:var(--w);border-radius:var(--rs);}.reply-in input{flex:1;padding:7px 10px;border:2px solid var(--bd);border-radius:14px;font-size:11px;outline:none;}.reply-in input:focus{border-color:var(--p);}.reply-in button{width:32px;height:32px;border-radius:50%;border:none;background:var(--p);color:#fff;font-size:13px;cursor:pointer;}
-        .prof-bn{background:linear-gradient(135deg,var(--pd),var(--p));padding:24px 16px;text-align:center;color:#fff;border-radius:0 0 var(--rl) var(--rl);}
-        .prof-pic{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.5);margin:0 auto 8px;display:block;}
-        .prof-pic-ph{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 8px;}
-        .prof-stats{display:flex;justify-content:space-around;padding:12px;margin:-14px 12px 12px;background:var(--w);border-radius:var(--r);box-shadow:var(--shm);}
-        .pm{display:flex;align-items:center;gap:10px;padding:10px;background:var(--w);border-radius:var(--rs);margin:0 12px 5px;cursor:pointer;}.pm:hover{background:#F1F8E9;}
-        .admin-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;}.at{padding:6px 14px;border:2px solid var(--bd);background:var(--w);border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;color:var(--tl);}.at.on{border-color:var(--p);background:var(--p);color:#fff;}
-        .stat-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:16px;}.stat-c{background:var(--w);border-radius:var(--r);padding:14px;box-shadow:var(--sh);text-align:center;}.stat-v{font-size:22px;font-weight:800;color:var(--p);}.stat-l{font-size:10px;color:var(--tl);margin-top:2px;}
-        .dtable{width:100%;border-collapse:collapse;background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);font-size:11px;}.dtable th{background:var(--bg);padding:7px 10px;text-align:left;font-size:9px;font-weight:700;color:var(--tl);text-transform:uppercase;}.dtable td{padding:7px 10px;border-top:1px solid var(--bd);}
-        .pend-banner{padding:8px 12px;background:#FFFBEB;border:2px solid #FDE68A;border-radius:var(--rs);font-size:11px;font-weight:600;color:var(--warn);}
-        .pend-card{border:2px solid var(--warn)!important;}
-        .admin-fab{position:fixed;bottom:16px;right:16px;z-index:999;display:none;}
-        .afb{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--d),#B91C1C);color:#fff;border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(220,38,38,.4);display:flex;align-items:center;justify-content:center;position:relative;}.afb .fab-b{position:absolute;top:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;animation:pulse 2s infinite;}
-        .afm{position:absolute;bottom:60px;right:0;background:var(--w);border-radius:var(--r);box-shadow:var(--shl);width:220px;overflow:hidden;display:none;}.afm.show{display:block;}
-        .afmi{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;font-size:12px;border:none;background:none;width:100%;text-align:left;color:var(--t);}.afmi:hover{background:#FEF2F2;}
-        .empty{text-align:center;padding:30px 16px;}.empty-icon{font-size:44px;margin-bottom:8px;}.empty-title{font-size:15px;font-weight:700;}
-        .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:5000;display:none;align-items:center;justify-content:center;padding:16px;}.modal-ov.show{display:flex;}
-        .modal-box{background:var(--w);border-radius:var(--rl);width:100%;max-width:440px;max-height:85vh;overflow-y:auto;box-shadow:var(--shl);}
-        .modal-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd);}.modal-hd h3{font-size:14px;}
-        .modal-x{width:26px;height:26px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
-        .modal-bd{padding:16px;}
-        .bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--bd);padding:3px 0;z-index:900;}
-        .bnav-in{display:flex;justify-content:space-around;max-width:480px;margin:0 auto;}
-        .bn{display:flex;flex-direction:column;align-items:center;cursor:pointer;border:none;background:none;color:var(--tl);font-size:8px;padding:3px 5px;}.bn.on{color:var(--p);}.bn .bn-icon{font-size:18px;}
-        /* Custom field highlight */
-        .custom-field-box{background:#FFFBEB;border:2px solid #FDE68A;border-radius:var(--rs);padding:12px;margin-top:4px;}
-        .custom-field-box label{color:var(--warn)!important;}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        @keyframes bounce{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-        @media(max-width:768px){.sidebar{transform:translateX(-100%);z-index:850;}.sidebar.open{transform:translateX(0);}.main{margin-left:0;padding:12px;padding-bottom:60px;}.bnav{display:block;}.tb-search{display:none;}.pgrid{grid-template-columns:repeat(2,1fr);gap:8px;}.form-row{flex-direction:column;gap:0;}.admin-fab{right:12px;bottom:60px;}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MadaMarket - Marketplace Madagascar</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a1a;--bg2:#12122a;--bg3:#1a1a3e;--bg4:#252550;
+  --primary:#7c5cfc;--primary2:#9b7dff;--secondary:#00cec9;
+  --success:#00b894;--warning:#fdcb6e;--danger:#e17055;
+  --text:#e8e8ff;--text2:#a0a0c0;--gold:#ffd700;
+  --radius:12px;--shadow:0 4px 20px rgba(0,0,0,.4);
+}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{color:var(--secondary);text-decoration:none}
+button{cursor:pointer;border:none;border-radius:var(--radius);padding:10px 20px;font-size:14px;font-weight:600;transition:.3s}
+button:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+input,textarea,select{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:12px 16px;color:var(--text);font-size:14px;width:100%;margin-bottom:12px;transition:.3s}
+input:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 10px rgba(124,92,252,.3)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),#5a3fd4);color:#fff}
+.btn-success{background:linear-gradient(135deg,var(--success),#00a381);color:#fff}
+.btn-danger{background:linear-gradient(135deg,var(--danger),#d63031);color:#fff}
+.btn-warning{background:linear-gradient(135deg,var(--warning),#f0b429);color:#222}
+.btn-secondary{background:linear-gradient(135deg,var(--secondary),#00a8a3);color:#fff}
+.btn-sm{padding:6px 14px;font-size:12px}
+.btn-block{width:100%;display:block}
+.hidden{display:none!important}
+.badge{background:var(--danger);color:#fff;border-radius:50%;font-size:11px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:20px;margin-bottom:16px;transition:.3s}
+.card:hover{border-color:var(--primary);box-shadow:0 0 20px rgba(124,92,252,.15)}
+.status-pending{color:var(--warning);font-weight:600}
+.status-approved{color:var(--success);font-weight:600}
+.status-rejected{color:var(--danger);font-weight:600}
+.stars-display{color:var(--gold)}
+.flex{display:flex;align-items:center;gap:10px}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.text-center{text-align:center}
+.mt-1{margin-top:8px}.mt-2{margin-top:16px}.mt-3{margin-top:24px}
+.mb-1{margin-bottom:8px}.mb-2{margin-bottom:16px}
+.tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.tag-pending{background:rgba(253,203,110,.15);color:var(--warning)}
+.tag-approved{background:rgba(0,184,148,.15);color:var(--success)}
+.tag-sold{background:rgba(124,92,252,.15);color:var(--primary2)}
+
+/* Auth Pages */
+#auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a1a 0%,#1a1040 50%,#0a0a1a 100%)}
+.auth-container{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:40px;width:100%;max-width:440px;box-shadow:var(--shadow)}
+.auth-container h1{text-align:center;margin-bottom:8px;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px}
+.auth-container p.subtitle{text-align:center;color:var(--text2);margin-bottom:24px;font-size:14px}
+.auth-tabs{display:flex;gap:0;margin-bottom:24px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--bg4)}
+.auth-tab{flex:1;padding:12px;text-align:center;background:var(--bg);color:var(--text2);cursor:pointer;font-weight:600;transition:.3s}
+.auth-tab.active{background:var(--primary);color:#fff}
+.auth-msg{padding:12px;border-radius:var(--radius);margin-bottom:12px;font-size:13px;text-align:center}
+.auth-msg.success{background:rgba(0,184,148,.15);color:var(--success);border:1px solid rgba(0,184,148,.3)}
+.auth-msg.error{background:rgba(225,112,85,.15);color:var(--danger);border:1px solid rgba(225,112,85,.3)}
+
+/* Header/Nav */
+header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 24px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav{display:flex;gap:4px}
+nav button{background:transparent;color:var(--text2);padding:8px 16px;font-size:13px;border-radius:8px;position:relative}
+nav button:hover{background:var(--bg3);color:var(--text);transform:none}
+nav button.active{background:var(--primary);color:#fff}
+nav button .nav-badge{position:absolute;top:2px;right:2px}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-user{display:flex;align-items:center;gap:8px;font-size:14px}
+.header-user .avatar{width:36px;height:36px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.notif-btn{position:relative;background:transparent;color:var(--text2);font-size:20px;padding:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.notif-btn:hover{background:var(--bg3);color:var(--text)}
+.notif-btn .badge{position:absolute;top:0;right:0;font-size:10px;min-width:18px;height:18px}
+
+/* Main Content */
+main{max-width:1400px;margin:0 auto;padding:24px}
+.page-title{font-size:24px;font-weight:700;margin-bottom:4px}
+.page-subtitle{color:var(--text2);font-size:14px;margin-bottom:24px}
+
+/* Dashboard Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:20px;text-align:center}
+.stat-card .stat-icon{font-size:28px;margin-bottom:8px}
+.stat-card .stat-value{font-size:28px;font-weight:800;margin-bottom:4px}
+.stat-card .stat-label{color:var(--text2);font-size:13px}
+.stat-card.purple .stat-icon,.stat-card.purple .stat-value{color:var(--primary2)}
+.stat-card.teal .stat-icon,.stat-card.teal .stat-value{color:var(--secondary)}
+.stat-card.green .stat-icon,.stat-card.green .stat-value{color:var(--success)}
+.stat-card.gold .stat-icon,.stat-card.gold .stat-value{color:var(--gold)}
+.stat-card.red .stat-icon,.stat-card.red .stat-value{color:var(--danger)}
+
+/* Admin Tabs */
+.admin-tabs{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap;border-bottom:2px solid var(--bg4);padding-bottom:8px}
+.admin-tab{padding:10px 18px;border-radius:8px 8px 0 0;background:transparent;color:var(--text2);font-size:13px;font-weight:600;position:relative;transition:.3s}
+.admin-tab:hover{background:var(--bg3);color:var(--text);transform:none}
+.admin-tab.active{background:var(--bg3);color:var(--primary2);border-bottom:2px solid var(--primary)}
+.admin-tab .badge{margin-left:6px}
+
+/* Tables */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--bg4);font-size:13px}
+th{color:var(--text2);font-weight:600;background:var(--bg3);white-space:nowrap}
+tr:hover td{background:rgba(124,92,252,.05)}
+.member-row{display:flex;align-items:center;gap:10px}
+.member-avatar{width:32px;height:32px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+/* Products */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.product-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);overflow:hidden;transition:.3s}
+.product-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:var(--shadow)}
+.product-img{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text2)}
+.product-info{padding:16px}
+.product-info h3{font-size:16px;margin-bottom:4px}
+.product-info .price{color:var(--secondary);font-size:20px;font-weight:800;margin:8px 0}
+.product-info .seller{color:var(--text2);font-size:12px}
+
+/* Forum */
+.post-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.post-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.post-content{color:var(--text);line-height:1.6;margin-bottom:16px}
+.post-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--bg4)}
+.comment{background:var(--bg3);border-radius:8px;padding:12px;margin:8px 0;margin-left:20px;border-left:3px solid var(--primary)}
+.comment .comment-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+
+/* Profile */
+.profile-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:40px;text-align:center;max-width:600px;margin:0 auto}
+.profile-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;margin:0 auto 16px}
+.stars-progress{background:var(--bg);border-radius:20px;height:24px;overflow:hidden;margin:16px 0}
+.stars-progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--gold));transition:.5s;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;min-width:40px}
+
+/* Roulette */
+#roulette-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.roulette-container{text-align:center;width:100%;max-width:500px;padding:20px}
+.roulette-title{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--warning));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.roulette-subtitle{color:var(--text2);margin-bottom:32px}
+.roulette-wheel{position:relative;height:300px;overflow:hidden;border:2px solid var(--gold);border-radius:var(--radius);background:var(--bg2);margin-bottom:24px}
+.roulette-pointer{position:absolute;top:50%;left:0;right:0;height:50px;margin-top:-25px;background:rgba(124,92,252,.2);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);z-index:2;display:flex;align-items:center;justify-content:center}
+.roulette-pointer i{color:var(--gold);font-size:20px;position:absolute;left:8px}
+.roulette-names{position:absolute;top:0;left:0;right:0;transition:none}
+.roulette-name{height:50px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--text);border-bottom:1px solid var(--bg4)}
+.roulette-name.winner{background:linear-gradient(90deg,rgba(255,215,0,.2),rgba(124,92,252,.2));color:var(--gold);font-size:22px}
+.roulette-result{font-size:20px;color:var(--gold);font-weight:700;animation:pulse 1s infinite}
+.roulette-timer{background:var(--bg3);border-radius:var(--radius);padding:16px;margin-bottom:16px;font-size:14px;color:var(--text2)}
+.roulette-timer .time{font-size:36px;font-weight:800;color:var(--secondary);display:block;margin-top:8px;font-family:monospace}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes confetti{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:10000;animation:confetti 3s ease-in-out forwards}
+
+/* Notification Dropdown */
+.notif-dropdown{position:absolute;top:100%;right:0;width:360px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);box-shadow:var(--shadow);z-index:200;max-height:500px;overflow-y:auto}
+.notif-dropdown h3{padding:16px;border-bottom:1px solid var(--bg4);font-size:16px}
+.notif-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.2s}
+.notif-item:hover{background:var(--bg3)}
+.notif-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.notif-icon.blue{background:rgba(124,92,252,.2);color:var(--primary2)}
+.notif-icon.green{background:rgba(0,184,148,.2);color:var(--success)}
+.notif-icon.orange{background:rgba(253,203,110,.2);color:var(--warning)}
+.notif-icon.red{background:rgba(225,112,85,.2);color:var(--danger)}
+.notif-text{font-size:13px;line-height:1.4}
+.notif-text small{color:var(--text2);display:block;margin-top:4px}
+
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,.8);z-index:500;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:32px;width:90%;max-width:500px;box-shadow:var(--shadow)}
+.modal h2{margin-bottom:16px}
+
+/* Responsive */
+@media(max-width:768px){
+  nav{overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav button{white-space:nowrap;font-size:12px;padding:6px 12px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  .admin-tabs::-webkit-scrollbar{display:none}
+  .header-inner{padding:0 8px}
+  .product-grid{grid-template-columns:1fr}
+  main{padding:16px}
+  .auth-container{margin:16px;padding:24px}
+  .notif-dropdown{right:-60px;width:300px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+/* Withdrawal animation */
+.withdraw-available{animation:glow 2s infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 5px var(--gold)}50%{box-shadow:0 0 25px var(--gold),0 0 50px rgba(255,215,0,.3)}}
+
+/* Ranking */
+.rank-1{color:var(--gold);font-size:20px}
+.rank-2{color:#c0c0c0;font-size:18px}
+.rank-3{color:#cd7f32;font-size:16px}
+</style>
 </head>
 <body>
-<div id="splash"><div class="logo">🏪</div><h1>MarchéPaysan</h1><p>Tsena ho an'ny Tantsaha 🌾</p><div class="ld"></div></div>
-<div id="toast"></div>
 
-<div class="auth-ov" id="authOv">
-<div class="auth-card">
-    <div class="auth-hd"><div class="ah-icon">🏪</div><h2 id="authTitle">Connexion</h2></div>
-    <div class="auth-tabs"><button class="auth-tab active" onclick="authTab('login',this)">Connexion</button><button class="auth-tab" onclick="authTab('register',this)">Inscription</button></div>
-    <div class="auth-bd" id="loginF">
-        <div class="fg"><label>📱 Téléphone <span class="req">*</span></label><input class="fi" type="tel" placeholder="Votre numéro" id="lPh"></div>
-        <div class="fg"><label>🔒 Mot de passe <span class="req">*</span></label><input class="fi" type="password" id="lPw"></div>
-        <button class="btn btn-p btn-full" onclick="doLogin()">Se connecter</button>
+<!-- ======================== AUTH PAGE ======================== -->
+<div id="auth-page">
+  <div class="auth-container">
+    <h1><i class="fas fa-store"></i> MadaMarket</h1>
+    <p class="subtitle">Marketplace Madagascar</p>
+    <div id="auth-message"></div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="showAuthTab('login')">Connexion</div>
+      <div class="auth-tab" onclick="showAuthTab('register')">Inscription</div>
     </div>
-    <div class="auth-bd" id="registerF" style="display:none;">
-        <div class="fg"><label>Type <span class="req">*</span></label><div class="role-sel"><div class="role-c sel" onclick="selRole(this,'vendeur')"><div class="rc-icon">🧑‍🌾</div><div class="rc-title">Vendeur</div></div><div class="role-c" onclick="selRole(this,'acheteur')"><div class="rc-icon">🛒</div><div class="rc-title">Acheteur</div></div></div></div>
-        <div class="fg"><label>📸 Photo portrait <span class="req">* OBLIGATOIRE</span></label><div class="photo-zone" id="photoZone" onclick="document.getElementById('photoIn').click()"><div class="photo-ph" id="photoPh">📷</div><img class="photo-prev" id="photoPrev"><div style="font-size:12px;font-weight:700;">Photo visage obligatoire</div></div><input type="file" id="photoIn" accept="image/*" capture="user" style="display:none;" onchange="handlePhoto(this)"></div>
-        <div class="fg"><label>👤 Nom <span class="req">*</span></label><input class="fi" id="rName"></div>
-        <div class="fg"><label>📱 Téléphone <span class="req">*</span></label><input class="fi" id="rPh"></div>
-        <div class="form-row"><div class="fg"><label>Région</label><select class="fi" id="rReg"><option value="">--</option><option>Analamanga</option><option>Vakinankaratra</option><option>Itasy</option><option>Haute Matsiatra</option><option>Atsinanana</option><option>Boeny</option><option>DIANA</option><option>SAVA</option></select></div><div class="fg"><label>Commune</label><input class="fi" id="rCom"></div></div>
-        <div class="fg"><label>🔒 Mot de passe <span class="req">*</span></label><input class="fi" type="password" id="rPw"></div>
-        <button class="btn btn-p btn-full" onclick="doRegister()">S'inscrire</button>
+    <!-- Login Form -->
+    <div id="login-form">
+      <div style="margin-bottom:12px">
+        <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">Email</label>
+        <input type="email" id="login-email" placeholder="votre@email.com">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">Mot de passe</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+      </div>
+      <button class="btn-primary btn-block" onclick="handleLogin()">
+        <i class="fas fa-sign-in-alt"></i> Se Connecter
+      </button>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text2)">
+        Admin: admin@mada.mg / admin123
+      </p>
     </div>
-</div></div>
-
-<div class="topbar" id="topbar" style="display:none;">
-    <button class="ib" id="sbTgl" onclick="toggleSB()" style="display:none;">☰</button>
-    <div class="tb-brand" onclick="goP('home')"><span class="icon">🏪</span><div><h1>MarchéPaysan</h1></div></div>
-    <div class="tb-search"><span class="si">🔍</span><input id="gSearch" placeholder="Rechercher..." oninput="doSearch(this.value)"></div>
-    <div class="tb-act"><button class="ib" onclick="goP('notif')">🔔<span class="badge" id="nBdg" style="display:none;">0</span></button><button class="av-btn" onclick="goP('profile')" id="topAv">👤</button></div>
+    <!-- Register Form -->
+    <div id="register-form" class="hidden">
+      <input type="text" id="reg-name" placeholder="Nom complet">
+      <input type="email" id="reg-email" placeholder="Email">
+      <input type="tel" id="reg-phone" placeholder="Téléphone (+261...)">
+      <input type="text" id="reg-city" placeholder="Ville">
+      <input type="password" id="reg-password" placeholder="Mot de passe">
+      <input type="password" id="reg-password2" placeholder="Confirmer mot de passe">
+      <button class="btn-primary btn-block" onclick="handleRegister()">
+        <i class="fas fa-user-plus"></i> S'inscrire
+      </button>
+    </div>
+  </div>
 </div>
 
-<div class="app" id="appL" style="display:none;">
-<aside class="sidebar" id="sidebar"><div class="sb-t">CATÉGORIES</div><div id="sbCats"></div><div class="sb-div"></div><div class="sb-t">NAVIGATION</div>
-<button class="sb-n on" onclick="goP('home',this)" data-p="home">🏠 Accueil</button>
-<button class="sb-n" onclick="goP('forum',this)" data-p="forum">🗣️ Forum</button>
-<button class="sb-n" onclick="goP('sell',this)" data-p="sell" id="nSell" style="display:none;">📦 Mes Produits</button>
-<button class="sb-n" onclick="goP('orders',this)" data-p="orders">📋 Commandes</button>
-<button class="sb-n" onclick="goP('profile',this)" data-p="profile">👤 Profil</button>
-<button class="sb-n" onclick="goP('admin',this)" data-p="admin" id="nAdmin" style="display:none;">🛡️ Admin<span class="sn-b" id="aPB">0</span></button>
-<div class="sb-div"></div><button class="sb-n" onclick="doLogout()" style="color:var(--d);">🚪 Déconnexion</button></aside>
-
-<main class="main" id="mainC">
-    <div class="pg on" id="pg-home"><div class="sec-t">🔥 Produits du jour</div><div class="pgrid" id="homeP"></div></div>
-    <div class="pg" id="pg-detail"><div id="detailBox"></div></div>
-    <div class="pg" id="pg-add-product">
-        <div class="pg-hd"><h2>➕ Publier un produit</h2></div>
-        <div style="max-width:520px;">
-            <div class="fg"><label>📸 Photos du produit (max 5) <span class="req">* Min 1</span></label><p style="font-size:10px;color:var(--tl);margin-bottom:6px;">Montrez la qualité !</p><div class="prod-photos" id="prodPhotos"><div class="prod-photo-add" onclick="document.getElementById('prodPhotoIn').click()"><span style="font-size:24px;">📷</span><span>Ajouter</span></div></div><input type="file" id="prodPhotoIn" accept="image/*" capture="environment" style="display:none;" onchange="addProdPhoto(this)" multiple></div>
-
-            <!-- ★★★ CATEGORIES WITH ALL TYPES ★★★ -->
-            <div class="fg"><label>📂 Catégorie <span class="req">*</span></label>
-            <select class="fi" id="apCat" onchange="fillNames()">
-                <option value="">-- Choisir une catégorie --</option>
-                <optgroup label="🌾 AGRICULTURE">
-                    <option value="legumes">🥬 Légumes / Legioma</option>
-                    <option value="fruits">🍎 Fruits / Voankazo</option>
-                    <option value="cereales">🌾 Céréales & Riz / Vary</option>
-                    <option value="tubercules">🥔 Tubercules / Mangahazo</option>
-                    <option value="epices">🌶️ Épices / Zava-manitra</option>
-                    <option value="herbes">🌿 Herbes & Plantes / Anana</option>
-                </optgroup>
-                <optgroup label="🐄 ÉLEVAGE">
-                    <option value="viande">🥩 Viande / Hena</option>
-                    <option value="volaille">🐔 Volaille / Akoho</option>
-                    <option value="poisson">🐟 Poisson & Fruits de mer / Trondro</option>
-                    <option value="lait">🥛 Produits laitiers / Ronono</option>
-                    <option value="oeufs">🥚 Œufs / Atody</option>
-                    <option value="miel">🍯 Miel / Tantely</option>
-                    <option value="animaux">🐄 Animaux vivants / Biby</option>
-                </optgroup>
-                <optgroup label="🏗️ CONSTRUCTION & MATÉRIAUX">
-                    <option value="construction">🏗️ Construction / Fanorenana</option>
-                    <option value="bois">🪵 Bois & Planches / Hazo</option>
-                </optgroup>
-                <optgroup label="🛠️ ARTISANAT & DIVERS">
-                    <option value="artisanat">🧶 Artisanat / Asa tanana</option>
-                    <option value="textile">🧵 Textile & Vêtements / Lamba</option>
-                    <option value="menage">🧹 Ménage & Entretien / Fitaovam-pianakaviana</option>
-                    <option value="outils">🔧 Outils & Équipement / Fitaovana</option>
-                    <option value="charbon">🔥 Charbon & Combustible / Saribao</option>
-                </optgroup>
-                <optgroup label="📦 AUTRE">
-                    <option value="divers">📦 Autre / Hafa (saisir librement)</option>
-                </optgroup>
-            </select></div>
-
-            <div class="fg"><label>📝 Produit <span class="req">*</span></label><select class="fi" id="apName" onchange="toggleCustom()"><option value="">-- Choisir catégorie d'abord --</option></select></div>
-
-            <!-- CUSTOM NAME FIELDS -->
-            <div id="customGrp" style="display:none;">
-                <div class="custom-field-box">
-                    <label>✏️ Nom du produit (FR) <span class="req">*</span></label>
-                    <input class="fi" id="apCFR" placeholder="Ex: Planche, Ciment, Charbon..." style="margin-top:4px;">
-                    <label style="margin-top:8px;">✏️ Anarana (MG)</label>
-                    <input class="fi" id="apCMG" placeholder="Ex: Hazo fisaka, Simanty..." style="margin-top:4px;">
-                    <label style="margin-top:8px;">🎨 Emoji/Icône</label>
-                    <select class="fi" id="apCIcon" style="margin-top:4px;">
-                        <option value="📦">📦 Colis</option>
-                        <option value="🪵">🪵 Bois</option>
-                        <option value="🧱">🧱 Brique</option>
-                        <option value="🏗️">🏗️ Construction</option>
-                        <option value="🔧">🔧 Outil</option>
-                        <option value="🧶">🧶 Artisanat</option>
-                        <option value="👕">👕 Vêtement</option>
-                        <option value="🧹">🧹 Ménage</option>
-                        <option value="🔥">🔥 Feu</option>
-                        <option value="💎">💎 Précieux</option>
-                        <option value="🌱">🌱 Plante</option>
-                        <option value="🐄">🐄 Animal</option>
-                        <option value="🍶">🍶 Liquide</option>
-                        <option value="🛒">🛒 Produit</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row"><div class="fg"><label>Quantité <span class="req">*</span></label><input class="fi" type="number" id="apQty" placeholder="50"></div><div class="fg"><label>Unité</label><select class="fi" id="apUnit"><option>kg</option><option>sac</option><option>tas</option><option>pièce</option><option>botte</option><option>litre</option><option>tête</option><option>kapoaka</option><option>mètre</option><option>planche</option><option>seau</option><option>paquet</option><option>lot</option><option>charrette</option></select></div></div>
-            <div class="form-row"><div class="fg"><label>💰 Prix (Ar) <span class="req">*</span></label><input class="fi" type="number" id="apPrice" placeholder="2000"></div><div class="fg"><label>Par</label><select class="fi" id="apPU"><option>kg</option><option>sac</option><option>tas</option><option>pièce</option><option>botte</option><option>litre</option><option>tête</option><option>kapoaka</option><option>mètre</option><option>planche</option><option>seau</option><option>paquet</option><option>lot</option><option>charrette</option></select></div></div>
-            <div class="fg"><label>📝 Description</label><textarea class="fi" id="apDesc" placeholder="Décrivez qualité, dimensions, provenance..."></textarea></div>
-            <button class="btn btn-p btn-full" onclick="addProduct()">📤 Publier</button>
+<!-- ======================== MAIN APP ======================== -->
+<div id="main-app" class="hidden">
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="logo"><i class="fas fa-store"></i> MadaMarket</div>
+      <nav id="main-nav">
+        <button class="nav-btn active" onclick="showPage('accueil')"><i class="fas fa-home"></i> Accueil</button>
+        <button class="nav-btn" onclick="showPage('produits')"><i class="fas fa-box"></i> Produits</button>
+        <button class="nav-btn" onclick="showPage('forum')"><i class="fas fa-comments"></i> Forum</button>
+        <button class="nav-btn" onclick="showPage('profil')"><i class="fas fa-user"></i> Profil</button>
+        <button class="nav-btn" onclick="showPage('menu')"><i class="fas fa-dice"></i> Roulette</button>
+        <button class="nav-btn" id="nav-admin" onclick="showPage('admin')"><i class="fas fa-shield-alt"></i> Admin</button>
+      </nav>
+      <div class="header-right">
+        <div class="header-stars" id="header-stars">
+          <i class="fas fa-star" style="color:var(--gold)"></i> <span id="header-star-count">0</span>
         </div>
+        <div style="position:relative" id="notif-wrapper">
+          <button class="notif-btn" onclick="toggleNotifDropdown()">
+            <i class="fas fa-bell"></i>
+            <span class="badge hidden" id="notif-badge">0</span>
+          </button>
+          <div class="notif-dropdown hidden" id="notif-dropdown"></div>
+        </div>
+        <div class="header-user">
+          <div class="avatar" id="header-avatar">A</div>
+          <span id="header-name">Admin</span>
+        </div>
+        <button class="btn-sm btn-danger" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
     </div>
-    <div class="pg" id="pg-sell"><div class="pg-hd" style="display:flex;justify-content:space-between;align-items:center;"><h2>📦 Mes Produits</h2><button class="btn btn-p btn-sm" onclick="goP('add-product')">➕</button></div><div id="sellL"></div></div>
-    <div class="pg" id="pg-orders"><div class="pg-hd"><h2>📋 Commandes</h2></div><div class="ot"><button class="ot-b on" onclick="rOrders('new',this)">🆕 Nouvelles</button><button class="ot-b" onclick="rOrders('progress',this)">📦 En cours</button><button class="ot-b" onclick="rOrders('done',this)">✅ Terminées</button></div><div id="orderL"></div></div>
-    <div class="pg" id="pg-forum"><div class="pg-hd" style="display:flex;justify-content:space-between;align-items:center;"><h2>🗣️ Forum</h2><button class="btn btn-p btn-sm" onclick="goP('new-post')">✏️</button></div><div class="ff-row"><button class="ff on" onclick="rForum('all',this)">Tous</button><button class="ff" onclick="rForum('question',this)">❓</button><button class="ff" onclick="rForum('astuce',this)">💡</button><button class="ff" onclick="rForum('urgence',this)">🚨</button></div><div id="forumL"></div></div>
-    <div class="pg" id="pg-forum-detail"><button class="btn btn-s btn-sm" onclick="goP('forum')">← Retour</button><div id="fdBox" style="margin-top:8px;"></div><div id="frBox"></div><div class="reply-in"><input placeholder="Réponse..." id="repIn"><button onclick="addReply()">▶</button></div></div>
-    <div class="pg" id="pg-new-post"><div class="pg-hd"><h2>✏️ Publication</h2></div><div style="max-width:520px;"><div class="fg"><label>Type</label><div class="chk-grp" id="ptypes"><span class="chk on" onclick="selPT(this,'question')">❓ Question</span><span class="chk" onclick="selPT(this,'astuce')">💡 Astuce</span><span class="chk" onclick="selPT(this,'urgence')">🚨 Urgence</span><span class="chk" onclick="selPT(this,'succes')">🎉 Succès</span></div></div><div class="fg"><label>Titre <span class="req">*</span></label><input class="fi" id="fpTi"></div><div class="fg"><label>Contenu <span class="req">*</span></label><textarea class="fi" id="fpCo" style="min-height:90px;"></textarea></div><button class="btn btn-p btn-full" onclick="pubPost()">📤</button></div></div>
-    <div class="pg" id="pg-notif"><div class="pg-hd"><h2>🔔 Notifications</h2></div><div id="notifL"></div></div>
-    <div class="pg" id="pg-profile"><div id="profBox"></div></div>
-    <div class="pg" id="pg-admin"><div class="pg-hd"><h2>🛡️ Administration</h2></div><div class="admin-tabs"><button class="at on" onclick="aTab('stats',this)">📊 Stats</button><button class="at" onclick="aTab('pending',this)" id="atPend">⏳ En attente</button><button class="at" onclick="aTab('users',this)">👥 Utilisateurs</button><button class="at" onclick="aTab('products',this)">📦 Produits</button></div><div id="adminBox"></div></div>
-</main></div>
+  </header>
 
-<div class="admin-fab" id="adminFab"><button class="afb" onclick="document.getElementById('adminMenu').classList.toggle('show')">🛡️<span class="fab-b" id="fabB">0</span></button><div class="afm" id="adminMenu"><button class="afmi" onclick="goP('admin');aTab('pending',document.getElementById('atPend'));">⏳ En attente</button><button class="afmi" onclick="goP('admin');aTab('users',null);">👥 Utilisateurs</button></div></div>
-<div class="bnav" id="bnav" style="display:none;"><div class="bnav-in"><button class="bn on" onclick="goP('home');bnA(this)"><span class="bn-icon">🏠</span>Accueil</button><button class="bn" onclick="goP('forum');bnA(this)"><span class="bn-icon">🗣️</span>Forum</button><button class="bn" onclick="goP('sell');bnA(this)" id="bnSell" style="display:none;"><span class="bn-icon">📦</span>Vendre</button><button class="bn" onclick="goP('orders');bnA(this)"><span class="bn-icon">📋</span>Cmd</button><button class="bn" onclick="goP('profile');bnA(this)"><span class="bn-icon">👤</span>Profil</button></div></div>
-<div id="sbBD" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:840;" onclick="toggleSB()"></div>
-<div class="modal-ov" id="modal"><div class="modal-box"><div class="modal-hd"><h3 id="mTitle"></h3><button class="modal-x" onclick="closeM()">✕</button></div><div class="modal-bd" id="mBody"></div></div></div>
+  <!-- Main Content -->
+  <main>
+    <!-- ======== ACCUEIL ======== -->
+    <section id="page-accueil">
+      <h1 class="page-title">Tableau de Bord</h1>
+      <p class="page-subtitle">Bienvenue sur MadaMarket</p>
+      <div class="stats-grid" id="dashboard-stats"></div>
+      <div id="dashboard-content"></div>
+    </section>
+
+    <!-- ======== PRODUITS ======== -->
+    <section id="page-produits" class="hidden">
+      <div class="flex-between mb-2">
+        <div>
+          <h1 class="page-title">Produits</h1>
+          <p class="page-subtitle">Marketplace</p>
+        </div>
+        <button class="btn-primary" onclick="showAddProduct()"><i class="fas fa-plus"></i> Ajouter Produit</button>
+      </div>
+      <!-- Add Product Form -->
+      <div id="add-product-form" class="card hidden">
+        <h3 class="mb-2">Nouveau Produit</h3>
+        <input type="text" id="prod-name" placeholder="Nom du produit">
+        <textarea id="prod-desc" placeholder="Description" rows="3"></textarea>
+        <input type="number" id="prod-price" placeholder="Prix (Ar)">
+        <select id="prod-category">
+          <option value="">Catégorie</option>
+          <option>Électronique</option>
+          <option>Vêtements</option>
+          <option>Maison</option>
+          <option>Alimentation</option>
+          <option>Services</option>
+          <option>Autre</option>
+        </select>
+        <div class="flex">
+          <button class="btn-success" onclick="addProduct()"><i class="fas fa-check"></i> Soumettre</button>
+          <button class="btn-danger" onclick="hideAddProduct()"><i class="fas fa-times"></i> Annuler</button>
+        </div>
+      </div>
+      <div class="product-grid" id="products-list"></div>
+    </section>
+
+    <!-- ======== FORUM ======== -->
+    <section id="page-forum" class="hidden">
+      <div class="flex-between mb-2">
+        <div>
+          <h1 class="page-title">Forum</h1>
+          <p class="page-subtitle">Discussions communautaires</p>
+        </div>
+        <button class="btn-primary" onclick="showAddPost()"><i class="fas fa-edit"></i> Nouveau Post</button>
+      </div>
+      <div id="add-post-form" class="card hidden">
+        <h3 class="mb-2">Nouveau Post</h3>
+        <input type="text" id="post-title" placeholder="Titre du post">
+        <textarea id="post-content" placeholder="Contenu..." rows="4"></textarea>
+        <div class="flex">
+          <button class="btn-success" onclick="addPost()"><i class="fas fa-paper-plane"></i> Publier</button>
+          <button class="btn-danger" onclick="hideAddPost()"><i class="fas fa-times"></i> Annuler</button>
+        </div>
+      </div>
+      <div id="forum-posts"></div>
+    </section>
+
+    <!-- ======== PROFIL ======== -->
+    <section id="page-profil" class="hidden">
+      <h1 class="page-title text-center">Mon Profil</h1>
+      <p class="page-subtitle text-center">Informations personnelles</p>
+      <div class="profile-card" id="profile-content"></div>
+    </section>
+
+    <!-- ======== MENU / ROULETTE ======== -->
+    <section id="page-menu" class="hidden">
+      <h1 class="page-title text-center"><i class="fas fa-dice"></i> Roulette MadaMarket</h1>
+      <p class="page-subtitle text-center">Toutes les heures, un membre actif gagne le jackpot de 20 étoiles!</p>
+      <div class="card text-center" style="max-width:600px;margin:0 auto">
+        <div class="roulette-timer">
+          <div>Prochaine roulette dans</div>
+          <span class="time" id="roulette-countdown">--:--</span>
+          <div style="margin-top:8px;font-size:12px">Heure Madagascar (UTC+3)</div>
+        </div>
+        <div id="roulette-history" class="mt-3"></div>
+        <button class="btn-warning mt-2" onclick="triggerRoulette()" id="btn-test-roulette" style="font-size:12px">
+          <i class="fas fa-flask"></i> Tester la Roulette (Demo)
+        </button>
+      </div>
+    </section>
+
+    <!-- ======== ADMIN ======== -->
+    <section id="page-admin" class="hidden">
+      <h1 class="page-title"><i class="fas fa-shield-alt"></i> Administration</h1>
+      <p class="page-subtitle">Gestion de la plateforme</p>
+      <div class="stats-grid" id="admin-stats"></div>
+      <div class="admin-tabs" id="admin-tabs">
+        <button class="admin-tab active" onclick="showAdminTab('overview')"><i class="fas fa-bell"></i> Notifications <span class="badge hidden" id="tab-notif-count">0</span></button>
+        <button class="admin-tab" onclick="showAdminTab('registrations')"><i class="fas fa-user-clock"></i> Inscriptions <span class="badge hidden" id="tab-reg-count">0</span></button>
+        <button class="admin-tab" onclick="showAdminTab('products')"><i class="fas fa-box"></i> Produits <span class="badge hidden" id="tab-prod-count">0</span></button>
+        <button class="admin-tab" onclick="showAdminTab('members')"><i class="fas fa-users"></i> Membres</button>
+        <button class="admin-tab" onclick="showAdminTab('orders')"><i class="fas fa-shopping-cart"></i> Commandes <span class="badge hidden" id="tab-order-count">0</span></button>
+        <button class="admin-tab" onclick="showAdminTab('forum')"><i class="fas fa-comments"></i> Forum <span class="badge hidden" id="tab-forum-count">0</span></button>
+        <button class="admin-tab" onclick="showAdminTab('stars')"><i class="fas fa-star"></i> Étoiles</button>
+      </div>
+      <div id="admin-content"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ======================== ROULETTE OVERLAY ======================== -->
+<div id="roulette-overlay" class="hidden">
+  <div class="roulette-container">
+    <div class="roulette-title"><i class="fas fa-trophy"></i> JACKPOT ROULETTE</div>
+    <div class="roulette-subtitle">20 Étoiles à gagner!</div>
+    <div class="roulette-wheel" id="roulette-wheel">
+      <div class="roulette-pointer"><i class="fas fa-caret-right"></i></div>
+      <div class="roulette-names" id="roulette-names"></div>
+    </div>
+    <div id="roulette-status" style="font-size:18px;margin-top:16px"></div>
+  </div>
+</div>
 
 <script>
-// ★★★ FULL PRODUCT DATABASE WITH ALL CATEGORIES ★★★
-const PDB={
-    legumes:[{fr:"Tomates",mg:"Voatabia",icon:"🍅"},{fr:"Oignons",mg:"Tongolo",icon:"🧅"},{fr:"Carottes",mg:"Karaoty",icon:"🥕"},{fr:"Choux",mg:"Laisoa",icon:"🥬"},{fr:"Haricots verts",mg:"Tsaramaso",icon:"🫘"},{fr:"Poivrons",mg:"Poavro",icon:"🫑"},{fr:"Aubergines",mg:"Baranjely",icon:"🍆"},{fr:"Piments",mg:"Sakay",icon:"🌶️"},{fr:"Brèdes",mg:"Anana",icon:"🥬"},{fr:"Concombres",mg:"Konkomba",icon:"🥒"},{fr:"Salade",mg:"Salady",icon:"🥬"},{fr:"Cresson",mg:"Anandrano",icon:"🌿"},{fr:"Petits pois",mg:"Petipoa",icon:"🟢"},{fr:"Gombo",mg:"Gombo",icon:"🟢"}],
-    fruits:[{fr:"Mangues",mg:"Manga",icon:"🥭"},{fr:"Bananes",mg:"Akondro",icon:"🍌"},{fr:"Ananas",mg:"Mananasy",icon:"🍍"},{fr:"Litchis",mg:"Letchi",icon:"🔴"},{fr:"Oranges",mg:"Voasary",icon:"🍊"},{fr:"Papayes",mg:"Papay",icon:"🟠"},{fr:"Avocats",mg:"Zavoka",icon:"🥑"},{fr:"Corossol",mg:"Voantsojy",icon:"🟢"},{fr:"Fraises",mg:"Frezy",icon:"🍓"},{fr:"Pastèques",mg:"Voatango",icon:"🍉"},{fr:"Pommes",mg:"Paoma",icon:"🍎"},{fr:"Noix de coco",mg:"Voanio",icon:"🥥"}],
-    cereales:[{fr:"Riz blanc",mg:"Vary fotsy",icon:"🍚"},{fr:"Riz rouge",mg:"Vary mena",icon:"🌾"},{fr:"Riz paddy",mg:"Vary akotry",icon:"🌾"},{fr:"Maïs",mg:"Katsaka",icon:"🌽"},{fr:"Sorgho",mg:"Ampemby",icon:"🌾"},{fr:"Blé",mg:"Ble",icon:"🌾"}],
-    tubercules:[{fr:"Manioc",mg:"Mangahazo",icon:"🥔"},{fr:"Patates douces",mg:"Vomanga",icon:"🍠"},{fr:"Pommes de terre",mg:"Ovy",icon:"🥔"},{fr:"Ignames",mg:"Oviala",icon:"🥔"},{fr:"Arachides",mg:"Voanjo",icon:"🥜"},{fr:"Taro",mg:"Saonjo",icon:"🥔"}],
-    epices:[{fr:"Vanille",mg:"Vanila",icon:"🟤"},{fr:"Cannelle",mg:"Kanely",icon:"🟫"},{fr:"Girofle",mg:"Jirofo",icon:"🟤"},{fr:"Poivre",mg:"Dipoavatra",icon:"⚫"},{fr:"Curcuma",mg:"Tamotamo",icon:"🟡"},{fr:"Gingembre",mg:"Sakamalao",icon:"🫚"},{fr:"Piment fort",mg:"Sakay masiaka",icon:"🌶️"}],
-    herbes:[{fr:"Persil",mg:"Persily",icon:"🌿"},{fr:"Basilic",mg:"Basilika",icon:"🌿"},{fr:"Moringa",mg:"Ananambo",icon:"🌿"},{fr:"Ravintsara",mg:"Ravintsara",icon:"🌿"},{fr:"Citronnelle",mg:"Veromanitra",icon:"🌿"},{fr:"Menthe",mg:"Menta",icon:"🌿"}],
-    viande:[{fr:"Bœuf",mg:"Hena omby",icon:"🥩"},{fr:"Porc",mg:"Hena kisoa",icon:"🥩"},{fr:"Mouton",mg:"Hena ondry",icon:"🐑"},{fr:"Chèvre",mg:"Hena osy",icon:"🐐"}],
-    volaille:[{fr:"Poulet vivant",mg:"Akoho velona",icon:"🐔"},{fr:"Poulet abattu",mg:"Akoho voavono",icon:"🍗"},{fr:"Canard",mg:"Gana",icon:"🦆"},{fr:"Dinde",mg:"Vorontsiloza",icon:"🦃"},{fr:"Oie",mg:"Gisa",icon:"🪿"},{fr:"Caille",mg:"Papelika",icon:"🐦"}],
-    poisson:[{fr:"Tilapia",mg:"Tilapia",icon:"🐟"},{fr:"Carpe",mg:"Karpa",icon:"🐟"},{fr:"Crevettes",mg:"Makamba",icon:"🦐"},{fr:"Crabe",mg:"Drakaka",icon:"🦀"},{fr:"Anguille",mg:"Amalona",icon:"🐍"}],
-    lait:[{fr:"Lait frais",mg:"Ronono vaovao",icon:"🥛"},{fr:"Yaourt",mg:"Yaorta",icon:"🥛"},{fr:"Fromage",mg:"Fromazy",icon:"🧀"},{fr:"Beurre",mg:"Dibera",icon:"🧈"}],
-    oeufs:[{fr:"Œufs de poule",mg:"Atodin'akoho",icon:"🥚"},{fr:"Œufs de cane",mg:"Atodin-gana",icon:"🥚"}],
-    miel:[{fr:"Miel pur",mg:"Tantely madio",icon:"🍯"},{fr:"Cire d'abeille",mg:"Savodin-tantely",icon:"🟡"}],
-    // ★★★ ANIMAUX VIVANTS ★★★
-    animaux:[{fr:"Vache",mg:"Omby",icon:"🐄"},{fr:"Zébu",mg:"Omby gasy",icon:"🐂"},{fr:"Mouton",mg:"Ondry",icon:"🐑"},{fr:"Chèvre",mg:"Osy",icon:"🐐"},{fr:"Cochon",mg:"Kisoa",icon:"🐷"},{fr:"Lapin",mg:"Bitro",icon:"🐇"},{fr:"Cheval",mg:"Soavaly",icon:"🐴"}],
-    // ★★★ CONSTRUCTION ★★★
-    construction:[{fr:"Ciment",mg:"Simanty",icon:"🧱"},{fr:"Sable",mg:"Fasika",icon:"🏖️"},{fr:"Gravier",mg:"Vatokely",icon:"🪨"},{fr:"Briques",mg:"Biriky",icon:"🧱"},{fr:"Tôle",mg:"Tôle",icon:"🏗️"},{fr:"Carreaux",mg:"Karô",icon:"🔲"},{fr:"Fer à béton",mg:"Vy",icon:"🔩"},{fr:"Peinture",mg:"Loko",icon:"🎨"},{fr:"Clous",mg:"Fantsika",icon:"📌"},{fr:"Vis",mg:"Vis",icon:"🔩"},{fr:"Tuyaux PVC",mg:"Tuyau",icon:"🔧"},{fr:"Fil de fer",mg:"Tareby vy",icon:"🔗"}],
-    // ★★★ BOIS & PLANCHES ★★★
-    bois:[{fr:"Planches de pin",mg:"Hazo fisaka pin",icon:"🪵"},{fr:"Planches d'eucalyptus",mg:"Hazo fisaka kininina",icon:"🪵"},{fr:"Madriers",mg:"Hazo lehibe",icon:"🪵"},{fr:"Chevrons",mg:"Hazo farafara",icon:"🪵"},{fr:"Contreplaqué",mg:"Contreplaqué",icon:"🪵"},{fr:"Bambou",mg:"Volondrano",icon:"🎋"},{fr:"Bois de chauffe",mg:"Kitay",icon:"🪵"},{fr:"Charbon de bois",mg:"Saribao",icon:"🔥"},{fr:"Palettes",mg:"Palette",icon:"📦"}],
-    // ★★★ ARTISANAT ★★★
-    artisanat:[{fr:"Vannerie / Paniers",mg:"Harona",icon:"🧺"},{fr:"Nattes",mg:"Tsihy",icon:"🧶"},{fr:"Poterie",mg:"Vilany tany",icon:"🏺"},{fr:"Broderie",mg:"Kojakojanala",icon:"🧵"},{fr:"Sculpture bois",mg:"Sary vongana",icon:"🗿"},{fr:"Bijoux artisanaux",mg:"Firavaka",icon:"💍"},{fr:"Chapeau raphia",mg:"Satroka rafia",icon:"👒"},{fr:"Sac raphia",mg:"Kitapo rafia",icon:"👜"}],
-    // ★★★ TEXTILE ★★★
-    textile:[{fr:"Soie sauvage",mg:"Landy",icon:"🧵"},{fr:"Lamba",mg:"Lamba",icon:"👘"},{fr:"Rabane",mg:"Rabane",icon:"🧶"},{fr:"Coton brut",mg:"Landihazo",icon:"🧵"},{fr:"Vêtements d'occasion",mg:"Friperie",icon:"👕"},{fr:"Tissus",mg:"Lamba",icon:"🧵"}],
-    // ★★★ MÉNAGE ★★★
-    menage:[{fr:"Savon artisanal",mg:"Savony",icon:"🧼"},{fr:"Balai",mg:"Fanadiovana",icon:"🧹"},{fr:"Huile essentielle",mg:"Menaka manitra",icon:"🍶"},{fr:"Encens",mg:"Emboka",icon:"🕯️"},{fr:"Charbon",mg:"Saribao",icon:"🔥"}],
-    // ★★★ OUTILS ★★★
-    outils:[{fr:"Houe / Angady",mg:"Angady",icon:"⛏️"},{fr:"Machette / Antsy",mg:"Antsy be",icon:"🔪"},{fr:"Bêche",mg:"Piky",icon:"🔧"},{fr:"Arrosoir",mg:"Fizondrano",icon:"🚿"},{fr:"Brouette",mg:"Barôta",icon:"🛒"},{fr:"Pulvérisateur",mg:"Pômpy",icon:"💨"},{fr:"Filet de pêche",mg:"Harato",icon:"🥅"},{fr:"Piège",mg:"Fandrika",icon:"🪤"}],
-    // ★★★ CHARBON & COMBUSTIBLE ★★★
-    charbon:[{fr:"Charbon de bois",mg:"Saribao",icon:"🔥"},{fr:"Bois de chauffe",mg:"Kitay",icon:"🪵"},{fr:"Pétrole lampant",mg:"Pétrole",icon:"🛢️"},{fr:"Bougie",mg:"Labozia",icon:"🕯️"}],
-    // ★★★ DIVERS - CATÉGORIE LIBRE ★★★
-    divers:[] // Vide = uniquement option "Autre"
+// ============================================================
+// DATABASE / STORAGE
+// ============================================================
+const DB = {
+  get: (key) => JSON.parse(localStorage.getItem('mm_' + key) || '[]'),
+  set: (key, val) => localStorage.setItem('mm_' + key, JSON.stringify(val)),
+  getOne: (key) => JSON.parse(localStorage.getItem('mm_' + key) || 'null'),
+  setOne: (key, val) => localStorage.setItem('mm_' + key, JSON.stringify(val))
 };
 
-const CATS=[
-    {k:"legumes",n:"Légumes",i:"🥬"},{k:"fruits",n:"Fruits",i:"🍎"},{k:"cereales",n:"Céréales",i:"🌾"},{k:"tubercules",n:"Tubercules",i:"🥔"},{k:"epices",n:"Épices",i:"🌶️"},{k:"herbes",n:"Herbes",i:"🌿"},
-    {k:"viande",n:"Viande",i:"🥩"},{k:"volaille",n:"Volaille",i:"🐔"},{k:"poisson",n:"Poisson",i:"🐟"},{k:"lait",n:"Lait",i:"🥛"},{k:"oeufs",n:"Œufs",i:"🥚"},{k:"miel",n:"Miel",i:"🍯"},{k:"animaux",n:"Animaux",i:"🐄"},
-    {k:"construction",n:"Construction",i:"🏗️"},{k:"bois",n:"Bois",i:"🪵"},{k:"artisanat",n:"Artisanat",i:"🧶"},{k:"textile",n:"Textile",i:"🧵"},{k:"menage",n:"Ménage",i:"🧹"},{k:"outils",n:"Outils",i:"🔧"},{k:"charbon",n:"Charbon",i:"🔥"},{k:"divers",n:"Divers",i:"📦"}
-];
-
-const DEMO="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='35' r='25' fill='%23C8E6C9'/%3E%3Ccircle cx='50' cy='95' r='40' fill='%23A5D6A7'/%3E%3Ccircle cx='42' cy='32' r='3' fill='%23333'/%3E%3Ccircle cx='58' cy='32' r='3' fill='%23333'/%3E%3Cpath d='M43 42 Q50 48 57 42' stroke='%23333' fill='none' stroke-width='2'/%3E%3C/svg%3E";
-
-let U=[
-    {id:1,name:"Admin",phone:"admin",pass:"1234",role:"admin",region:"Analamanga",commune:"Tana",status:"active",verified:true,photo:null,avatar:"🛡️"},
-    {id:2,name:"Rakoto Jean",phone:"034 12 345",pass:"1234",role:"vendeur",region:"Analamanga",commune:"Ambohimanga",status:"active",verified:true,photo:DEMO,avatar:"👨‍🌾"},
-    {id:3,name:"Noro Faly",phone:"034 56 789",pass:"1234",role:"vendeur",region:"Vakinankaratra",commune:"Antsirabe",status:"active",verified:true,photo:DEMO,avatar:"👩‍🌾"},
-    {id:4,name:"Aina Razaf",phone:"034 11 222",pass:"1234",role:"acheteur",region:"Analamanga",commune:"Tana",status:"active",verified:true,photo:DEMO,avatar:"👩"},
-];
-let P=[
-    {id:1,sid:2,icon:"🍅",name:"Tomates",mg:"Voatabia",cat:"legumes",price:2000,unit:"kg",qty:50,desc:"Bio.",views:23,rating:4.8,ok:true,photos:[],comments:[{uid:4,text:"Excellent !",time:"2h"}],status:"online"},
-    {id:2,sid:2,icon:"🧅",name:"Oignons",mg:"Tongolo",cat:"legumes",price:3000,unit:"kg",qty:200,desc:"Secs.",views:45,rating:4.5,ok:true,photos:[],comments:[],status:"online"},
-    {id:3,sid:3,icon:"🌽",name:"Maïs",mg:"Katsaka",cat:"cereales",price:1500,unit:"kg",qty:500,desc:"Sec.",views:12,rating:4.2,ok:true,photos:[],comments:[],status:"online"},
-    {id:4,sid:3,icon:"🧱",name:"Ciment",mg:"Simanty",cat:"construction",price:38000,unit:"sac",qty:100,desc:"Ciment CEM II 50kg.",views:34,rating:4.6,ok:true,photos:[],comments:[],status:"online"},
-    {id:5,sid:2,icon:"🪵",name:"Planches de pin",mg:"Hazo fisaka",cat:"bois",price:5000,unit:"planche",qty:200,desc:"2m x 20cm, bien séchées.",views:28,rating:4.4,ok:true,photos:[],comments:[],status:"online"},
-    {id:6,sid:3,icon:"🔥",name:"Charbon",mg:"Saribao",cat:"charbon",price:3000,unit:"sac",qty:50,desc:"Charbon de bois dur.",views:67,rating:4.7,ok:true,photos:[],comments:[],status:"online"},
-    {id:7,sid:2,icon:"🍚",name:"Riz blanc",mg:"Vary fotsy",cat:"cereales",price:2500,unit:"kg",qty:1000,desc:"Qualité supérieure.",views:89,rating:4.7,ok:true,photos:[],comments:[],status:"online"},
-];
-let O=[{id:"CMD-045",cid:4,sid:2,product:"20kg Tomates",amount:40000,time:"2h",status:"new"},{id:"CMD-046",cid:4,sid:3,product:"10 sacs Ciment",amount:380000,time:"1h",status:"new"}];
-let FP=[{id:1,aid:2,type:"question",cat:"Construction",title:"Meilleur ciment pour fondation ?",content:"Quel type de ciment recommandez-vous ?",likes:15,liked:false,ok:true,time:"3h",replies:[{aid:3,text:"CEM II est bien pour les fondations.",expert:true}]},{id:2,aid:3,type:"astuce",cat:"Maraîchage",title:"Basilic vs pucerons",content:"Plantez du basilic !",likes:45,liked:false,ok:true,time:"5h",replies:[]}];
-let notifs=[{id:1,msg:"📦 Commande <b>#CMD-045</b>",type:"order",read:false,time:"2h"}],modLog=[];
-let me=null,catF='all',dProd=null,curFP=null,newPT='question',dQty=1,regPhoto=null,tempProdPhotos=[],galleryIdx=0;
-
-window.onload=()=>{setTimeout(()=>document.getElementById('splash').classList.add('hide'),1800);setTimeout(()=>document.getElementById('authOv').classList.add('show'),2200);};
-
-function handlePhoto(inp){if(inp.files&&inp.files[0]){const r=new FileReader();r.onload=e=>{regPhoto=e.target.result;const p=document.getElementById('photoPrev');p.src=regPhoto;p.classList.add('vis');document.getElementById('photoPh').style.display='none';document.getElementById('photoZone').classList.add('has');};r.readAsDataURL(inp.files[0]);}}
-function addProdPhoto(inp){if(!inp.files)return;Array.from(inp.files).forEach(f=>{if(tempProdPhotos.length>=5)return;const r=new FileReader();r.onload=e=>{tempProdPhotos.push(e.target.result);renderPP();};r.readAsDataURL(f);});inp.value='';}
-function removePP(i){tempProdPhotos.splice(i,1);renderPP();}
-function renderPP(){const b=document.getElementById('prodPhotos');b.innerHTML=tempProdPhotos.map((ph,i)=>`<div class="prod-photo-item"><img src="${ph}"><button class="ppi-del" onclick="event.stopPropagation();removePP(${i})">✕</button>${i===0?'<span class="ppi-main">★ PRINCIPALE</span>':''}</div>`).join('')+(tempProdPhotos.length<5?`<div class="prod-photo-add" onclick="document.getElementById('prodPhotoIn').click()"><span style="font-size:24px;">📷</span><span>${tempProdPhotos.length}/5</span></div>`:'');}
-
-function renderGallery(photos,icon){if(!photos||!photos.length)return`<div class="pd-gallery"><div class="pd-gallery-emoji">${icon}</div></div>`;galleryIdx=0;return`<div class="pd-gallery"><img src="${photos[0]}" class="pd-gallery-main" id="galMain">${photos.length>1?`<button class="pd-gallery-nav prev" onclick="galNav(-1)">‹</button><button class="pd-gallery-nav next" onclick="galNav(1)">›</button><span class="pd-gallery-count" id="galCnt">1/${photos.length}</span>`:''}${photos.length>1?`<div class="pd-gallery-thumbs">${photos.map((ph,i)=>`<img src="${ph}" class="pd-gallery-thumb ${i===0?'active':''}" onclick="galGo(${i})">`).join('')}</div>`:''}</div>`;}
-function galNav(d){const ph=dProd.photos;if(!ph||ph.length<=1)return;galleryIdx=(galleryIdx+d+ph.length)%ph.length;galGo(galleryIdx);}
-function galGo(i){const ph=dProd.photos;galleryIdx=i;document.getElementById('galMain').src=ph[i];document.getElementById('galCnt').textContent=(i+1)+'/'+ph.length;document.querySelectorAll('.pd-gallery-thumb').forEach((t,j)=>t.classList.toggle('active',j===i));}
-
-function authTab(t,el){document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('loginF').style.display=t==='login'?'block':'none';document.getElementById('registerF').style.display=t==='register'?'block':'none';}
-function selRole(el,r){document.querySelectorAll('.role-c').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
-function doLogin(){const ph=document.getElementById('lPh').value.trim(),pw=document.getElementById('lPw').value;const u=U.find(x=>x.phone===ph&&x.pass===pw);if(!u){toast('❌ Incorrects','error');return;}if(u.status==='suspended'){toast('⛔ Suspendu','error');return;}me=u;document.getElementById('authOv').classList.remove('show');initApp();toast('🎉 Bienvenue '+u.name,'success');}
-function doRegister(){const n=document.getElementById('rName').value.trim(),ph=document.getElementById('rPh').value.trim(),pw=document.getElementById('rPw').value;if(!regPhoto){toast('❌ PHOTO OBLIGATOIRE !','error');document.getElementById('photoZone').classList.add('err');return;}if(!n||!ph||!pw||pw.length<4){toast('❌ Remplissez tout','error');return;}if(U.find(u=>u.phone===ph)){toast('❌ Numéro utilisé','error');return;}const role=document.querySelector('.role-c.sel .rc-title').textContent.includes('Vendeur')?'vendeur':'acheteur';U.push({id:Date.now(),name:n,phone:ph,pass:pw,role,region:document.getElementById('rReg').value,commune:document.getElementById('rCom').value,status:'active',verified:false,photo:regPhoto,avatar:role==='vendeur'?'🧑‍🌾':'🛒'});me=U[U.length-1];regPhoto=null;document.getElementById('authOv').classList.remove('show');initApp();toast('🎉 Bienvenue !','success');}
-function doLogout(){me=null;['topbar','appL','bnav','adminFab'].forEach(x=>document.getElementById(x).style.display='none');document.getElementById('authOv').classList.add('show');}
-
-function initApp(){document.getElementById('topbar').style.display='flex';document.getElementById('appL').style.display='flex';document.getElementById('bnav').style.display='';const isV=me.role==='vendeur',isA=me.role==='admin';document.getElementById('nSell').style.display=(isV||isA)?'':'none';document.getElementById('nAdmin').style.display=isA?'':'none';if(document.getElementById('bnSell'))document.getElementById('bnSell').style.display=(isV||isA)?'':'none';const ta=document.getElementById('topAv');ta.innerHTML=me.photo?`<img src="${me.photo}">`:(me.avatar||'👤');document.getElementById('adminFab').style.display=isA?'block':'none';document.getElementById('sbTgl').style.display='';rSBCats();rHome();updB();goP('home');}
-
-function uAv(u,sz){return u?.photo?`<img src="${u.photo}" style="width:${sz}px;height:${sz}px;border-radius:50%;object-fit:cover;border:1px solid var(--p);">`:`<span style="width:${sz}px;height:${sz}px;border-radius:50%;background:#E8F5E9;display:inline-flex;align-items:center;justify-content:center;font-size:${sz/2}px;">${u?.avatar||'👤'}</span>`;}
-function maskPh(ph){if(!ph)return'***';const d=ph.replace(/\s/g,'');return d.substring(0,3)+' ** ***';}
-function toast(m,t='info'){const el=document.getElementById('toast');el.textContent=m;el.className='show '+t;setTimeout(()=>el.className='',3500);}
-function openM(t,b){document.getElementById('mTitle').textContent=t;document.getElementById('mBody').innerHTML=b;document.getElementById('modal').classList.add('show');}
-function closeM(){document.getElementById('modal').classList.remove('show');}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeM();});
-function addNotif(msg){notifs.unshift({id:Date.now(),msg,type:'system',read:false,time:"maintenant"});updB();}
-function updB(){const nc=notifs.filter(n=>!n.read).length;const nb=document.getElementById('nBdg');nb.textContent=nc;nb.style.display=nc>0?'flex':'none';const pend=P.filter(x=>!x.ok).length+FP.filter(x=>!x.ok).length;document.getElementById('fabB').textContent=pend;document.getElementById('aPB').textContent=pend;document.getElementById('aPB').style.display=pend>0?'':'none';}
-
-function goP(p,navEl){document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));const pg=document.getElementById('pg-'+p);if(pg)pg.classList.add('on');document.querySelectorAll('.sb-n').forEach(n=>n.classList.remove('on'));if(navEl)navEl.classList.add('on');else document.querySelectorAll('.sb-n').forEach(n=>{if(n.dataset.p===p)n.classList.add('on');});document.getElementById('sidebar').classList.remove('open');document.getElementById('sbBD').style.display='none';if(p==='home')rHome();if(p==='sell')rSell();if(p==='orders')rOrders('new');if(p==='forum')rForum('all');if(p==='profile')rProf();if(p==='admin'){const pd=P.filter(x=>!x.ok).length+FP.filter(x=>!x.ok).length;if(pd>0)aTab('pending',document.getElementById('atPend'));else aTab('stats',document.querySelector('.at'));}if(p==='notif')rNotifs();if(p==='add-product'){tempProdPhotos=[];renderPP();}window.scrollTo(0,0);}
-function bnA(el){document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
-function toggleSB(){const s=document.getElementById('sidebar'),b=document.getElementById('sbBD');s.classList.toggle('open');b.style.display=s.classList.contains('open')?'block':'none';}
-
-function rSBCats(){const b=document.getElementById('sbCats');const ok=P.filter(p=>p.status==='online'&&p.ok);b.innerHTML=`<div class="sb-i ${catF==='all'?'on':''}" onclick="fCat('all',this)"><span style="font-size:14px;">📋</span> Tous <span class="si-cnt">${ok.length}</span></div>`+CATS.map(c=>`<div class="sb-i ${catF===c.k?'on':''}" onclick="fCat('${c.k}',this)"><span style="font-size:14px;">${c.i}</span> ${c.n} <span class="si-cnt">${ok.filter(p=>p.cat===c.k).length}</span></div>`).join('');}
-function fCat(k,el){catF=k;document.querySelectorAll('.sb-i').forEach(i=>i.classList.remove('on'));if(el)el.classList.add('on');rHome();}
-
-function rHome(list){const b=document.getElementById('homeP');let ps=list||P.filter(p=>p.status==='online'&&p.ok);if(catF!=='all')ps=ps.filter(p=>p.cat===catF);if(!ps.length){b.innerHTML='<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Aucun produit</div></div>';return;}
-b.innerHTML=ps.map(p=>{const s=U.find(u=>u.id===p.sid);const hasPh=p.photos&&p.photos.length>0;return`<div class="pc" onclick="showD(${p.id})"><div class="pc-img">${hasPh?`<img src="${p.photos[0]}">`:p.icon}<span class="pc-badge" style="background:${s?.verified?'var(--ok)':'var(--warn)'}">${s?.verified?'✅':'⚠️'}</span>${hasPh&&p.photos.length>1?`<span class="pc-count">📷${p.photos.length}</span>`:''}</div><div class="pc-bd"><div class="pc-name">${p.name}</div><div class="pc-mg">${p.mg}</div><div class="pc-price">${p.price.toLocaleString()} Ar/${p.unit}</div><div class="pc-meta"><span style="color:var(--sec)">⭐${p.rating}</span><span>📍${s?.commune||''}</span><span>💬${p.comments.length}</span></div><div class="pc-seller">${uAv(s||{},20)} ${s?.name||''}</div></div></div>`;}).join('');}
-function doSearch(q){q=q.toLowerCase();if(!q){rHome();return;}rHome(P.filter(p=>{const s=U.find(u=>u.id===p.sid);return p.ok&&(p.name.toLowerCase().includes(q)||p.mg.toLowerCase().includes(q)||(s?.name||'').toLowerCase().includes(q)||(s?.commune||'').toLowerCase().includes(q)||p.cat.includes(q));}));}
-
-function showD(id){dProd=P.find(p=>p.id===id);if(!dProd)return;dQty=1;rDetail();goP('detail');}
-function rDetail(){const p=dProd,s=U.find(u=>u.id===p.sid);
-document.getElementById('detailBox').innerHTML=`<button class="btn btn-s btn-sm" onclick="goP('home')" style="margin-bottom:8px;">← Retour</button>
-${renderGallery(p.photos,p.icon)}
-${!p.ok?'<div class="pend-banner" style="margin:8px 0;">⏳ EN ATTENTE</div>':''}
-<div class="pd-ct"><div class="pd-name">${p.name}</div><div class="pd-mg">${p.mg}</div>
-<div style="color:var(--sec);font-size:12px;margin:4px 0;">⭐⭐⭐⭐⭐ (${p.comments.length} avis)</div>
-<div class="pd-price">${p.price.toLocaleString()} Ar / ${p.unit}</div>
-<div style="font-size:11px;color:var(--tl);">📦 Stock: ${p.qty} ${p.unit} • 📂 ${CATS.find(c=>c.k===p.cat)?.n||p.cat}</div>
-<div class="pd-sec"><div class="pd-st">🧑‍🌾 Vendeur</div><div class="pd-seller">${uAv(s||{},50)}<div style="flex:1;"><div style="font-weight:700;font-size:13px;">${s?.name||''}</div><div style="font-size:10px;color:var(--tl);">📍 ${s?.commune||''}</div><div style="font-size:11px;color:var(--tl);margin-top:3px;">📱 ${maskPh(s?.phone)}</div><button class="btn btn-p btn-xs" style="margin-top:4px;" onclick="openM('📞 Appeler','<div style=\\'text-align:center;padding:10px;\\'>\\<p style=\\'font-size:18px;font-weight:800;color:var(--pd);\\'>${s?.phone||''}</p><a href=\\'tel:${(s?.phone||'').replace(/\\s/g,'')}\\'class=\\'btn btn-p\\' style=\\'margin-top:10px;\\'>📞 Appeler</a></div>')">📞 Appeler</button></div></div></div>
-${me?.id!==p.sid?`<div class="pd-sec"><div class="pd-st">📦 Commander</div><div class="qr"><button class="qb" onclick="chgQ(-1)">−</button><div><div class="qv" id="qV">${dQty}</div><div style="font-size:10px;color:var(--tl);text-align:center;">${p.unit}</div></div><button class="qb" onclick="chgQ(1)">+</button><div style="margin-left:auto;font-size:15px;font-weight:700;color:var(--p);" id="qT">${(dQty*p.price).toLocaleString()} Ar</div></div><button class="btn btn-p btn-full" onclick="placeO()">🛒 Acheter</button></div>`:''}
-<div class="pd-sec"><div class="pd-st">💬 Commentaires (${p.comments.length})</div>${p.comments.map(c=>{const cu=U.find(u=>u.id===c.uid);return`<div class="cmt">${uAv(cu||{},30)}<div style="flex:1;"><div style="font-weight:700;font-size:11px;">${cu?.name||'?'}</div><div style="font-size:12px;margin-top:2px;">${c.text}</div><div style="font-size:9px;color:var(--tl);">${c.time}</div></div></div>`;}).join('')}${!p.comments.length?'<p style="color:var(--tl);font-size:11px;">Aucun</p>':''}<div class="cmt-in"><input placeholder="Commentaire..." id="cmtIn"><button onclick="addCmt()">▶</button></div></div></div>`;}
-function chgQ(d){dQty=Math.max(1,Math.min(dProd.qty,dQty+d));document.getElementById('qV').textContent=dQty;document.getElementById('qT').textContent=(dQty*dProd.price).toLocaleString()+' Ar';}
-function placeO(){O.unshift({id:'CMD-'+Math.floor(Math.random()*900+100),cid:me.id,sid:dProd.sid,product:`${dQty} ${dProd.unit} ${dProd.name}`,amount:dQty*dProd.price,time:"maintenant",status:"new"});addNotif('📦 <b>'+dProd.name+'</b>');toast('✅ Commandé !','success');}
-function addCmt(){const inp=document.getElementById('cmtIn'),t=inp.value.trim();if(!t)return;dProd.comments.push({uid:me.id,text:t,time:"maintenant"});inp.value='';rDetail();toast('💬','success');}
-
-// ★★★ PRODUCT NAMES WITH "AUTRE" IN EVERY CATEGORY ★★★
-function fillNames(){
-    const c=document.getElementById('apCat').value;
-    const s=document.getElementById('apName');
-    s.innerHTML='<option value="">-- Choisir --</option>';
-    document.getElementById('customGrp').style.display='none';
-
-    if(c==='divers'){
-        // Catégorie "Divers" = directement saisie libre
-        s.innerHTML='<option value="__autre__">📝 Saisir le nom du produit</option>';
-        document.getElementById('customGrp').style.display='block';
-        return;
-    }
-
-    if(c&&PDB[c]){
-        PDB[c].forEach(p=>{
-            s.innerHTML+=`<option value="${p.fr}" data-icon="${p.icon}" data-mg="${p.mg}">${p.icon} ${p.fr} / ${p.mg}</option>`;
-        });
-        // ★ TOUJOURS ajouter "Autre" à la fin
-        s.innerHTML+=`<option value="__autre__">📝 ── Autre / Hafa (saisir manuellement) ──</option>`;
-    }
-}
-function toggleCustom(){document.getElementById('customGrp').style.display=document.getElementById('apName').value==='__autre__'?'block':'none';}
-
-function addProduct(){
-    const c=document.getElementById('apCat').value,nEl=document.getElementById('apName'),nv=nEl.value,q=document.getElementById('apQty').value,pr=document.getElementById('apPrice').value;
-    if(tempProdPhotos.length===0){toast('❌ Min 1 photo !','error');return;}
-    if(!c||!nv||!q||!pr){toast('❌ Champs requis','error');return;}
-    let name,mg,icon;
-    if(nv==='__autre__'){
-        name=document.getElementById('apCFR').value.trim();
-        mg=document.getElementById('apCMG').value.trim()||name;
-        icon=document.getElementById('apCIcon').value||'📦';
-        if(!name){toast('❌ Nom du produit requis !','error');return;}
-    }else{
-        const o=nEl.options[nEl.selectedIndex];name=nv;icon=o.dataset.icon||'📦';mg=o.dataset.mg||'';
-    }
-    P.push({id:Date.now(),sid:me.id,icon,name,mg,cat:c,price:+pr,unit:document.getElementById('apUnit').value,qty:+q,desc:document.getElementById('apDesc').value||'',views:0,rating:0,ok:false,photos:[...tempProdPhotos],comments:[],status:'online'});
-    tempProdPhotos=[];addNotif('📦 <b>'+name+'</b> en attente');updB();toast('✅ En attente validation','warning');goP('sell');
+function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+function formatDate(d) { return new Date(d).toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+function getMadagascarTime() {
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  return new Date(utc + (3 * 3600000));
 }
 
-function rSell(){const b=document.getElementById('sellL'),ps=P.filter(p=>p.sid===me?.id);if(!ps.length){b.innerHTML='<div class="empty"><div class="empty-icon">📦</div><div class="empty-title">Aucun produit</div><button class="btn btn-p" onclick="goP(\'add-product\')">➕</button></div>';return;}b.innerHTML=ps.map(p=>`<div class="mp"><div class="mp-icon">${p.photos?.length?`<img src="${p.photos[0]}">`:p.icon}</div><div class="mp-info"><div class="mp-name">${p.name} • ${CATS.find(c=>c.k===p.cat)?.n||p.cat}</div><div class="mp-det">${p.qty} ${p.unit} • ${p.price.toLocaleString()} Ar • 📷${p.photos?.length||0}</div><div class="mp-row"><span class="pill ${p.ok?'pill-ok':'pill-pen'}">${p.ok?'✅':'⏳'}</span> <span>💬${p.comments.length}</span></div><div class="mp-btns"><button onclick="showD(${p.id})">👁</button><button onclick="if(confirm('Supprimer ?')){P=P.filter(x=>x.id!==${p.id});rSell();}">🗑️</button></div></div></div>`).join('');}
-
-function rOrders(f,el){if(el){document.querySelectorAll('.ot-b').forEach(t=>t.classList.remove('on'));el.classList.add('on');}const b=document.getElementById('orderL');let os=O;if(me?.role==='vendeur')os=os.filter(o=>o.sid===me.id);else if(me?.role==='acheteur')os=os.filter(o=>o.cid===me.id);const fl=os.filter(o=>o.status===f);if(!fl.length){b.innerHTML='<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">Aucune</div></div>';return;}b.innerHTML=fl.map(o=>{const c=U.find(u=>u.id===o.cid);return`<div class="oc"><div class="oc-hd"><b>${o.id}</b><span style="font-size:10px;color:var(--tl)">${o.time}</span></div><div class="oc-bd"><div style="display:flex;align-items:center;gap:5px;">${uAv(c||{},22)}<b style="font-size:12px;">${c?.name||''}</b></div><div style="font-size:11px;color:var(--tl)">📦 ${o.product}</div><div style="font-size:14px;font-weight:700;color:var(--p);margin-top:3px;">${o.amount.toLocaleString()} Ar</div></div>${o.status==='new'?`<div class="oc-ft"><button class="btn btn-p btn-sm" style="flex:1" onclick="O.find(x=>x.id==='${o.id}').status='progress';rOrders('new');toast('✅','success');">✅</button><button class="btn btn-d btn-sm" style="flex:1" onclick="O=O.filter(x=>x.id!=='${o.id}');rOrders('new');">❌</button></div>`:o.status==='progress'?`<div class="oc-ft"><button class="btn btn-p btn-sm" style="flex:1" onclick="O.find(x=>x.id==='${o.id}').status='done';rOrders('progress');">✅ Livré</button></div>`:''}</div>`;}).join('');}
-
-function rForum(f,el){if(el){document.querySelectorAll('.ff').forEach(t=>t.classList.remove('on'));el.classList.add('on');}const b=document.getElementById('forumL');let ps=FP.filter(p=>p.ok);if(f!=='all')ps=ps.filter(p=>p.type===f);b.innerHTML=ps.map(p=>{const a=U.find(u=>u.id===p.aid);return`<div class="fc" onclick="showFD(${p.id})"><div class="fc-hd">${uAv(a||{},34)}<div><div class="fc-au" style="font-weight:700;font-size:12px;">${a?.name||''}</div><div class="fc-tm" style="font-size:9px;color:var(--tl);">${p.time} • ${p.cat}</div></div></div><div class="fc-bd"><strong>${p.title}</strong>${p.content}</div><div class="fc-ft"><button class="fc-act" onclick="event.stopPropagation();const fp=FP.find(x=>x.id===${p.id});fp.liked=!fp.liked;fp.likes+=fp.liked?1:-1;rForum('all');">${p.liked?'❤️':'👍'} ${p.likes}</button><button class="fc-act">💬 ${p.replies.length}</button></div></div>`;}).join('');}
-function showFD(id){curFP=FP.find(p=>p.id===id);if(!curFP)return;rFD();goP('forum-detail');}
-function rFD(){const p=curFP,a=U.find(u=>u.id===p.aid);document.getElementById('fdBox').innerHTML=`<div class="fc" style="cursor:default;"><div class="fc-hd">${uAv(a||{},34)}<div><div style="font-weight:700;font-size:12px;">${a?.name||''}</div><div style="font-size:9px;color:var(--tl);">${p.time}</div></div></div><div class="fc-bd"><strong style="font-size:15px;">${p.title}</strong><br>${p.content}</div></div>`;document.getElementById('frBox').innerHTML=`<div style="font-weight:700;margin:10px 0 5px;font-size:12px;">📋 Réponses (${p.replies.length})</div>`+p.replies.map(r=>{const ra=U.find(u=>u.id===r.aid);return`<div style="padding:8px 12px;margin-bottom:5px;background:var(--w);border-radius:var(--rs);border-left:3px solid ${r.expert?'var(--sec)':'var(--p)'};"><div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">${uAv(ra||{},24)}<b style="font-size:11px;">${ra?.name||''}</b>${r.expert?'<span style="padding:1px 5px;background:var(--sec);color:#fff;font-size:7px;border-radius:5px;">⭐</span>':''}</div><div style="font-size:11px;line-height:1.4;">${r.text}</div></div>`;}).join('');}
-function addReply(){const inp=document.getElementById('repIn'),t=inp.value.trim();if(!t)return;curFP.replies.push({aid:me.id,text:t,expert:false});inp.value='';rFD();toast('✅','success');}
-function selPT(el,t){document.querySelectorAll('#ptypes .chk').forEach(x=>x.classList.remove('on'));el.classList.add('on');newPT=t;}
-function pubPost(){const ti=document.getElementById('fpTi').value.trim(),co=document.getElementById('fpCo').value.trim();if(!ti||!co){toast('❌ Requis','error');return;}FP.unshift({id:Date.now(),aid:me.id,type:newPT,cat:'Général',title:ti,content:co,likes:0,liked:false,ok:false,time:"maintenant",replies:[]});updB();toast('✅ En attente','warning');goP('forum');}
-function rNotifs(){const b=document.getElementById('notifL');b.innerHTML=notifs.length?notifs.map(n=>`<div class="nf ${n.read?'':'unread'}" style="display:flex;gap:8px;padding:10px;background:var(--w);border-radius:var(--rs);margin-bottom:5px;${n.read?'':'border-left:3px solid var(--p);background:#F1F8E9;'}"><div style="width:34px;height:34px;border-radius:50%;background:#E3F2FD;display:flex;align-items:center;justify-content:center;font-size:16px;">💬</div><div><div style="font-size:11px;">${n.msg}</div><div style="font-size:9px;color:var(--tl);margin-top:2px;">${n.time}</div></div></div>`).join(''):'<div class="empty"><div class="empty-icon">🔔</div><div class="empty-title">Vide</div></div>';notifs.forEach(n=>n.read=true);updB();}
-function rProf(){const u=me;document.getElementById('profBox').innerHTML=`<div class="prof-bn">${u.photo?`<img src="${u.photo}" class="prof-pic">`:`<div class="prof-pic-ph">${u.avatar}</div>`}<div style="font-size:17px;font-weight:700;">${u.name}</div><div style="font-size:11px;opacity:.8;margin-top:2px;">📍 ${u.commune||''}, ${u.region||''}</div><div style="display:inline-block;padding:3px 12px;background:rgba(255,255,255,.2);border-radius:12px;font-size:10px;margin-top:5px;">${u.role==='vendeur'?'🧑‍🌾 Vendeur':u.role==='admin'?'🛡️ Admin':'🛒 Acheteur'}</div></div><div class="prof-stats"><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:var(--p);">${P.filter(p=>p.sid===u.id).length}</div><div style="font-size:9px;color:var(--tl);">Produits</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:var(--p);">⭐4.8</div><div style="font-size:9px;color:var(--tl);">Note</div></div></div>${u.role==='vendeur'?`<div class="pm" onclick="goP('sell')"><div class="pm-icon" style="background:#E8F5E9">📦</div><div><div class="pm-title" style="font-weight:600;font-size:12px;">Mes Produits</div></div>→</div><div class="pm" onclick="goP('add-product')"><div class="pm-icon" style="background:#F1F8E9">➕</div><div><div class="pm-title" style="font-weight:600;font-size:12px;">Publier</div></div>→</div>`:''}${u.role==='admin'?`<div class="pm" onclick="goP('admin')"><div class="pm-icon" style="background:#FEE2E2">🛡️</div><div><div class="pm-title" style="font-weight:600;font-size:12px;">Admin</div></div>→</div>`:''}<div style="text-align:center;padding:16px;"><button class="btn btn-d" onclick="doLogout()">🚪 Déconnexion</button></div>`;}
-
-function aTab(tab,el){document.querySelectorAll('.at').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');const b=document.getElementById('adminBox');const pendP=P.filter(x=>!x.ok),pendF=FP.filter(x=>!x.ok);
-if(tab==='stats'){b.innerHTML=`<div class="stat-g"><div class="stat-c"><div class="stat-v">${U.length}</div><div class="stat-l">👥 Users</div></div><div class="stat-c"><div class="stat-v" style="color:var(--warn)">${pendP.length+pendF.length}</div><div class="stat-l">⏳ En attente</div></div><div class="stat-c"><div class="stat-v">${P.length}</div><div class="stat-l">📦 Produits</div></div><div class="stat-c"><div class="stat-v">${CATS.length}</div><div class="stat-l">📂 Catégories</div></div></div>`;}
-else if(tab==='pending'){b.innerHTML=`<h3 style="margin-bottom:8px;">📦 Produits (${pendP.length})</h3>${pendP.map(p=>{const s=U.find(u=>u.id===p.sid);return`<div class="mp pend-card"><div style="width:100%;padding:5px 10px;background:#FFFBEB;font-size:10px;font-weight:700;color:var(--warn);">⏳ ${s?.name||'?'} • ${CATS.find(c=>c.k===p.cat)?.n||p.cat}</div><div class="mp-icon" style="margin-top:6px;">${p.photos?.length?`<img src="${p.photos[0]}">`:p.icon}</div><div class="mp-info" style="margin-top:6px;"><div class="mp-name">${p.name} / ${p.mg}</div><div class="mp-det">${p.price.toLocaleString()} Ar/${p.unit} • 📷${p.photos?.length||0}</div>${p.photos?.length?`<div style="display:flex;gap:4px;margin-top:4px;">${p.photos.map(ph=>`<img src="${ph}" style="width:40px;height:40px;border-radius:4px;object-fit:cover;">`).join('')}</div>`:''}<div class="mp-btns" style="margin-top:6px;"><button class="btn btn-ok btn-xs" onclick="aApprove('p',${p.id})">✅ APPROUVER</button><button class="btn btn-d btn-xs" onclick="aReject('p',${p.id})">❌ REJETER</button></div></div></div>`;}).join('')||'<p style="color:var(--tl)">✅ Rien</p>'}
-<h3 style="margin:14px 0 8px;">🗣️ Posts (${pendF.length})</h3>${pendF.map(p=>{const a=U.find(u=>u.id===p.aid);return`<div class="fc pend-card" style="cursor:default;"><div style="padding:5px 10px;background:#FFFBEB;font-size:10px;font-weight:700;color:var(--warn);">⏳ ${a?.name||'?'}</div><div class="fc-bd"><strong>${p.title}</strong>${p.content}</div><div style="padding:6px 12px;display:flex;gap:4px;"><button class="btn btn-ok btn-xs" onclick="aApprove('f',${p.id})">✅</button><button class="btn btn-d btn-xs" onclick="aReject('f',${p.id})">❌</button></div></div>`;}).join('')||'<p style="color:var(--tl)">✅ Rien</p>'}`;}
-else if(tab==='users'){b.innerHTML=`<div style="overflow-x:auto;"><table class="dtable"><thead><tr><th>Photo</th><th>Nom</th><th>Tel</th><th>Rôle</th><th>Actions</th></tr></thead><tbody>${U.filter(u=>u.role!=='admin').map(u=>`<tr><td>${u.photo?`<img src="${u.photo}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">`:(u.avatar||'👤')}</td><td><b>${u.name}</b></td><td>${u.phone}</td><td>${u.role}</td><td><button class="btn btn-xs ${u.status==='active'?'btn-w':'btn-ok'}" onclick="const usr=U.find(x=>x.id===${u.id});usr.status=usr.status==='active'?'suspended':'active';aTab('users',null);rHome();">${u.status==='active'?'⛔':'✅'}</button></td></tr>`).join('')}</tbody></table></div>`;}
-else if(tab==='products'){b.innerHTML=`<div style="overflow-x:auto;"><table class="dtable"><thead><tr><th></th><th>Produit</th><th>Catégorie</th><th>Vendeur</th><th>Prix</th><th>OK</th><th>Act</th></tr></thead><tbody>${P.map(p=>{const s=U.find(u=>u.id===p.sid);return`<tr ${!p.ok?'style="background:#FFFBEB"':''}><td>${p.photos?.length?`<img src="${p.photos[0]}" style="width:30px;height:30px;border-radius:4px;object-fit:cover;">`:`<span style="font-size:18px;">${p.icon}</span>`}</td><td><b>${p.name}</b></td><td>${CATS.find(c=>c.k===p.cat)?.n||p.cat}</td><td>${s?.name||'?'}</td><td>${p.price.toLocaleString()}</td><td>${p.ok?'✅':'⏳'}</td><td>${!p.ok?`<button class="btn btn-ok btn-xs" onclick="aApprove('p',${p.id})">✅</button>`:''}<button class="btn btn-d btn-xs" onclick="if(confirm('Supprimer ?')){P=P.filter(x=>x.id!==${p.id});rHome();rSBCats();updB();aTab('products',null);}">🗑️</button></td></tr>`;}).join('')}</tbody></table></div>`;}
+// ============================================================
+// INITIALIZATION - Seed Admin
+// ============================================================
+function initApp() {
+  let users = DB.get('users');
+  if (!users.find(u => u.role === 'admin')) {
+    users.push({
+      id: 'admin001',
+      name: 'Administrateur',
+      email: 'admin@mada.mg',
+      phone: '+261340000000',
+      city: 'Antananarivo',
+      password: 'admin123',
+      role: 'admin',
+      status: 'approved',
+      stars: 0,
+      isActive: true,
+      withdrawalRequested: false,
+      registeredAt: new Date().toISOString()
+    });
+    DB.set('users', users);
+  }
+  if (!DB.get('products').length && !DB.get('_seeded')) {
+    DB.setOne('_seeded', true);
+  }
+  startRouletteTimer();
+  setInterval(updateRouletteCountdown, 1000);
+  updateRouletteCountdown();
 }
-function aApprove(type,id){if(type==='p'){const p=P.find(x=>x.id===id);if(p)p.ok=true;}if(type==='f'){const p=FP.find(x=>x.id===id);if(p)p.ok=true;}updB();rHome();rSBCats();toast('✅ Approuvé','success');aTab('pending',document.getElementById('atPend'));}
-function aReject(type,id){if(!confirm('Rejeter ?'))return;if(type==='p')P=P.filter(x=>x.id!==id);if(type==='f')FP=FP.filter(x=>x.id!==id);updB();toast('❌ Rejeté','error');aTab('pending',document.getElementById('atPend'));}
+
+// ============================================================
+// AUTH SYSTEM
+// ============================================================
+let currentUser = null;
+
+function showAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1));
+  });
+  document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('register-form').classList.toggle('hidden', tab !== 'register');
+  document.getElementById('auth-message').innerHTML = '';
+}
+
+function showAuthMsg(msg, type) {
+  document.getElementById('auth-message').innerHTML = `<div class="auth-msg ${type}">${msg}</div>`;
+}
+
+function handleRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const city = document.getElementById('reg-city').value.trim();
+  const pw = document.getElementById('reg-password').value;
+  const pw2 = document.getElementById('reg-password2').value;
+
+  if (!name || !email || !phone || !city || !pw) return showAuthMsg('Remplissez tous les champs', 'error');
+  if (pw !== pw2) return showAuthMsg('Les mots de passe ne correspondent pas', 'error');
+  if (pw.length < 4) return showAuthMsg('Mot de passe trop court (min 4)', 'error');
+
+  let users = DB.get('users');
+  if (users.find(u => u.email === email)) return showAuthMsg('Email déjà utilisé', 'error');
+
+  const user = {
+    id: genId(), name, email, phone, city, password: pw,
+    role: 'user', status: 'pending', stars: 0, isActive: true,
+    withdrawalRequested: false,
+    registeredAt: new Date().toISOString()
+  };
+  users.push(user);
+  DB.set('users', users);
+
+  // Create notification for admin
+  addNotification('registration', `Nouvelle inscription: ${name} (${email})`, user.id);
+
+  showAuthMsg('Inscription réussie! En attente de validation par l\'admin. Vous recevrez un accès une fois approuvé.', 'success');
+  document.getElementById('reg-name').value = '';
+  document.getElementById('reg-email').value = '';
+  document.getElementById('reg-phone').value = '';
+  document.getElementById('reg-city').value = '';
+  document.getElementById('reg-password').value = '';
+  document.getElementById('reg-password2').value = '';
+}
+
+function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw = document.getElementById('login-password').value;
+  if (!email || !pw) return showAuthMsg('Remplissez tous les champs', 'error');
+
+  const users = DB.get('users');
+  const user = users.find(u => u.email === email && u.password === pw);
+  if (!user) return showAuthMsg('Email ou mot de passe incorrect', 'error');
+  if (user.status === 'pending') return showAuthMsg('Votre compte est en attente de validation par l\'administrateur', 'error');
+  if (user.status === 'rejected') return showAuthMsg('Votre inscription a été refusée', 'error');
+
+  // Mark as active
+  user.isActive = true;
+  DB.set('users', users);
+
+  currentUser = user;
+  DB.setOne('currentUser', user.id);
+  document.getElementById('auth-page').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+  renderApp();
+}
+
+function handleLogout() {
+  if (currentUser) {
+    let users = DB.get('users');
+    let u = users.find(x => x.id === currentUser.id);
+    if (u) { u.isActive = false; DB.set('users', users); }
+  }
+  currentUser = null;
+  DB.setOne('currentUser', null);
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('auth-page').classList.remove('hidden');
+  document.getElementById('auth-message').innerHTML = '';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+function addNotification(type, message, refId = null) {
+  let notifs = DB.get('notifications');
+  notifs.push({
+    id: genId(), type, message, refId,
+    read: false, createdAt: new Date().toISOString()
+  });
+  DB.set('notifications', notifs);
+}
+
+function getUnreadNotifCount() {
+  if (!currentUser || currentUser.role !== 'admin') return 0;
+  let pending = getPendingCounts();
+  return pending.registrations + pending.products + pending.comments + pending.orders + pending.withdrawals;
+}
+
+function getPendingCounts() {
+  const users = DB.get('users');
+  const products = DB.get('products');
+  const comments = DB.get('comments');
+  const orders = DB.get('orders');
+  return {
+    registrations: users.filter(u => u.status === 'pending').length,
+    products: products.filter(p => p.status === 'pending').length,
+    comments: comments.filter(c => c.status === 'pending').length,
+    orders: orders.filter(o => o.status === 'pending').length,
+    withdrawals: users.filter(u => u.withdrawalRequested).length
+  };
+}
+
+function toggleNotifDropdown() {
+  const dd = document.getElementById('notif-dropdown');
+  dd.classList.toggle('hidden');
+  if (!dd.classList.contains('hidden')) renderNotifDropdown();
+}
+
+function renderNotifDropdown() {
+  const dd = document.getElementById('notif-dropdown');
+  const p = getPendingCounts();
+  let html = '<h3>Notifications Admin</h3>';
+
+  if (p.registrations) html += `<div class="notif-item" onclick="showPage('admin');showAdminTab('registrations');toggleNotifDropdown()"><div class="notif-icon orange"><i class="fas fa-user-clock"></i></div><div class="notif-text"><strong>${p.registrations} inscription(s)</strong> en attente de validation<small>Cliquez pour gérer</small></div></div>`;
+  if (p.products) html += `<div class="notif-item" onclick="showPage('admin');showAdminTab('products');toggleNotifDropdown()"><div class="notif-icon blue"><i class="fas fa-box"></i></div><div class="notif-text"><strong>${p.products} produit(s)</strong> en attente d'approbation<small>Cliquez pour gérer</small></div></div>`;
+  if (p.comments) html += `<div class="notif-item" onclick="showPage('admin');showAdminTab('forum');toggleNotifDropdown()"><div class="notif-icon red"><i class="fas fa-comment-dots"></i></div><div class="notif-text"><strong>${p.comments} commentaire(s)</strong> à modérer<small>Vérifier avant publication</small></div></div>`;
+  if (p.orders) html += `<div class="notif-item" onclick="showPage('admin');showAdminTab('orders');toggleNotifDropdown()"><div class="notif-icon green"><i class="fas fa-shopping-cart"></i></div><div class="notif-text"><strong>${p.orders} commande(s)</strong> à approuver<small>Cliquez pour gérer</small></div></div>`;
+  if (p.withdrawals) html += `<div class="notif-item" onclick="showPage('admin');showAdminTab('stars');toggleNotifDropdown()"><div class="notif-icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="notif-text"><strong>${p.withdrawals} retrait(s)</strong> à valider<small>Cliquez pour gérer</small></div></div>`;
+  if (!p.registrations && !p.products && !p.comments && !p.orders && !p.withdrawals) {
+    html += '<div class="notif-item"><div class="notif-text" style="text-align:center;color:var(--text2);width:100%">Aucune notification en attente ✓</div></div>';
+  }
+  dd.innerHTML = html;
+}
+
+function updateNotifBadge() {
+  const count = getUnreadNotifCount();
+  const badge = document.getElementById('notif-badge');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+let currentPage = 'accueil';
+let currentAdminTab = 'overview';
+
+function showPage(page) {
+  currentPage = page;
+  document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+  document.getElementById('page-' + page).classList.remove('hidden');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.textContent.toLowerCase().includes(getNavText(page))) b.classList.add('active');
+  });
+  document.getElementById('notif-dropdown').classList.add('hidden');
+  renderPage(page);
+}
+
+function getNavText(page) {
+  const map = {accueil:'accueil',produits:'produit',forum:'forum',profil:'profil',menu:'roulette',admin:'admin'};
+  return map[page] || page;
+}
+
+function showAdminTab(tab) {
+  currentAdminTab = tab;
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t => {
+    if (t.onclick && t.onclick.toString().includes("'" + tab + "'")) t.classList.add('active');
+  });
+  renderAdminTab(tab);
+}
+
+// ============================================================
+// RENDER APP
+// ============================================================
+function renderApp() {
+  if (!currentUser) return;
+
+  // Update header
+  document.getElementById('header-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('header-name').textContent = currentUser.name;
+
+  // Refresh stars from DB
+  const users = DB.get('users');
+  const freshUser = users.find(u => u.id === currentUser.id);
+  if (freshUser) {
+    currentUser.stars = freshUser.stars;
+    currentUser.withdrawalRequested = freshUser.withdrawalRequested;
+  }
+  document.getElementById('header-star-count').textContent = currentUser.stars || 0;
+
+  // Show/hide admin nav
+  document.getElementById('nav-admin').classList.toggle('hidden', currentUser.role !== 'admin');
+  document.getElementById('notif-wrapper').classList.toggle('hidden', currentUser.role !== 'admin');
+
+  updateNotifBadge();
+  renderPage(currentPage);
+}
+
+function renderPage(page) {
+  switch(page) {
+    case 'accueil': renderDashboard(); break;
+    case 'produits': renderProducts(); break;
+    case 'forum': renderForum(); break;
+    case 'profil': renderProfile(); break;
+    case 'menu': renderMenu(); break;
+    case 'admin': renderAdmin(); break;
+  }
+  updateNotifBadge();
+  updateAdminTabBadges();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const products = DB.get('products');
+  const users = DB.get('users');
+  const orders = DB.get('orders');
+
+  const myProducts = products.filter(p => p.userId === currentUser.id);
+  const myOrders = orders.filter(o => o.buyerId === currentUser.id || o.sellerId === currentUser.id);
+
+  let statsHtml = '';
+  if (currentUser.role === 'admin') {
+    const p = getPendingCounts();
+    statsHtml = `
+      <div class="stat-card red"><div class="stat-icon"><i class="fas fa-user-clock"></i></div><div class="stat-value">${p.registrations}</div><div class="stat-label">Inscriptions en attente</div></div>
+      <div class="stat-card purple"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-value">${p.products}</div><div class="stat-label">Produits en attente</div></div>
+      <div class="stat-card teal"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-value">${users.filter(u=>u.role!=='admin').length}</div><div class="stat-label">Membres total</div></div>
+      <div class="stat-card green"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-value">${p.orders}</div><div class="stat-label">Commandes en attente</div></div>
+      <div class="stat-card gold"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-value">${p.comments}</div><div class="stat-label">Commentaires à modérer</div></div>
+    `;
+  } else {
+    statsHtml = `
+      <div class="stat-card purple"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-value">${myProducts.length}</div><div class="stat-label">Mes Produits</div></div>
+      <div class="stat-card teal"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-value">${myOrders.length}</div><div class="stat-label">Mes Commandes</div></div>
+      <div class="stat-card gold"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-value">${currentUser.stars || 0}</div><div class="stat-label">Mes Étoiles</div></div>
+      <div class="stat-card green"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-value">${products.filter(p=>p.status==='approved').length}</div><div class="stat-label">Produits disponibles</div></div>
+    `;
+  }
+  document.getElementById('dashboard-stats').innerHTML = statsHtml;
+
+  // Recent activity
+  let contentHtml = '<h2 class="mb-2">Activité récente</h2>';
+  const recentProducts = products.filter(p => p.status === 'approved').slice(-4).reverse();
+  if (recentProducts.length) {
+    contentHtml += '<div class="product-grid">';
+    recentProducts.forEach(p => {
+      const seller = DB.get('users').find(u => u.id === p.userId);
+      contentHtml += `
+        <div class="product-card">
+          <div class="product-img"><i class="fas fa-${getCategoryIcon(p.category)}"></i></div>
+          <div class="product-info">
+            <h3>${esc(p.name)}</h3>
+            <div class="price">${Number(p.price).toLocaleString()} Ar</div>
+            <div class="seller"><i class="fas fa-user"></i> ${esc(seller ? seller.name : 'Inconnu')}</div>
+          </div>
+        </div>`;
+    });
+    contentHtml += '</div>';
+  } else {
+    contentHtml += '<div class="card text-center" style="color:var(--text2)">Aucun produit disponible pour le moment</div>';
+  }
+  document.getElementById('dashboard-content').innerHTML = contentHtml;
+}
+
+// ============================================================
+// PRODUCTS
+// ============================================================
+function showAddProduct() { document.getElementById('add-product-form').classList.remove('hidden'); }
+function hideAddProduct() { document.getElementById('add-product-form').classList.add('hidden'); }
+
+function addProduct() {
+  const name = document.getElementById('prod-name').value.trim();
+  const desc = document.getElementById('prod-desc').value.trim();
+  const price = document.getElementById('prod-price').value;
+  const category = document.getElementById('prod-category').value;
+
+  if (!name || !price) return alert('Nom et prix requis');
+
+  let products = DB.get('products');
+  const product = {
+    id: genId(), userId: currentUser.id, name, description: desc,
+    price: Number(price), category: category || 'Autre',
+    status: 'pending', createdAt: new Date().toISOString()
+  };
+  products.push(product);
+  DB.set('products', products);
+  addNotification('product', `Nouveau produit: "${name}" par ${currentUser.name}`, product.id);
+
+  document.getElementById('prod-name').value = '';
+  document.getElementById('prod-desc').value = '';
+  document.getElementById('prod-price').value = '';
+  document.getElementById('prod-category').value = '';
+  hideAddProduct();
+  renderProducts();
+  alert('Produit soumis! En attente de validation par l\'admin.');
+}
+
+function renderProducts() {
+  const products = DB.get('products');
+  const users = DB.get('users');
+  let html = '';
+
+  // Show user's pending products first
+  const myPending = products.filter(p => p.userId === currentUser.id && p.status === 'pending');
+  if (myPending.length) {
+    html += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> Mes produits en attente de validation</h3><div class="product-grid mb-2">';
+    myPending.forEach(p => {
+      html += `
+        <div class="product-card" style="border-color:var(--warning);opacity:.7">
+          <div class="product-img" style="position:relative"><i class="fas fa-${getCategoryIcon(p.category)}"></i><div style="position:absolute;top:10px;right:10px" class="tag tag-pending"><i class="fas fa-clock"></i> En attente</div></div>
+          <div class="product-info">
+            <h3>${esc(p.name)}</h3>
+            <div class="price">${Number(p.price).toLocaleString()} Ar</div>
+            <div class="status-pending"><i class="fas fa-hourglass-half"></i> En attente de validation admin</div>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+  }
+
+  // Approved products
+  const approved = products.filter(p => p.status === 'approved');
+  html += '<h3 class="mb-2"><i class="fas fa-check-circle" style="color:var(--success)"></i> Produits disponibles</h3>';
+  if (approved.length) {
+    html += '<div class="product-grid">';
+    approved.forEach(p => {
+      const seller = users.find(u => u.id === p.userId);
+      const isOwner = p.userId === currentUser.id;
+      html += `
+        <div class="product-card">
+          <div class="product-img"><i class="fas fa-${getCategoryIcon(p.category)}"></i></div>
+          <div class="product-info">
+            <h3>${esc(p.name)}</h3>
+            <p style="color:var(--text2);font-size:12px;margin:4px 0">${esc(p.description || '')}</p>
+            <div class="price">${Number(p.price).toLocaleString()} Ar</div>
+            <div class="seller"><i class="fas fa-user"></i> ${esc(seller ? seller.name : 'Inconnu')}</div>
+            <div class="flex mt-1">
+              <span class="tag tag-approved"><i class="fas fa-check"></i> Approuvé</span>
+              ${!isOwner ? `<button class="btn-success btn-sm" onclick="buyProduct('${p.id}')"><i class="fas fa-shopping-cart"></i> Acheter</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="card text-center" style="color:var(--text2)">Aucun produit approuvé</div>';
+  }
+
+  document.getElementById('products-list').innerHTML = html;
+}
+
+function buyProduct(productId) {
+  const products = DB.get('products');
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  if (product.userId === currentUser.id) return alert('Vous ne pouvez pas acheter votre propre produit');
+
+  if (!confirm(`Acheter "${product.name}" pour ${Number(product.price).toLocaleString()} Ar ?`)) return;
+
+  let orders = DB.get('orders');
+  const order = {
+    id: genId(), productId, buyerId: currentUser.id, sellerId: product.userId,
+    productName: product.name, price: product.price,
+    status: 'pending', createdAt: new Date().toISOString()
+  };
+  orders.push(order);
+  DB.set('orders', orders);
+
+  addNotification('order', `Nouvelle commande: "${product.name}" par ${currentUser.name}`, order.id);
+  alert('Commande passée! En attente d\'approbation par l\'admin.');
+  renderProducts();
+}
+
+// ============================================================
+// FORUM
+// ============================================================
+function showAddPost() { document.getElementById('add-post-form').classList.remove('hidden'); }
+function hideAddPost() { document.getElementById('add-post-form').classList.add('hidden'); }
+
+function addPost() {
+  const title = document.getElementById('post-title').value.trim();
+  const content = document.getElementById('post-content').value.trim();
+  if (!title || !content) return alert('Titre et contenu requis');
+
+  let posts = DB.get('posts');
+  posts.push({
+    id: genId(), userId: currentUser.id, title, content,
+    createdAt: new Date().toISOString()
+  });
+  DB.set('posts', posts);
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-content').value = '';
+  hideAddPost();
+  renderForum();
+}
+
+function renderForum() {
+  const posts = DB.get('posts');
+  const users = DB.get('users');
+  const comments = DB.get('comments');
+  let html = '';
+
+  if (!posts.length) {
+    html = '<div class="card text-center" style="color:var(--text2)">Aucun post pour le moment. Soyez le premier!</div>';
+  }
+
+  posts.slice().reverse().forEach(post => {
+    const author = users.find(u => u.id === post.userId);
+    // Only show approved comments
+    const postComments = comments.filter(c => c.postId === post.id && c.status === 'approved');
+    const pendingComments = comments.filter(c => c.postId === post.id && c.status === 'pending' && c.userId === currentUser.id);
+
+    html += `
+      <div class="post-card">
+        <div class="post-header">
+          <div class="member-avatar">${(author ? author.name : '?').charAt(0)}</div>
+          <div>
+            <strong>${esc(author ? author.name : 'Inconnu')}</strong>
+            <div style="font-size:12px;color:var(--text2)">${formatDate(post.createdAt)}</div>
+          </div>
+        </div>
+        <h3 style="margin-bottom:8px">${esc(post.title)}</h3>
+        <div class="post-content">${esc(post.content)}</div>
+        <div style="margin-top:12px">
+          <strong style="font-size:13px"><i class="fas fa-comments"></i> Commentaires (${postComments.length})</strong>`;
+
+    postComments.forEach(c => {
+      const cAuthor = users.find(u => u.id === c.userId);
+      html += `
+          <div class="comment">
+            <div class="comment-header">
+              <div class="member-avatar" style="width:24px;height:24px;font-size:10px">${(cAuthor ? cAuthor.name : '?').charAt(0)}</div>
+              <strong>${esc(cAuthor ? cAuthor.name : 'Inconnu')}</strong>
+              <span style="color:var(--text2)">${formatDate(c.createdAt)}</span>
+            </div>
+            <div style="font-size:13px">${esc(c.content)}</div>
+          </div>`;
+    });
+
+    // Show user's pending comments
+    pendingComments.forEach(c => {
+      html += `
+          <div class="comment" style="border-left-color:var(--warning);opacity:.6">
+            <div class="comment-header">
+              <span class="tag tag-pending"><i class="fas fa-clock"></i> En attente de modération</span>
+            </div>
+            <div style="font-size:13px">${esc(c.content)}</div>
+          </div>`;
+    });
+
+    html += `
+        </div>
+        <div class="post-actions">
+          <input type="text" id="comment-${post.id}" placeholder="Écrire un commentaire..." style="margin:0;flex:1">
+          <button class="btn-primary btn-sm" onclick="addComment('${post.id}')"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('forum-posts').innerHTML = html;
+}
+
+function addComment(postId) {
+  const input = document.getElementById('comment-' + postId);
+  const content = input.value.trim();
+  if (!content) return;
+
+  let comments = DB.get('comments');
+  const comment = {
+    id: genId(), postId, userId: currentUser.id, content,
+    status: 'pending', createdAt: new Date().toISOString()
+  };
+  comments.push(comment);
+  DB.set('comments', comments);
+
+  const post = DB.get('posts').find(p => p.id === postId);
+  addNotification('comment', `Nouveau commentaire de ${currentUser.name} sur "${post ? post.title : 'post'}"`, comment.id);
+
+  input.value = '';
+  renderForum();
+  alert('Commentaire soumis! Il sera visible après modération par l\'admin.');
+}
+
+// ============================================================
+// PROFILE
+// ============================================================
+function renderProfile() {
+  // Refresh user data
+  const users = DB.get('users');
+  const freshUser = users.find(u => u.id === currentUser.id);
+  if (freshUser) {
+    currentUser.stars = freshUser.stars;
+    currentUser.withdrawalRequested = freshUser.withdrawalRequested;
+  }
+  document.getElementById('header-star-count').textContent = currentUser.stars || 0;
+
+  const starsPercent = Math.min(100, ((currentUser.stars || 0) / 1000) * 100);
+  const canWithdraw = (currentUser.stars || 0) >= 1000;
+
+  let html = `
+    <div class="profile-avatar">${currentUser.name.charAt(0).toUpperCase()}</div>
+    <h2>${esc(currentUser.name)}</h2>
+    <p style="color:var(--text2);margin-bottom:16px">${currentUser.role === 'admin' ? 'Administrateur' : 'Membre'}</p>
+    <div class="card" style="text-align:left;margin-top:16px">
+      <div style="margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--primary2);width:20px"></i> ${esc(currentUser.email)}</div>
+      <div style="margin-bottom:10px"><i class="fas fa-phone" style="color:var(--secondary);width:20px"></i> ${esc(currentUser.phone || 'Non renseigné')}</div>
+      <div style="margin-bottom:10px"><i class="fas fa-map-marker-alt" style="color:var(--danger);width:20px"></i> ${esc(currentUser.city || 'Non renseigné')}</div>
+      <div><i class="fas fa-calendar" style="color:var(--success);width:20px"></i> Inscrit le ${formatDate(currentUser.registeredAt)}</div>
+    </div>
+    <div class="card mt-2" style="text-align:center${canWithdraw ? ';border-color:var(--gold)' : ''}">
+      <h3><i class="fas fa-star stars-display"></i> Mes Étoiles</h3>
+      <div style="font-size:48px;font-weight:800;color:var(--gold);margin:16px 0">${currentUser.stars || 0}</div>
+      <div class="stars-progress">
+        <div class="stars-progress-bar" style="width:${starsPercent}%">${Math.round(starsPercent)}%</div>
+      </div>
+      <div style="color:var(--text2);font-size:13px;margin-bottom:16px">Objectif: 1000 étoiles pour un retrait</div>
+      ${canWithdraw && !currentUser.withdrawalRequested ? `<button class="btn-warning withdraw-available" onclick="requestWithdrawal()"><i class="fas fa-money-bill-wave"></i> Demander un Retrait</button>` : ''}
+      ${currentUser.withdrawalRequested ? '<div class="tag tag-pending" style="font-size:14px;padding:10px 20px"><i class="fas fa-clock"></i> Retrait en attente de validation admin</div>' : ''}
+      ${!canWithdraw ? `<div style="color:var(--text2);font-size:12px">Il vous manque ${1000 - (currentUser.stars || 0)} étoiles</div>` : ''}
+    </div>`;
+
+  document.getElementById('profile-content').innerHTML = html;
+}
+
+function requestWithdrawal() {
+  if (!confirm('Demander un retrait de vos étoiles? L\'admin devra valider.')) return;
+  let users = DB.get('users');
+  let u = users.find(x => x.id === currentUser.id);
+  if (u) {
+    u.withdrawalRequested = true;
+    currentUser.withdrawalRequested = true;
+    DB.set('users', users);
+    addNotification('withdrawal', `Demande de retrait: ${currentUser.name} (${currentUser.stars} étoiles)`, currentUser.id);
+    renderProfile();
+  }
+}
+
+// ============================================================
+// MENU / ROULETTE
+// ============================================================
+function renderMenu() {
+  const history = DB.get('rouletteHistory');
+  let histHtml = '<h3 class="mb-2"><i class="fas fa-history"></i> Historique des gains</h3>';
+  if (history.length) {
+    histHtml += '<div class="table-wrap"><table><tr><th>Gagnant</th><th>Étoiles</th><th>Date</th></tr>';
+    history.slice().reverse().slice(0, 20).forEach(h => {
+      histHtml += `<tr><td><strong>${esc(h.winnerName)}</strong></td><td><span class="stars-display"><i class="fas fa-star"></i> +${h.stars}</span></td><td>${formatDate(h.timestamp)}</td></tr>`;
+    });
+    histHtml += '</table></div>';
+  } else {
+    histHtml += '<p style="color:var(--text2)">Aucun tirage effectué</p>';
+  }
+  document.getElementById('roulette-history').innerHTML = histHtml;
+}
+
+let rouletteInterval = null;
+
+function updateRouletteCountdown() {
+  const now = getMadagascarTime();
+  const mins = 59 - now.getMinutes();
+  const secs = 59 - now.getSeconds();
+  const el = document.getElementById('roulette-countdown');
+  if (el) el.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+}
+
+function startRouletteTimer() {
+  // Check every second if it's time for roulette
+  setInterval(() => {
+    const now = getMadagascarTime();
+    if (now.getMinutes() === 0 && now.getSeconds() === 0) {
+      const lastRun = DB.getOne('lastRoulette');
+      const nowH = now.getHours();
+      if (lastRun !== nowH) {
+        DB.setOne('lastRoulette', nowH);
+        triggerRoulette();
+      }
+    }
+  }, 1000);
+}
+
+let rouletteRunning = false;
+
+function triggerRoulette() {
+  const users = DB.get('users').filter(u => u.role !== 'admin' && u.status === 'approved' && u.isActive);
+  if (users.length < 1) return alert('Pas assez de membres actifs pour la roulette');
+  if (rouletteRunning) return;
+  rouletteRunning = true;
+
+  // Disable all buttons
+  document.querySelectorAll('button:not(#roulette-overlay button)').forEach(b => b.disabled = true);
+
+  // Pick winner
+  const winnerIndex = Math.floor(Math.random() * users.length);
+  const winner = users[winnerIndex];
+
+  // Build names list (repeat for spinning effect)
+  const overlay = document.getElementById('roulette-overlay');
+  const namesDiv = document.getElementById('roulette-names');
+  const statusDiv = document.getElementById('roulette-status');
+  overlay.classList.remove('hidden');
+  statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Tirage en cours...';
+
+  // Create repeated names list
+  let names = [];
+  for (let i = 0; i < 60; i++) {
+    names.push(users[i % users.length]);
+  }
+  // Place winner near the end
+  names[names.length - 5] = winner;
+
+  let namesHtml = '';
+  names.forEach((u, i) => {
+    namesHtml += `<div class="roulette-name" data-index="${i}">${esc(u.name)}</div>`;
+  });
+  namesDiv.innerHTML = namesHtml;
+
+  // Animate
+  const targetPos = (names.length - 5) * 50 - 125; // center the winner
+  let currentPos = 0;
+  const duration = 6000; // 6 seconds
+  const startTime = Date.now();
+
+  function animateRoulette() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    // Easing: ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    currentPos = eased * targetPos;
+    namesDiv.style.transform = `translateY(-${currentPos}px)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animateRoulette);
+    } else {
+      // Winner!
+      setTimeout(() => {
+        const winnerEl = namesDiv.querySelector(`[data-index="${names.length - 5}"]`);
+        if (winnerEl) winnerEl.classList.add('winner');
+        statusDiv.innerHTML = `<div class="roulette-result">🎉 ${esc(winner.name)} gagne 20 étoiles! 🎉</div>`;
+
+        // Add stars
+        let allUsers = DB.get('users');
+        let w = allUsers.find(u => u.id === winner.id);
+        if (w) {
+          w.stars = (w.stars || 0) + 20;
+          DB.set('users', allUsers);
+          if (currentUser && currentUser.id === winner.id) {
+            currentUser.stars = w.stars;
+            document.getElementById('header-star-count').textContent = w.stars;
+          }
+        }
+
+        // Save history
+        let hist = DB.get('rouletteHistory');
+        hist.push({ winnerId: winner.id, winnerName: winner.name, stars: 20, timestamp: new Date().toISOString() });
+        DB.set('rouletteHistory', hist);
+
+        // Confetti
+        launchConfetti();
+
+        // Close after 5 seconds
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          rouletteRunning = false;
+          document.querySelectorAll('button').forEach(b => b.disabled = false);
+          renderApp();
+        }, 5000);
+      }, 500);
+    }
+  }
+  requestAnimationFrame(animateRoulette);
+}
+
+function launchConfetti() {
+  const colors = ['#ffd700','#7c5cfc','#00cec9','#e17055','#00b894','#fd79a8'];
+  for (let i = 0; i < 50; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDelay = Math.random() * 2 + 's';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    el.style.width = (5 + Math.random() * 10) + 'px';
+    el.style.height = (5 + Math.random() * 10) + 'px';
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+function renderAdmin() {
+  if (currentUser.role !== 'admin') return;
+  const p = getPendingCounts();
+  const users = DB.get('users');
+  const products = DB.get('products');
+  const orders = DB.get('orders');
+
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-card red"><div class="stat-icon"><i class="fas fa-user-clock"></i></div><div class="stat-value">${p.registrations}</div><div class="stat-label">Inscriptions</div></div>
+    <div class="stat-card purple"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-value">${p.products}</div><div class="stat-label">Produits</div></div>
+    <div class="stat-card teal"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-value">${p.orders}</div><div class="stat-label">Commandes</div></div>
+    <div class="stat-card gold"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-value">${p.comments}</div><div class="stat-label">Commentaires</div></div>
+    <div class="stat-card green"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-value">${p.withdrawals}</div><div class="stat-label">Retraits</div></div>
+  `;
+
+  updateAdminTabBadges();
+  renderAdminTab(currentAdminTab);
+}
+
+function updateAdminTabBadges() {
+  if (!currentUser || currentUser.role !== 'admin') return;
+  const p = getPendingCounts();
+  setBadge('tab-notif-count', p.registrations + p.products + p.comments + p.orders + p.withdrawals);
+  setBadge('tab-reg-count', p.registrations);
+  setBadge('tab-prod-count', p.products);
+  setBadge('tab-order-count', p.orders);
+  setBadge('tab-forum-count', p.comments);
+}
+
+function setBadge(id, count) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (count > 0) { el.textContent = count; el.classList.remove('hidden'); }
+  else { el.classList.add('hidden'); }
+}
+
+function renderAdminTab(tab) {
+  const content = document.getElementById('admin-content');
+  switch(tab) {
+    case 'overview': renderAdminOverview(content); break;
+    case 'registrations': renderAdminRegistrations(content); break;
+    case 'products': renderAdminProducts(content); break;
+    case 'members': renderAdminMembers(content); break;
+    case 'orders': renderAdminOrders(content); break;
+    case 'forum': renderAdminForum(content); break;
+    case 'stars': renderAdminStars(content); break;
+  }
+}
+
+// --- ADMIN: Overview/Notifications ---
+function renderAdminOverview(el) {
+  const p = getPendingCounts();
+  let html = '<h2 class="mb-2"><i class="fas fa-bell"></i> Centre de Notifications</h2>';
+
+  if (p.registrations + p.products + p.comments + p.orders + p.withdrawals === 0) {
+    html += '<div class="card text-center" style="color:var(--success);font-size:18px;padding:40px"><i class="fas fa-check-circle" style="font-size:48px;display:block;margin-bottom:16px"></i>Tout est à jour! Aucune action requise.</div>';
+  } else {
+    if (p.registrations) html += `<div class="card flex-between" style="border-left:4px solid var(--warning)"><div class="flex"><div class="notif-icon orange"><i class="fas fa-user-clock"></i></div><div><strong>${p.registrations} inscription(s) en attente</strong><div style="color:var(--text2);font-size:12px">Des utilisateurs attendent votre validation</div></div></div><button class="btn-warning btn-sm" onclick="showAdminTab('registrations')">Gérer <i class="fas fa-arrow-right"></i></button></div>`;
+    if (p.products) html += `<div class="card flex-between" style="border-left:4px solid var(--primary)"><div class="flex"><div class="notif-icon blue"><i class="fas fa-box"></i></div><div><strong>${p.products} produit(s) en attente</strong><div style="color:var(--text2);font-size:12px">Des produits attendent votre approbation</div></div></div><button class="btn-primary btn-sm" onclick="showAdminTab('products')">Gérer <i class="fas fa-arrow-right"></i></button></div>`;
+    if (p.comments) html += `<div class="card flex-between" style="border-left:4px solid var(--danger)"><div class="flex"><div class="notif-icon red"><i class="fas fa-comment-dots"></i></div><div><strong>${p.comments} commentaire(s) à modérer</strong><div style="color:var(--text2);font-size:12px">Vérifiez avant publication (insultes, spam...)</div></div></div><button class="btn-danger btn-sm" onclick="showAdminTab('forum')">Modérer <i class="fas fa-arrow-right"></i></button></div>`;
+    if (p.orders) html += `<div class="card flex-between" style="border-left:4px solid var(--secondary)"><div class="flex"><div class="notif-icon green"><i class="fas fa-shopping-cart"></i></div><div><strong>${p.orders} commande(s) en attente</strong><div style="color:var(--text2);font-size:12px">Des ventes attendent votre approbation</div></div></div><button class="btn-secondary btn-sm" onclick="showAdminTab('orders')">Gérer <i class="fas fa-arrow-right"></i></button></div>`;
+    if (p.withdrawals) html += `<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="notif-icon orange"><i class="fas fa-money-bill-wave"></i></div><div><strong>${p.withdrawals} demande(s) de retrait</strong><div style="color:var(--text2);font-size:12px">Des membres veulent retirer leurs étoiles</div></div></div><button class="btn-warning btn-sm" onclick="showAdminTab('stars')">Valider <i class="fas fa-arrow-right"></i></button></div>`;
+  }
+  el.innerHTML = html;
+}
+
+// --- ADMIN: Registrations ---
+function renderAdminRegistrations(el) {
+  const users = DB.get('users').filter(u => u.role !== 'admin');
+  const pending = users.filter(u => u.status === 'pending');
+  const approved = users.filter(u => u.status === 'approved');
+  const rejected = users.filter(u => u.status === 'rejected');
+
+  let html = '<h2 class="mb-2"><i class="fas fa-user-clock"></i> Inscriptions en attente</h2>';
+
+  if (pending.length) {
+    html += '<div class="table-wrap"><table><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Ville</th><th>Date</th><th>Actions</th></tr>';
+    pending.forEach(u => {
+      html += `<tr>
+        <td><div class="member-row"><div class="member-avatar">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
+        <td>${esc(u.email)}</td>
+        <td>${esc(u.phone || '-')}</td>
+        <td>${esc(u.city || '-')}</td>
+        <td>${formatDate(u.registeredAt)}</td>
+        <td>
+          <div class="flex">
+            <button class="btn-success btn-sm" onclick="adminApproveUser('${u.id}')"><i class="fas fa-check"></i> Valider</button>
+            <button class="btn-danger btn-sm" onclick="adminRejectUser('${u.id}')"><i class="fas fa-times"></i> Refuser</button>
+          </div>
+        </td>
+      </tr>`;
+    });
+    html += '</table></div>';
+  } else {
+    html += '<div class="card text-center" style="color:var(--text2)">Aucune inscription en attente</div>';
+  }
+
+  // Recently processed
+  html += '<h3 class="mt-3 mb-2">Inscriptions traitées récemment</h3>';
+  const recent = [...approved, ...rejected].sort((a, b) => new Date(b.registeredAt) - new Date(a.registeredAt)).slice(0, 10);
+  if (recent.length) {
+    html += '<div class="table-wrap"><table><tr><th>Nom</th><th>Email</th><th>Statut</th><th>Date</th></tr>';
+    recent.forEach(u => {
+      html += `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td><span class="tag ${u.status === 'approved' ? 'tag-approved' : 'tag-pending'}" style="${u.status === 'rejected' ? 'background:rgba(225,112,85,.15);color:var(--danger)' : ''}">${u.status === 'approved' ? '✓ Approuvé' : '✗ Refusé'}</span></td><td>${formatDate(u.registeredAt)}</td></tr>`;
+    });
+    html += '</table></div>';
+  }
+  el.innerHTML = html;
+}
+
+function adminApproveUser(userId) {
+  let users = DB.get('users');
+  let u = users.find(x => x.id === userId);
+  if (u) { u.status = 'approved'; DB.set('users', users); }
+  renderAdmin();
+}
+
+function adminRejectUser(userId) {
+  if (!confirm('Refuser cette inscription?')) return;
+  let users = DB.get('users');
+  let u = users.find(x => x.id === userId);
+  if (u) { u.status = 'rejected'; DB.set('users', users); }
+  renderAdmin();
+}
+
+// --- ADMIN: Products ---
+function renderAdminProducts(el) {
+  const products = DB.get('products');
+  const users = DB.get('users');
+  const pending = products.filter(p => p.status === 'pending');
+  const approved = products.filter(p => p.status === 'approved');
+
+  let html = '<h2 class="mb-2"><i class="fas fa-box"></i> Produits en attente d\'approbation</h2>';
+
+  if (pending.length) {
+    html += '<div class="table-wrap"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Catégorie</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
+    pending.forEach(p => {
+      const seller = users.find(u => u.id === p.userId);
+      html += `<tr>
+        <td><strong>${esc(p.name)}</strong></td>
+        <td>${esc(seller ? seller.name : 'Inconnu')}</td>
+        <td style="color:var(--secondary);font-weight:700">${Number(p.price).toLocaleString()} Ar</td>
+        <td>${esc(p.category || '-')}</td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${esc(p.description || '-')}</td>
+        <td>${formatDate(p.createdAt)}</td>
+        <td>
+          <div class="flex">
+            <button class="btn-success btn-sm" onclick="adminApproveProduct('${p.id}')"><i class="fas fa-check"></i> Approuver</button>
+            <button class="btn-danger btn-sm" onclick="adminRejectProduct('${p.id}')"><i class="fas fa-times"></i> Refuser</button>
+          </div>
+        </td>
+      </tr>`;
+    });
+    html += '</table></div>';
+  } else {
+    html += '<div class="card text-center" style="color:var(--text2)">Aucun produit en attente</div>';
+  }
+
+  html += `<h3 class="mt-3 mb-2">Produits approuvés (${approved.length})</h3>`;
+  if (approved.length) {
+    html += '<div class="table-wrap"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Catégorie</th><th>Statut</th></tr>';
+    approved.forEach(p => {
+      const seller = users.find(u => u.id === p.userId);
+      html += `<tr><td>${esc(p.name)}</td><td>${esc(seller ? seller.name : '-')}</td><td>${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td><td><span class="tag tag-approved">✓ Approuvé</span></td></tr>`;
+    });
+    html += '</table></div>';
+  }
+  el.innerHTML = html;
+}
+
+function adminApproveProduct(prodId) {
+  let products = DB.get('products');
+  let p = products.find(x => x.id === prodId);
+  if (p) { p.status = 'approved'; DB.set('products', products); }
+  renderAdmin();
+}
+
+function adminRejectProduct(prodId) {
+  if (!confirm('Refuser ce produit?')) return;
+  let products = DB.get('products');
+  let p = products.find(x => x.id === prodId);
+  if (p) { p.status = 'rejected'; DB.set('products', products); }
+  renderAdmin();
+}
+
+// --- ADMIN: Members ---
+function renderAdminMembers(el) {
+  const users = DB.get('users').filter(u => u.role !== 'admin');
+  let html = '<h2 class="mb-2"><i class="fas fa-users"></i> Liste des Membres</h2>';
+  html += `<div class="card mb-2"><input type="text" id="member-search" placeholder="Rechercher un membre (nom, email, téléphone)..." oninput="filterMembers()" style="margin:0"></div>`;
+
+  html += '<div class="table-wrap"><table id="members-table"><tr><th>#</th><th>Membre</th><th>Email</th><th>Téléphone</th><th>Ville</th><th>Statut</th><th>Étoiles</th><th>Actif</th><th>Inscrit le</th><th>Actions</th></tr>';
+  users.forEach((u, i) => {
+    html += `<tr class="member-filter-row" data-search="${(u.name + u.email + u.phone + u.city).toLowerCase()}">
+      <td>${i + 1}</td>
+      <td><div class="member-row"><div class="member-avatar">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
+      <td>${esc(u.email)}</td>
+      <td>${esc(u.phone || '-')}</td>
+      <td>${esc(u.city || '-')}</td>
+      <td><span class="tag ${u.status === 'approved' ? 'tag-approved' : u.status === 'pending' ? 'tag-pending' : ''}" ${u.status === 'rejected' ? 'style="background:rgba(225,112,85,.15);color:var(--danger)"' : ''}>${u.status === 'approved' ? '✓ Actif' : u.status === 'pending' ? '⏳ En attente' : '✗ Refusé'}</span></td>
+      <td><span class="stars-display"><i class="fas fa-star"></i> ${u.stars || 0}</span></td>
+      <td>${u.isActive ? '<span style="color:var(--success)">●</span>' : '<span style="color:var(--text2)">○</span>'}</td>
+      <td>${formatDate(u.registeredAt)}</td>
+      <td>
+        <button class="btn-primary btn-sm" onclick="showMemberDetail('${u.id}')" title="Détails"><i class="fas fa-eye"></i></button>
+      </td>
+    </tr>`;
+  });
+  html += '</table></div>';
+  if (!users.length) html += '<div class="card text-center" style="color:var(--text2)">Aucun membre</div>';
+  el.innerHTML = html;
+}
+
+function filterMembers() {
+  const q = document.getElementById('member-search').value.toLowerCase();
+  document.querySelectorAll('.member-filter-row').forEach(row => {
+    row.style.display = row.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+
+function showMemberDetail(userId) {
+  const users = DB.get('users');
+  const u = users.find(x => x.id === userId);
+  if (!u) return;
+  const products = DB.get('products').filter(p => p.userId === userId);
+  const orders = DB.get('orders').filter(o => o.buyerId === userId || o.sellerId === userId);
+  alert(`
+📋 DÉTAILS MEMBRE
+━━━━━━━━━━━━━━━━
+Nom: ${u.name}
+Email: ${u.email}
+Téléphone: ${u.phone || '-'}
+Ville: ${u.city || '-'}
+Statut: ${u.status}
+Étoiles: ${u.stars || 0}
+Produits: ${products.length}
+Commandes: ${orders.length}
+Inscrit le: ${formatDate(u.registeredAt)}
+Mot de passe: ${u.password}
+  `.trim());
+}
+
+// --- ADMIN: Orders ---
+function renderAdminOrders(el) {
+  const orders = DB.get('orders');
+  const users = DB.get('users');
+  const products = DB.get('products');
+  const pending = orders.filter(o => o.status === 'pending');
+  const approved = orders.filter(o => o.status === 'approved');
+
+  let html = '<h2 class="mb-2"><i class="fas fa-shopping-cart"></i> Gestion des Commandes</h2>';
+
+  if (pending.length) {
+    html += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> Commandes en attente d\'approbation</h3>';
+    html += '<div class="table-wrap"><table><tr><th>Commande</th><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Date</th><th>Actions</th></tr>';
+    pending.forEach(o => {
+      const buyer = users.find(u => u.id === o.buyerId);
+      const seller = users.find(u => u.id === o.sellerId);
+      html += `<tr>
+        <td><code>${o.id.substr(0,8)}</code></td>
+        <td><strong>${esc(o.productName)}</strong></td>
+        <td>${esc(buyer ? buyer.name : '-')}</td>
+        <td>${esc(seller ? seller.name : '-')}</td>
+        <td style="color:var(--secondary);font-weight:700">${Number(o.price).toLocaleString()} Ar</td>
+        <td>${formatDate(o.createdAt)}</td>
+        <td><button class="btn-success btn-sm" onclick="adminApproveOrder('${o.id}')"><i class="fas fa-check"></i> Approuver la vente</button></td>
+      </tr>`;
+    });
+    html += '</table></div>';
+  } else {
+    html += '<div class="card text-center" style="color:var(--text2)"><i class="fas fa-check-circle" style="color:var(--success)"></i> Aucune commande en attente</div>';
+  }
+
+  html += `<h3 class="mt-3 mb-2" style="color:var(--success)"><i class="fas fa-check-circle"></i> Commandes approuvées (${approved.length})</h3>`;
+  if (approved.length) {
+    html += '<div class="table-wrap"><table><tr><th>Commande</th><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Date</th><th>Statut</th></tr>';
+    approved.forEach(o => {
+      const buyer = users.find(u => u.id === o.buyerId);
+      const seller = users.find(u => u.id === o.sellerId);
+      html += `<tr><td><code>${o.id.substr(0,8)}</code></td><td>${esc(o.productName)}</td><td>${esc(buyer ? buyer.name : '-')}</td><td>${esc(seller ? seller.name : '-')}</td><td>${Number(o.price).toLocaleString()} Ar</td><td>${formatDate(o.createdAt)}</td><td><span class="tag tag-approved">✓ Approuvé</span></td></tr>`;
+    });
+    html += '</table></div>';
+  }
+  el.innerHTML = html;
+}
+
+function adminApproveOrder(orderId) {
+  let orders = DB.get('orders');
+  let o = orders.find(x => x.id === orderId);
+  if (!o) return;
+  o.status = 'approved';
+  DB.set('orders', orders);
+
+  // Mark product as sold
+  let products = DB.get('products');
+  let p = products.find(x => x.id === o.productId);
+  if (p) { p.status = 'sold'; DB.set('products', products); }
+
+  // Award stars to seller and buyer
+  let users = DB.get('users');
+  let seller = users.find(u => u.id === o.sellerId);
+  let buyer = users.find(u => u.id === o.buyerId);
+  if (seller) seller.stars = (seller.stars || 0) + 10;
+  if (buyer) buyer.stars = (buyer.stars || 0) + 5;
+  DB.set('users', users);
+
+  renderAdmin();
+}
+
+// --- ADMIN: Forum Moderation ---
+function renderAdminForum(el) {
+  const comments = DB.get('comments');
+  const posts = DB.get('posts');
+  const users = DB.get('users');
+  const pending = comments.filter(c => c.status === 'pending');
+  const approved = comments.filter(c => c.status === 'approved');
+
+  let html = '<h2 class="mb-2"><i class="fas fa-comments"></i> Modération du Forum</h2>';
+  html += '<p class="mb-2" style="color:var(--text2)">Tous les commentaires doivent être validés avant d\'être visibles pour éviter insultes et spam.</p>';
+
+  if (pending.length) {
+    html += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-exclamation-triangle"></i> Commentaires à modérer</h3>';
+    pending.forEach(c => {
+      const author = users.find(u => u.id === c.userId);
+      const post = posts.find(p => p.id === c.postId);
+      html += `
+        <div class="card" style="border-left:4px solid var(--warning)">
+          <div class="flex-between mb-1">
+            <div class="flex">
+              <div class="member-avatar" style="width:32px;height:32px;font-size:12px">${(author ? author.name : '?').charAt(0)}</div>
+              <div>
+                <strong>${esc(author ? author.name : 'Inconnu')}</strong>
+                <div style="font-size:11px;color:var(--text2)">sur le post: "${esc(post ? post.title : 'Inconnu')}"</div>
+              </div>
+            </div>
+            <span style="font-size:11px;color:var(--text2)">${formatDate(c.createdAt)}</span>
+          </div>
+          <div style="background:var(--bg3);padding:12px;border-radius:8px;margin:8px 0;font-size:14px">${esc(c.content)}</div>
+          <div class="flex">
+            <button class="btn-success btn-sm" onclick="adminApproveComment('${c.id}')"><i class="fas fa-check"></i> Approuver</button>
+            <button class="btn-danger btn-sm" onclick="adminRejectComment('${c.id}')"><i class="fas fa-trash"></i> Supprimer</button>
+          </div>
+        </div>`;
+    });
+  } else {
+    html += '<div class="card text-center" style="color:var(--success)"><i class="fas fa-check-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Tous les commentaires sont modérés ✓</div>';
+  }
+
+  html += `<h3 class="mt-3 mb-2">Commentaires approuvés récemment (${approved.length})</h3>`;
+  if (approved.length) {
+    html += '<div class="table-wrap"><table><tr><th>Auteur</th><th>Post</th><th>Commentaire</th><th>Date</th></tr>';
+    approved.slice().reverse().slice(0, 20).forEach(c => {
+      const author = users.find(u => u.id === c.userId);
+      const post = posts.find(p => p.id === c.postId);
+      html += `<tr><td>${esc(author ? author.name : '-')}</td><td>${esc(post ? post.title : '-')}</td><td style="max-width:300px">${esc(c.content)}</td><td>${formatDate(c.createdAt)}</td></tr>`;
+    });
+    html += '</table></div>';
+  }
+  el.innerHTML = html;
+}
+
+function adminApproveComment(commentId) {
+  let comments = DB.get('comments');
+  let c = comments.find(x => x.id === commentId);
+  if (c) { c.status = 'approved'; DB.set('comments', comments); }
+  // Award star for commenting
+  let users = DB.get('users');
+  if (c) {
+    let u = users.find(x => x.id === c.userId);
+    if (u) { u.stars = (u.stars || 0) + 1; DB.set('users', users); }
+  }
+  renderAdmin();
+}
+
+function adminRejectComment(commentId) {
+  if (!confirm('Supprimer ce commentaire?')) return;
+  let comments = DB.get('comments');
+  comments = comments.filter(c => c.id !== commentId);
+  DB.set('comments', comments);
+  renderAdmin();
+}
+
+// --- ADMIN: Stars & Withdrawals ---
+function renderAdminStars(el) {
+  const users = DB.get('users').filter(u => u.role !== 'admin');
+  // Sort by stars descending
+  const sorted = [...users].sort((a, b) => (b.stars || 0) - (a.stars || 0));
+  const withdrawals = users.filter(u => u.withdrawalRequested);
+
+  let html = '<h2 class="mb-2"><i class="fas fa-star" style="color:var(--gold)"></i> Classement des Étoiles</h2>';
+
+  // Withdrawal requests
+  if (withdrawals.length) {
+    html += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-money-bill-wave"></i> Demandes de retrait à valider</h3>';
+    withdrawals.forEach(u => {
+      html += `
+        <div class="card flex-between" style="border-left:4px solid var(--gold)">
+          <div class="flex">
+            <div class="member-avatar">${u.name.charAt(0)}</div>
+            <div>
+              <strong>${esc(u.name)}</strong>
+              <div style="color:var(--text2);font-size:12px">${esc(u.email)} | ${esc(u.phone || '-')}</div>
+              <div class="stars-display"><i class="fas fa-star"></i> ${u.stars || 0} étoiles</div>
+            </div>
+          </div>
+          <div class="flex">
+            <button class="btn-success btn-sm" onclick="adminApproveWithdrawal('${u.id}')"><i class="fas fa-check"></i> Valider Retrait</button>
+            <button class="btn-danger btn-sm" onclick="adminRejectWithdrawal('${u.id}')"><i class="fas fa-times"></i> Refuser</button>
+          </div>
+        </div>`;
+    });
+  }
+
+  // Rankings table
+  html += '<h3 class="mt-3 mb-2">Classement complet (décroissant)</h3>';
+  html += '<div class="table-wrap"><table><tr><th>Rang</th><th>Membre</th><th>Étoiles</th><th>Progression</th><th>Statut Retrait</th></tr>';
+  sorted.forEach((u, i) => {
+    const pct = Math.min(100, ((u.stars || 0) / 1000) * 100);
+    const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1);
+    html += `<tr>
+      <td class="${rankClass}" style="font-weight:700">${medal}</td>
+      <td><div class="member-row"><div class="member-avatar">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
+      <td><span class="stars-display" style="font-size:16px;font-weight:700"><i class="fas fa-star"></i> ${u.stars || 0}</span></td>
+      <td><div class="stars-progress" style="height:16px;width:150px;display:inline-block"><div class="stars-progress-bar" style="width:${pct}%;font-size:9px">${Math.round(pct)}%</div></div></td>
+      <td>${u.withdrawalRequested ? '<span class="tag tag-pending">⏳ Demande en cours</span>' : (u.stars || 0) >= 1000 ? '<span class="tag tag-approved">✓ Éligible</span>' : '-'}</td>
+    </tr>`;
+  });
+  html += '</table></div>';
+  el.innerHTML = html;
+}
+
+function adminApproveWithdrawal(userId) {
+  if (!confirm('Valider ce retrait? Les étoiles seront remises à zéro.')) return;
+  let users = DB.get('users');
+  let u = users.find(x => x.id === userId);
+  if (u) {
+    u.stars = 0;
+    u.withdrawalRequested = false;
+    DB.set('users', users);
+  }
+  renderAdmin();
+}
+
+function adminRejectWithdrawal(userId) {
+  let users = DB.get('users');
+  let u = users.find(x => x.id === userId);
+  if (u) {
+    u.withdrawalRequested = false;
+    DB.set('users', users);
+  }
+  renderAdmin();
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function esc(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getCategoryIcon(cat) {
+  const map = {'Électronique':'laptop','Vêtements':'tshirt','Maison':'home','Alimentation':'utensils','Services':'handshake','Autre':'box'};
+  return map[cat] || 'box';
+}
+
+// Close notification dropdown on outside click
+document.addEventListener('click', (e) => {
+  const nw = document.getElementById('notif-wrapper');
+  if (nw && !nw.contains(e.target)) {
+    document.getElementById('notif-dropdown').classList.add('hidden');
+  }
+});
+
+// ============================================================
+// AUTO SESSION RESTORE
+// ============================================================
+function checkSession() {
+  const userId = DB.getOne('currentUser');
+  if (userId) {
+    const users = DB.get('users');
+    const user = users.find(u => u.id === userId);
+    if (user && user.status === 'approved') {
+      currentUser = user;
+      user.isActive = true;
+      DB.set('users', users);
+      document.getElementById('auth-page').classList.add('hidden');
+      document.getElementById('main-app').classList.remove('hidden');
+      renderApp();
+    }
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+initApp();
+checkSession();
 </script>
 </body>
 </html>
