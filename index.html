@@ -36,8 +36,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary)
 .tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
 .tag-pending{background:rgba(253,203,110,.15);color:var(--warning)}
 .tag-approved{background:rgba(0,184,148,.15);color:var(--success)}
-.tag-sold{background:rgba(124,92,252,.15);color:var(--primary2)}
 .tag-rejected{background:rgba(225,112,85,.15);color:var(--danger)}
+.tag-sold{background:rgba(124,92,252,.15);color:var(--primary2)}
 .flex{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .flex-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .text-center{text-align:center}
@@ -45,93 +45,101 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary)
 .mb-1{margin-bottom:8px}.mb-2{margin-bottom:16px}.mb-3{margin-bottom:24px}
 .stars-display{color:var(--gold)}
 
-/* ===== AUTH ===== */
-#auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a1a 0%,#1a1040 50%,#0a0a1a 100%)}
+/* AUTH */
+#auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a1a 0%,#1a1040 50%,#0a0a1a 100%);padding:20px}
 .auth-box{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:40px;width:100%;max-width:440px;box-shadow:var(--shadow)}
 .auth-box h1{text-align:center;margin-bottom:8px;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px}
 .auth-box .sub{text-align:center;color:var(--text2);margin-bottom:24px;font-size:14px}
 .auth-tabs{display:flex;margin-bottom:24px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--bg4)}
 .auth-tabs div{flex:1;padding:12px;text-align:center;background:var(--bg);color:var(--text2);cursor:pointer;font-weight:600;transition:.3s}
 .auth-tabs div.active{background:var(--primary);color:#fff}
-.auth-msg{padding:12px;border-radius:var(--radius);margin-bottom:12px;font-size:13px;text-align:center}
+.auth-msg{padding:12px;border-radius:var(--radius);margin-bottom:12px;font-size:13px;text-align:center;line-height:1.5}
 .auth-msg.ok{background:rgba(0,184,148,.15);color:var(--success);border:1px solid rgba(0,184,148,.3)}
 .auth-msg.err{background:rgba(225,112,85,.15);color:var(--danger);border:1px solid rgba(225,112,85,.3)}
 .auth-msg.warn{background:rgba(253,203,110,.15);color:var(--warning);border:1px solid rgba(253,203,110,.3)}
+.auth-msg.info{background:rgba(124,92,252,.15);color:var(--primary2);border:1px solid rgba(124,92,252,.3)}
+.field-label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px}
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.hdr{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.hdr{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:8px}
 .logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--primary2),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
 .nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
 .nav::-webkit-scrollbar{display:none}
-.nav button{background:transparent;color:var(--text2);padding:8px 14px;font-size:12px;border-radius:8px;position:relative;white-space:nowrap}
+.nav button{background:transparent;color:var(--text2);padding:8px 12px;font-size:12px;border-radius:8px;position:relative;white-space:nowrap}
 .nav button:hover{background:var(--bg3);color:var(--text);transform:none}
 .nav button.active{background:var(--primary);color:#fff}
-.nav button .nbadge{position:absolute;top:0;right:0;font-size:9px;min-width:16px;height:16px;background:var(--danger);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.hdr-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.hdr-user{display:flex;align-items:center;gap:8px;font-size:13px}
+.nav button .nbadge{position:absolute;top:-2px;right:-2px;font-size:9px;min-width:16px;height:16px;background:var(--danger);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .avatar{width:34px;height:34px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;color:#fff}
-.bell-btn{position:relative;background:transparent;color:var(--text2);font-size:18px;padding:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+.bell-btn{position:relative;background:transparent;color:var(--text2);font-size:18px;padding:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%}
 .bell-btn:hover{background:var(--bg3);color:var(--text)}
-.bell-btn .badge{position:absolute;top:0;right:0;font-size:9px;min-width:16px;height:16px}
+.bell-btn .badge{position:absolute;top:-2px;right:-2px;font-size:9px;min-width:16px;height:16px}
+.bell-ring{animation:ring .5s ease}
+@keyframes ring{0%{transform:rotate(0)}20%{transform:rotate(15deg)}40%{transform:rotate(-15deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-10deg)}100%{transform:rotate(0)}}
 
-/* ===== MAIN ===== */
+/* NEW NOTIF FLASH */
+.notif-flash{position:fixed;top:80px;right:20px;background:var(--bg2);border:1px solid var(--primary);border-radius:var(--radius);padding:16px 20px;box-shadow:0 8px 30px rgba(124,92,252,.3);z-index:300;animation:slideIn .4s ease;max-width:350px}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(100%);opacity:0}}
+
+/* MAIN */
 main{max-width:1400px;margin:0 auto;padding:24px}
 .pg-title{font-size:22px;font-weight:700;margin-bottom:4px}
 .pg-sub{color:var(--text2);font-size:13px;margin-bottom:24px}
 
-/* ===== STATS ===== */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
-.st{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:18px;text-align:center;transition:.3s}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.st{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:16px;text-align:center;transition:.3s}
 .st:hover{border-color:var(--primary)}
-.st .ico{font-size:24px;margin-bottom:6px}
-.st .val{font-size:26px;font-weight:800;margin-bottom:4px}
-.st .lbl{color:var(--text2);font-size:12px}
+.st .ico{font-size:22px;margin-bottom:4px}
+.st .val{font-size:24px;font-weight:800;margin-bottom:2px}
+.st .lbl{color:var(--text2);font-size:11px}
 .st.purple .ico,.st.purple .val{color:var(--primary2)}
 .st.teal .ico,.st.teal .val{color:var(--secondary)}
 .st.green .ico,.st.green .val{color:var(--success)}
 .st.gold .ico,.st.gold .val{color:var(--gold)}
 .st.red .ico,.st.red .val{color:var(--danger)}
 
-/* ===== ADMIN TABS ===== */
+/* ADMIN TABS */
 .atabs{display:flex;gap:4px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--bg4);padding-bottom:8px}
 .atabs::-webkit-scrollbar{display:none}
-.atab{padding:10px 16px;border-radius:8px 8px 0 0;background:transparent;color:var(--text2);font-size:12px;font-weight:600;transition:.3s;white-space:nowrap;position:relative}
+.atab{padding:10px 14px;border-radius:8px 8px 0 0;background:transparent;color:var(--text2);font-size:11px;font-weight:600;transition:.3s;white-space:nowrap;position:relative}
 .atab:hover{background:var(--bg3);color:var(--text);transform:none}
 .atab.active{background:var(--bg3);color:var(--primary2);border-bottom:2px solid var(--primary)}
 .atab .badge{margin-left:4px;font-size:9px;min-width:16px;height:16px}
 
-/* ===== TABLE ===== */
+/* TABLE */
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--bg4);font-size:12px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--bg4);font-size:12px}
 th{color:var(--text2);font-weight:600;background:var(--bg3);white-space:nowrap}
 tr:hover td{background:rgba(124,92,252,.04)}
 
-/* ===== PRODUCTS ===== */
+/* PRODUCTS */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
 .pcard{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);overflow:hidden;transition:.3s}
 .pcard:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow)}
-.pimg{height:140px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--text2);position:relative}
+.pimg{height:130px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--text2);position:relative}
 .pinfo{padding:14px}
 .pinfo h3{font-size:14px;margin-bottom:4px}
 .pinfo .price{color:var(--secondary);font-size:18px;font-weight:800;margin:6px 0}
 .pinfo .seller{color:var(--text2);font-size:11px}
 
-/* ===== FORUM ===== */
+/* FORUM */
 .post{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);padding:18px;margin-bottom:14px}
 .post-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .post-body{color:var(--text);line-height:1.6;margin-bottom:14px;font-size:14px}
 .cmt{background:var(--bg3);border-radius:8px;padding:10px;margin:6px 0 6px 20px;border-left:3px solid var(--primary);font-size:13px}
 .cmt-hd{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px}
 
-/* ===== PROFILE ===== */
+/* PROFILE */
 .prof{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:36px;text-align:center;max-width:600px;margin:0 auto}
 .prof-av{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;margin:0 auto 14px;color:#fff}
 .progress-bar{background:var(--bg);border-radius:20px;height:22px;overflow:hidden;margin:12px 0}
 .progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--gold));transition:.5s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:35px;color:#fff}
 
-/* ===== ROULETTE ===== */
+/* ROULETTE */
 #roulette-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,26,.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .rl-title{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--warning));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .rl-sub{color:var(--text2);margin-bottom:24px;font-size:14px}
@@ -147,7 +155,7 @@ tr:hover td{background:rgba(124,92,252,.04)}
 @keyframes confetti{0%{transform:translateY(-100vh) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .confetti{position:fixed;z-index:10000;animation:confetti 3s ease-in-out forwards}
 
-/* ===== NOTIF DROPDOWN ===== */
+/* NOTIF DROPDOWN */
 .ndrop{position:absolute;top:calc(100% + 8px);right:-20px;width:340px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--radius);box-shadow:var(--shadow);z-index:200;max-height:480px;overflow-y:auto}
 .ndrop h3{padding:14px 16px;border-bottom:1px solid var(--bg4);font-size:14px;margin:0}
 .nitem{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:10px;align-items:flex-start;cursor:pointer;transition:.2s}
@@ -160,23 +168,32 @@ tr:hover td{background:rgba(124,92,252,.04)}
 .ntxt{font-size:12px;line-height:1.4}
 .ntxt small{color:var(--text2);display:block;margin-top:3px}
 
-/* ===== WITHDRAWAL ===== */
+/* PASSWORD DISPLAY */
+.pwd-box{background:var(--bg);border:2px dashed var(--warning);border-radius:var(--radius);padding:16px;margin:10px 0;text-align:center}
+.pwd-box .pwd{font-size:28px;font-weight:800;color:var(--gold);font-family:monospace;letter-spacing:4px;margin:8px 0}
+.pwd-box .copy-hint{font-size:11px;color:var(--text2)}
+
+/* WITHDRAW */
 .withdraw-glow{animation:glow 2s infinite}
 @keyframes glow{0%,100%{box-shadow:0 0 5px var(--gold)}50%{box-shadow:0 0 25px var(--gold),0 0 50px rgba(255,215,0,.3)}}
 
-/* ===== DEMO BTN ===== */
+/* DEMO BTN */
 .demo-btn{background:linear-gradient(135deg,var(--gold),#ff6b6b);color:#000;font-size:16px;padding:14px 28px;border-radius:16px;font-weight:800;animation:pulse 2s infinite;margin:20px auto;display:block}
 .demo-btn:hover{transform:scale(1.05)}
 
-/* ===== RESPONSIVE ===== */
+/* RESPONSIVE */
 @media(max-width:768px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .pgrid{grid-template-columns:1fr}
   main{padding:14px}
-  .auth-box{margin:14px;padding:24px}
-  .ndrop{right:-80px;width:290px}
-  .hdr{padding:0 4px;gap:6px}
-  .logo{font-size:16px}
+  .auth-box{padding:24px}
+  .ndrop{right:-100px;width:290px}
+  .hdr{padding:0 4px;gap:4px}
+  .logo{font-size:15px}
+  .nav button{padding:6px 8px;font-size:10px}
+  .hdr-right{gap:6px}
+  #hdr-name-text{display:none}
+  .notif-flash{right:10px;left:10px;max-width:none}
 }
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -196,30 +213,39 @@ tr:hover td{background:rgba(124,92,252,.04)}
       <div class="active" onclick="authTab('login')">Connexion</div>
       <div onclick="authTab('register')">Inscription</div>
     </div>
+
+    <!-- LOGIN -->
     <div id="form-login">
-      <label style="font-size:12px;color:var(--text2)">Email</label>
-      <input type="email" id="l-email" placeholder="votre@email.com">
-      <label style="font-size:12px;color:var(--text2)">Mot de passe</label>
-      <input type="password" id="l-pass" placeholder="••••••••">
+      <label class="field-label"><i class="fas fa-phone"></i> Numéro de téléphone</label>
+      <input type="tel" id="l-phone" placeholder="034 XX XXX XX">
+      <label class="field-label"><i class="fas fa-lock"></i> Mot de passe</label>
+      <input type="password" id="l-pass" placeholder="Mot de passe reçu par téléphone">
       <button class="btn-primary btn-block" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
-      <div style="margin-top:20px;padding:14px;background:var(--bg3);border-radius:var(--radius);font-size:12px;text-align:center">
-        <div style="color:var(--warning);font-weight:700;margin-bottom:6px"><i class="fas fa-key"></i> Compte Admin</div>
-        <div>Email: <code style="color:var(--secondary)">admin@mada.mg</code></div>
-        <div>Mot de passe: <code style="color:var(--secondary)">admin123</code></div>
-        <button class="btn-warning btn-xs mt-1" onclick="fillAdmin()">Remplir auto</button>
-      </div>
     </div>
+
+    <!-- REGISTER -->
     <div id="form-register" class="hidden">
-      <input type="text" id="r-name" placeholder="Nom complet *">
-      <input type="email" id="r-email" placeholder="Email *">
-      <input type="tel" id="r-phone" placeholder="Téléphone (+261...)">
-      <input type="text" id="r-city" placeholder="Ville">
-      <input type="password" id="r-pass" placeholder="Mot de passe *">
-      <input type="password" id="r-pass2" placeholder="Confirmer mot de passe *">
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.6">
+        <i class="fas fa-info-circle" style="color:var(--secondary)"></i>
+        <strong>Comment ça marche?</strong><br>
+        1. Remplissez vos informations ci-dessous<br>
+        2. Un administrateur validera votre inscription par téléphone<br>
+        3. Vous recevrez votre mot de passe par SMS/appel<br>
+        4. Connectez-vous avec votre numéro + mot de passe
+      </div>
+      <label class="field-label"><i class="fas fa-user"></i> Nom complet *</label>
+      <input type="text" id="r-name" placeholder="Votre nom complet">
+      <label class="field-label"><i class="fas fa-phone"></i> Téléphone *</label>
+      <input type="tel" id="r-phone" placeholder="034 XX XXX XX">
+      <label class="field-label"><i class="fas fa-map-marker-alt"></i> Ville *</label>
+      <input type="text" id="r-city" placeholder="Ex: Antananarivo">
+      <label class="field-label"><i class="fas fa-home"></i> Quartier *</label>
+      <input type="text" id="r-quartier" placeholder="Ex: Analakely">
       <button class="btn-primary btn-block" onclick="doRegister()"><i class="fas fa-user-plus"></i> S'inscrire</button>
     </div>
-    <div style="margin-top:16px;text-align:center">
-      <button class="btn-xs btn-danger" onclick="resetAll()" style="opacity:.5"><i class="fas fa-trash"></i> Reset données</button>
+
+    <div style="margin-top:20px;text-align:center;border-top:1px solid var(--bg4);padding-top:16px">
+      <button class="btn-xs btn-danger" onclick="resetAll()" style="opacity:.6"><i class="fas fa-trash"></i> Réinitialiser le site</button>
     </div>
   </div>
 </div>
@@ -231,19 +257,19 @@ tr:hover td{background:rgba(124,92,252,.04)}
       <div class="logo"><i class="fas fa-store"></i> MadaMarket</div>
       <div class="nav" id="main-nav"></div>
       <div class="hdr-right">
-        <div style="white-space:nowrap"><i class="fas fa-star" style="color:var(--gold)"></i> <span id="hdr-stars">0</span></div>
+        <div style="white-space:nowrap;font-size:13px"><i class="fas fa-star" style="color:var(--gold)"></i> <span id="hdr-stars">0</span></div>
         <div style="position:relative" id="bell-wrap">
-          <button class="bell-btn" onclick="toggleNotif()">
+          <button class="bell-btn" id="bell-btn" onclick="toggleNotif()">
             <i class="fas fa-bell"></i>
             <span class="badge hidden" id="bell-badge">0</span>
           </button>
           <div class="ndrop hidden" id="ndrop"></div>
         </div>
-        <div class="hdr-user">
+        <div style="display:flex;align-items:center;gap:6px">
           <div class="avatar" id="hdr-av">A</div>
-          <span id="hdr-name" style="font-size:13px">Admin</span>
+          <span id="hdr-name-text" style="font-size:13px">Admin</span>
         </div>
-        <button class="btn-sm btn-danger" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+        <button class="btn-sm btn-danger" onclick="doLogout()" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></button>
       </div>
     </div>
   </header>
@@ -263,141 +289,142 @@ tr:hover td{background:rgba(124,92,252,.04)}
   </div>
 </div>
 
+<!-- NOTIFICATION FLASH CONTAINER -->
+<div id="flash-container"></div>
+
 <script>
 // ============================================================
 // STORAGE
 // ============================================================
-const S = {
-  get(k) { try { return JSON.parse(localStorage.getItem('mm_'+k)) || []; } catch { return []; } },
-  set(k,v) { localStorage.setItem('mm_'+k, JSON.stringify(v)); },
-  getVal(k) { try { return JSON.parse(localStorage.getItem('mm_'+k)); } catch { return null; } },
-  setVal(k,v) { localStorage.setItem('mm_'+k, JSON.stringify(v)); }
+const S={
+  get(k){try{return JSON.parse(localStorage.getItem('mm_'+k))||[]}catch{return[]}},
+  set(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))},
+  getVal(k){try{return JSON.parse(localStorage.getItem('mm_'+k))}catch{return null}},
+  setVal(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))}
 };
-function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2,6); }
-function fdate(d) { return new Date(d).toLocaleString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
-function esc(s) { if(!s) return ''; const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
-function mdTime() { const n=new Date(); return new Date(n.getTime()+n.getTimezoneOffset()*60000+3*3600000); }
-function catIcon(c) { return {Électronique:'laptop',Vêtements:'tshirt',Maison:'home',Alimentation:'utensils',Services:'handshake'}[c]||'box'; }
+function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,6)}
+function fdate(d){if(!d)return'-';return new Date(d).toLocaleString('fr-FR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function mdTime(){const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+3*3600000)}
+function catIcon(c){return{Électronique:'laptop',Vêtements:'tshirt',Maison:'home',Alimentation:'utensils',Services:'handshake'}[c]||'box'}
+function genPassword(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let p='';for(let i=0;i<6;i++)p+=chars[Math.floor(Math.random()*chars.length)];return p}
+function normalizePhone(p){return(p||'').replace(/[\s\-\.]/g,'')}
 
 // ============================================================
 // INIT
 // ============================================================
-let CU = null; // current user
-let curPage = 'accueil';
-let curATab = 'notifs';
+let CU=null;
+let curPage='accueil';
+let curATab='notifs';
+let lastPendingCount=0;
 
-function initDB() {
-  let u = S.get('users');
-  // Always ensure admin exists with correct credentials
-  const ai = u.findIndex(x => x.id === 'admin001' || x.role === 'admin');
-  const admin = {
-    id:'admin001', name:'Administrateur', email:'admin@mada.mg',
-    phone:'+261340000000', city:'Antananarivo', password:'admin123',
-    role:'admin', status:'approved', stars:0, isActive:true,
-    withdrawReq:false, regAt:new Date().toISOString()
+function initDB(){
+  let u=S.get('users');
+  // Ensure admin
+  const adminPhone='0340000000';
+  const ai=u.findIndex(x=>x.id==='admin001'||x.role==='admin');
+  const admin={
+    id:'admin001',name:'Administrateur',phone:adminPhone,
+    city:'Antananarivo',quartier:'Centre',password:'admin123',
+    role:'admin',status:'approved',stars:0,isActive:true,
+    withdrawReq:false,regAt:new Date().toISOString()
   };
-  if (ai >= 0) { u[ai] = {...u[ai], ...admin, stars: u[ai].stars || 0}; }
-  else { u.push(admin); }
-  S.set('users', u);
-
-  // Ensure arrays exist
-  if (!localStorage.getItem('mm_products')) S.set('products',[]);
-  if (!localStorage.getItem('mm_posts')) S.set('posts',[]);
-  if (!localStorage.getItem('mm_comments')) S.set('comments',[]);
-  if (!localStorage.getItem('mm_orders')) S.set('orders',[]);
-  if (!localStorage.getItem('mm_rHistory')) S.set('rHistory',[]);
+  if(ai>=0){
+    u[ai]={...u[ai],...admin,stars:u[ai].stars||0};
+  }else{
+    u.push(admin);
+  }
+  S.set('users',u);
+  ['products','posts','comments','orders','rHistory'].forEach(k=>{
+    if(!localStorage.getItem('mm_'+k))S.set(k,[]);
+  });
 }
 
-function resetAll() {
-  if (!confirm('Supprimer TOUTES les données et recommencer?')) return;
-  Object.keys(localStorage).forEach(k => { if(k.startsWith('mm_')) localStorage.removeItem(k); });
+function resetAll(){
+  if(!confirm('⚠️ Supprimer TOUTES les données du site et recommencer à zéro?'))return;
+  Object.keys(localStorage).forEach(k=>{if(k.startsWith('mm_'))localStorage.removeItem(k)});
   location.reload();
-}
-
-function fillAdmin() {
-  document.getElementById('l-email').value = 'admin@mada.mg';
-  document.getElementById('l-pass').value = 'admin123';
 }
 
 // ============================================================
 // AUTH
 // ============================================================
-function authTab(t) {
-  document.querySelectorAll('.auth-tabs div').forEach((d,i) => d.classList.toggle('active', (t==='login'?i===0:i===1)));
-  document.getElementById('form-login').classList.toggle('hidden', t!=='login');
-  document.getElementById('form-register').classList.toggle('hidden', t!=='register');
-  document.getElementById('auth-msg').innerHTML = '';
+function authTab(t){
+  document.querySelectorAll('.auth-tabs div').forEach((d,i)=>d.classList.toggle('active',(t==='login'?i===0:i===1)));
+  document.getElementById('form-login').classList.toggle('hidden',t!=='login');
+  document.getElementById('form-register').classList.toggle('hidden',t!=='register');
+  document.getElementById('auth-msg').innerHTML='';
 }
 
-function authMsg(m,t) { document.getElementById('auth-msg').innerHTML=`<div class="auth-msg ${t}">${m}</div>`; }
+function authMsg(m,t){document.getElementById('auth-msg').innerHTML=`<div class="auth-msg ${t}">${m}</div>`}
 
-function doLogin() {
-  const email = document.getElementById('l-email').value.trim();
-  const pw = document.getElementById('l-pass').value;
-  if (!email||!pw) return authMsg('Remplissez tous les champs','err');
+function doLogin(){
+  const phone=normalizePhone(document.getElementById('l-phone').value);
+  const pw=document.getElementById('l-pass').value;
+  if(!phone||!pw)return authMsg('Remplissez tous les champs','err');
 
-  const users = S.get('users');
-  const u = users.find(x => x.email===email && x.password===pw);
-  if (!u) return authMsg('Email ou mot de passe incorrect','err');
-  if (u.status==='pending') return authMsg('⏳ Votre compte est en attente de validation par l\'administrateur','warn');
-  if (u.status==='rejected') return authMsg('❌ Votre inscription a été refusée','err');
+  const users=S.get('users');
+  const u=users.find(x=>normalizePhone(x.phone)===phone&&x.password===pw);
+  if(!u)return authMsg('❌ Numéro ou mot de passe incorrect','err');
+  if(u.status==='pending')return authMsg('⏳ Votre inscription est en cours de validation. Un administrateur vous contactera par téléphone pour vous communiquer votre mot de passe.','warn');
+  if(u.status==='rejected')return authMsg('❌ Votre inscription a été refusée.','err');
 
-  u.isActive = true;
-  S.set('users', users);
-  CU = u;
-  S.setVal('session', u.id);
+  u.isActive=true;
+  S.set('users',users);
+  CU=u;
+  S.setVal('session',u.id);
   document.getElementById('auth-page').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   renderAll();
 }
 
-function doRegister() {
+function doRegister(){
   const name=document.getElementById('r-name').value.trim();
-  const email=document.getElementById('r-email').value.trim();
-  const phone=document.getElementById('r-phone').value.trim();
+  const phone=normalizePhone(document.getElementById('r-phone').value);
   const city=document.getElementById('r-city').value.trim();
-  const pw=document.getElementById('r-pass').value;
-  const pw2=document.getElementById('r-pass2').value;
+  const quartier=document.getElementById('r-quartier').value.trim();
 
-  if (!name||!email||!pw) return authMsg('Remplissez les champs obligatoires (*)','err');
-  if (pw!==pw2) return authMsg('Les mots de passe ne correspondent pas','err');
-  if (pw.length<4) return authMsg('Mot de passe trop court (min 4 caractères)','err');
+  if(!name||!phone||!city||!quartier)return authMsg('Remplissez tous les champs obligatoires','err');
+  if(phone.length<8)return authMsg('Numéro de téléphone invalide','err');
 
-  let users = S.get('users');
-  if (users.find(x=>x.email===email)) return authMsg('Cet email est déjà utilisé','err');
+  let users=S.get('users');
+  if(users.find(x=>normalizePhone(x.phone)===phone))return authMsg('Ce numéro de téléphone est déjà inscrit','err');
 
   users.push({
-    id:uid(), name, email, phone:phone||'', city:city||'', password:pw,
-    role:'user', status:'pending', stars:0, isActive:false,
-    withdrawReq:false, regAt:new Date().toISOString()
+    id:uid(),name,phone,city,quartier,password:null,
+    role:'user',status:'pending',stars:0,isActive:false,
+    withdrawReq:false,regAt:new Date().toISOString()
   });
-  S.set('users', users);
+  S.set('users',users);
 
-  authMsg('✅ Inscription réussie! Votre compte est en attente de validation par l\'administrateur. Revenez plus tard.','ok');
-  ['r-name','r-email','r-phone','r-city','r-pass','r-pass2'].forEach(id=>document.getElementById(id).value='');
+  authMsg(`✅ <strong>Inscription enregistrée!</strong><br><br>
+    📞 Un administrateur vous contactera au <strong>${esc(phone)}</strong> pour valider votre identité et vous communiquer votre mot de passe.<br><br>
+    ⏳ Veuillez patienter...`,'ok');
+
+  ['r-name','r-phone','r-city','r-quartier'].forEach(id=>document.getElementById(id).value='');
 }
 
-function doLogout() {
-  if (CU) {
-    let u = S.get('users');
-    let x = u.find(a=>a.id===CU.id);
-    if (x) { x.isActive=false; S.set('users',u); }
+function doLogout(){
+  if(CU){
+    let u=S.get('users');
+    let x=u.find(a=>a.id===CU.id);
+    if(x){x.isActive=false;S.set('users',u)}
   }
-  CU=null; S.setVal('session',null);
+  CU=null;S.setVal('session',null);
   document.getElementById('app').classList.add('hidden');
   document.getElementById('auth-page').classList.remove('hidden');
   document.getElementById('auth-msg').innerHTML='';
-  document.getElementById('l-email').value='';
+  document.getElementById('l-phone').value='';
   document.getElementById('l-pass').value='';
 }
 
-function restoreSession() {
-  const sid = S.getVal('session');
-  if (!sid) return;
-  const users = S.get('users');
-  const u = users.find(x=>x.id===sid);
-  if (u && u.status==='approved') {
-    u.isActive=true; S.set('users',users);
+function restoreSession(){
+  const sid=S.getVal('session');
+  if(!sid)return;
+  const users=S.get('users');
+  const u=users.find(x=>x.id===sid);
+  if(u&&u.status==='approved'){
+    u.isActive=true;S.set('users',users);
     CU=u;
     document.getElementById('auth-page').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
@@ -406,489 +433,440 @@ function restoreSession() {
 }
 
 // ============================================================
-// PENDING COUNTS (for admin)
+// PENDING COUNTS
 // ============================================================
-function pending() {
-  const u=S.get('users'), p=S.get('products'), c=S.get('comments'), o=S.get('orders');
-  return {
-    reg: u.filter(x=>x.status==='pending'&&x.role!=='admin').length,
-    prod: p.filter(x=>x.status==='pending').length,
-    cmt: c.filter(x=>x.status==='pending').length,
-    ord: o.filter(x=>x.status==='pending').length,
-    wdr: u.filter(x=>x.withdrawReq).length,
-    get total() { return this.reg+this.prod+this.cmt+this.ord+this.wdr; }
+function pending(){
+  const u=S.get('users'),p=S.get('products'),c=S.get('comments'),o=S.get('orders');
+  return{
+    reg:u.filter(x=>x.status==='pending'&&x.role!=='admin').length,
+    prod:p.filter(x=>x.status==='pending').length,
+    cmt:c.filter(x=>x.status==='pending').length,
+    ord:o.filter(x=>x.status==='pending').length,
+    wdr:u.filter(x=>x.withdrawReq).length,
+    get total(){return this.reg+this.prod+this.cmt+this.ord+this.wdr}
   };
 }
 
 // ============================================================
+// REAL-TIME NOTIFICATION POLLING (every 2 seconds)
+// ============================================================
+function pollNotifications(){
+  if(!CU||CU.role!=='admin')return;
+  const p=pending();
+  const newCount=p.total;
+
+  // Update badge
+  const bb=document.getElementById('bell-badge');
+  if(newCount>0){bb.textContent=newCount;bb.classList.remove('hidden')}
+  else{bb.classList.add('hidden')}
+
+  // Flash notification if count increased
+  if(newCount>lastPendingCount&&lastPendingCount>=0){
+    const diff=newCount-lastPendingCount;
+    showFlash(diff,p);
+    // Ring bell
+    const bell=document.getElementById('bell-btn');
+    bell.classList.remove('bell-ring');
+    void bell.offsetWidth;
+    bell.classList.add('bell-ring');
+  }
+  lastPendingCount=newCount;
+
+  // If on admin page, refresh content
+  if(curPage==='admin'){
+    buildNav();
+  }
+}
+
+function showFlash(count,p){
+  let msg='';
+  if(p.reg>0)msg+=`${p.reg} inscription(s) `;
+  if(p.prod>0)msg+=`${p.prod} produit(s) `;
+  if(p.cmt>0)msg+=`${p.cmt} commentaire(s) `;
+  if(p.ord>0)msg+=`${p.ord} commande(s) `;
+
+  const flash=document.createElement('div');
+  flash.className='notif-flash';
+  flash.innerHTML=`
+    <div class="flex" style="gap:10px">
+      <div class="nico orange" style="width:40px;height:40px"><i class="fas fa-bell" style="font-size:16px"></i></div>
+      <div>
+        <div style="font-weight:700;font-size:14px">🔔 Nouvelle notification!</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px">${msg}en attente</div>
+      </div>
+    </div>`;
+  document.getElementById('flash-container').appendChild(flash);
+  setTimeout(()=>{flash.style.animation='slideOut .4s ease forwards';setTimeout(()=>flash.remove(),500)},4000);
+}
+
+// Start polling
+setInterval(pollNotifications,2000);
+
+// ============================================================
 // NAVIGATION
 // ============================================================
-function buildNav() {
-  const isAdmin = CU && CU.role==='admin';
-  const p = isAdmin ? pending() : {total:0};
-  let tabs = [
+function buildNav(){
+  const isAdmin=CU&&CU.role==='admin';
+  const p=isAdmin?pending():{total:0};
+  let tabs=[
     {id:'accueil',icon:'home',label:'Accueil'},
     {id:'produits',icon:'box',label:'Produits'},
     {id:'forum',icon:'comments',label:'Forum'},
     {id:'profil',icon:'user',label:'Profil'},
     {id:'roulette',icon:'dice',label:'Roulette'},
   ];
-  if (isAdmin) tabs.push({id:'admin',icon:'shield-alt',label:'Admin',badge:p.total});
+  if(isAdmin)tabs.push({id:'admin',icon:'shield-alt',label:'Admin',badge:p.total});
 
-  let h = '';
-  tabs.forEach(t => {
-    h += `<button class="${curPage===t.id?'active':''}" onclick="goPage('${t.id}')"><i class="fas fa-${t.icon}"></i> ${t.label}`;
-    if (t.badge && t.badge > 0) h += `<span class="nbadge">${t.badge}</span>`;
-    h += '</button>';
+  let h='';
+  tabs.forEach(t=>{
+    h+=`<button class="${curPage===t.id?'active':''}" onclick="goPage('${t.id}')"><i class="fas fa-${t.icon}"></i> ${t.label}`;
+    if(t.badge&&t.badge>0)h+=`<span class="nbadge">${t.badge}</span>`;
+    h+='</button>';
   });
-  document.getElementById('main-nav').innerHTML = h;
+  document.getElementById('main-nav').innerHTML=h;
 }
 
-function goPage(p) {
-  curPage=p;
-  document.getElementById('ndrop').classList.add('hidden');
-  renderAll();
-}
+function goPage(p){curPage=p;document.getElementById('ndrop').classList.add('hidden');renderAll()}
 
 // ============================================================
 // RENDER ALL
 // ============================================================
-function renderAll() {
-  if (!CU) return;
-  // Refresh user from DB
-  const users = S.get('users');
-  const fresh = users.find(x=>x.id===CU.id);
-  if (fresh) { CU.stars=fresh.stars; CU.withdrawReq=fresh.withdrawReq; }
+function renderAll(){
+  if(!CU)return;
+  const users=S.get('users');
+  const fresh=users.find(x=>x.id===CU.id);
+  if(fresh){CU.stars=fresh.stars;CU.withdrawReq=fresh.withdrawReq}
 
-  document.getElementById('hdr-av').textContent = CU.name.charAt(0).toUpperCase();
-  document.getElementById('hdr-name').textContent = CU.name;
-  document.getElementById('hdr-stars').textContent = CU.stars||0;
+  document.getElementById('hdr-av').textContent=CU.name.charAt(0).toUpperCase();
+  document.getElementById('hdr-name-text').textContent=CU.name;
+  document.getElementById('hdr-stars').textContent=CU.stars||0;
 
-  const isAdmin = CU.role==='admin';
-  document.getElementById('bell-wrap').style.display = isAdmin?'block':'none';
+  const isAdmin=CU.role==='admin';
+  document.getElementById('bell-wrap').style.display=isAdmin?'block':'none';
 
-  if (isAdmin) {
-    const p = pending();
-    const bb = document.getElementById('bell-badge');
-    if (p.total>0) { bb.textContent=p.total; bb.classList.remove('hidden'); }
-    else { bb.classList.add('hidden'); }
+  if(isAdmin){
+    const p=pending();
+    const bb=document.getElementById('bell-badge');
+    if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}
+    else{bb.classList.add('hidden')}
+    lastPendingCount=p.total;
   }
 
   buildNav();
-  const ct = document.getElementById('content');
-
-  switch(curPage) {
-    case 'accueil': renderAccueil(ct); break;
-    case 'produits': renderProduits(ct); break;
-    case 'forum': renderForum(ct); break;
-    case 'profil': renderProfil(ct); break;
-    case 'roulette': renderRoulette(ct); break;
-    case 'admin': renderAdmin(ct); break;
-    default: renderAccueil(ct);
+  const ct=document.getElementById('content');
+  switch(curPage){
+    case'accueil':renderAccueil(ct);break;
+    case'produits':renderProduits(ct);break;
+    case'forum':renderForum(ct);break;
+    case'profil':renderProfil(ct);break;
+    case'roulette':renderRoulettePage(ct);break;
+    case'admin':renderAdmin(ct);break;
+    default:renderAccueil(ct);
   }
 }
 
 // ============================================================
-// NOTIFICATIONS DROPDOWN
+// NOTIF DROPDOWN
 // ============================================================
-function toggleNotif() {
-  const dd = document.getElementById('ndrop');
+function toggleNotif(){
+  const dd=document.getElementById('ndrop');
   dd.classList.toggle('hidden');
-  if (!dd.classList.contains('hidden')) renderNotifDrop();
+  if(!dd.classList.contains('hidden'))renderNotifDrop();
 }
-document.addEventListener('click', e => {
-  const w = document.getElementById('bell-wrap');
-  if (w && !w.contains(e.target)) document.getElementById('ndrop').classList.add('hidden');
+document.addEventListener('click',e=>{
+  const w=document.getElementById('bell-wrap');
+  if(w&&!w.contains(e.target))document.getElementById('ndrop').classList.add('hidden');
 });
 
-function renderNotifDrop() {
-  const p = pending();
-  let h = '<h3><i class="fas fa-bell"></i> Notifications Admin</h3>';
-  if (p.total===0) {
-    h += '<div class="nitem"><div class="ntxt" style="text-align:center;color:var(--success);width:100%;padding:10px">✅ Aucune notification en attente</div></div>';
-  } else {
-    if (p.reg) h+=`<div class="nitem" onclick="goPage('admin');curATab='inscriptions';renderAll();toggleNotif()"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div class="ntxt"><strong>${p.reg} inscription(s)</strong> en attente<small>Cliquez pour gérer</small></div></div>`;
-    if (p.prod) h+=`<div class="nitem" onclick="goPage('admin');curATab='produits';renderAll();toggleNotif()"><div class="nico blue"><i class="fas fa-box"></i></div><div class="ntxt"><strong>${p.prod} produit(s)</strong> à approuver<small>Cliquez pour gérer</small></div></div>`;
-    if (p.cmt) h+=`<div class="nitem" onclick="goPage('admin');curATab='forum';renderAll();toggleNotif()"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div class="ntxt"><strong>${p.cmt} commentaire(s)</strong> à modérer<small>Vérifier insultes/spam</small></div></div>`;
-    if (p.ord) h+=`<div class="nitem" onclick="goPage('admin');curATab='commandes';renderAll();toggleNotif()"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div class="ntxt"><strong>${p.ord} commande(s)</strong> à approuver<small>Cliquez pour gérer</small></div></div>`;
-    if (p.wdr) h+=`<div class="nitem" onclick="goPage('admin');curATab='etoiles';renderAll();toggleNotif()"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div class="ntxt"><strong>${p.wdr} retrait(s)</strong> à valider<small>Cliquez pour gérer</small></div></div>`;
+function renderNotifDrop(){
+  const p=pending();
+  let h='<h3><i class="fas fa-bell"></i> Notifications</h3>';
+  if(p.total===0){
+    h+='<div class="nitem"><div class="ntxt" style="text-align:center;color:var(--success);width:100%;padding:10px">✅ Aucune notification</div></div>';
+  }else{
+    if(p.reg)h+=`<div class="nitem" onclick="goPage('admin');curATab='inscriptions';renderAll();toggleNotif()"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div class="ntxt"><strong>${p.reg} inscription(s)</strong> en attente<small>Validation téléphonique requise</small></div></div>`;
+    if(p.prod)h+=`<div class="nitem" onclick="goPage('admin');curATab='produits';renderAll();toggleNotif()"><div class="nico blue"><i class="fas fa-box"></i></div><div class="ntxt"><strong>${p.prod} produit(s)</strong> à approuver<small>Cliquez pour gérer</small></div></div>`;
+    if(p.cmt)h+=`<div class="nitem" onclick="goPage('admin');curATab='forum';renderAll();toggleNotif()"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div class="ntxt"><strong>${p.cmt} commentaire(s)</strong> à modérer<small>Vérifier insultes/spam</small></div></div>`;
+    if(p.ord)h+=`<div class="nitem" onclick="goPage('admin');curATab='commandes';renderAll();toggleNotif()"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div class="ntxt"><strong>${p.ord} commande(s)</strong> à approuver<small>Cliquez pour gérer</small></div></div>`;
+    if(p.wdr)h+=`<div class="nitem" onclick="goPage('admin');curATab='etoiles';renderAll();toggleNotif()"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div class="ntxt"><strong>${p.wdr} retrait(s)</strong> à valider<small>Cliquez pour gérer</small></div></div>`;
   }
-  document.getElementById('ndrop').innerHTML = h;
+  document.getElementById('ndrop').innerHTML=h;
 }
 
 // ============================================================
 // PAGE: ACCUEIL
 // ============================================================
-function renderAccueil(ct) {
-  const users=S.get('users'), prods=S.get('products'), orders=S.get('orders');
-  const isAdmin = CU.role==='admin';
-  let h = '<h1 class="pg-title">Tableau de Bord</h1><p class="pg-sub">Bienvenue, '+esc(CU.name)+'!</p>';
+function renderAccueil(ct){
+  const users=S.get('users'),prods=S.get('products'),orders=S.get('orders');
+  const isAdmin=CU.role==='admin';
+  let h='<h1 class="pg-title">Tableau de Bord</h1><p class="pg-sub">Bienvenue, '+esc(CU.name)+'!</p><div class="stats">';
 
-  h += '<div class="stats">';
-  if (isAdmin) {
-    const p = pending();
-    h += `
-      <div class="st red"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="val">${p.reg}</div><div class="lbl">Inscriptions en attente</div></div>
-      <div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${p.prod}</div><div class="lbl">Produits en attente</div></div>
-      <div class="st teal"><div class="ico"><i class="fas fa-users"></i></div><div class="val">${users.filter(u=>u.role!=='admin').length}</div><div class="lbl">Membres total</div></div>
-      <div class="st green"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${p.ord}</div><div class="lbl">Commandes en attente</div></div>
-      <div class="st gold"><div class="ico"><i class="fas fa-comment-dots"></i></div><div class="val">${p.cmt}</div><div class="lbl">Commentaires à modérer</div></div>`;
-  } else {
-    const myP = prods.filter(p=>p.userId===CU.id);
-    h += `
-      <div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${myP.length}</div><div class="lbl">Mes Produits</div></div>
+  if(isAdmin){
+    const p=pending();
+    h+=`<div class="st red"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="val">${p.reg}</div><div class="lbl">Inscriptions</div></div>
+      <div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${p.prod}</div><div class="lbl">Produits</div></div>
+      <div class="st teal"><div class="ico"><i class="fas fa-users"></i></div><div class="val">${users.filter(u=>u.role!=='admin').length}</div><div class="lbl">Membres</div></div>
+      <div class="st green"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${p.ord}</div><div class="lbl">Commandes</div></div>
+      <div class="st gold"><div class="ico"><i class="fas fa-comment-dots"></i></div><div class="val">${p.cmt}</div><div class="lbl">Commentaires</div></div>`;
+  }else{
+    const myP=prods.filter(p=>p.userId===CU.id);
+    h+=`<div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${myP.length}</div><div class="lbl">Mes Produits</div></div>
       <div class="st teal"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${orders.filter(o=>o.buyerId===CU.id).length}</div><div class="lbl">Mes Commandes</div></div>
       <div class="st gold"><div class="ico"><i class="fas fa-star"></i></div><div class="val">${CU.stars||0}</div><div class="lbl">Mes Étoiles</div></div>
       <div class="st green"><div class="ico"><i class="fas fa-check-circle"></i></div><div class="val">${prods.filter(p=>p.status==='approved').length}</div><div class="lbl">Produits dispo</div></div>`;
   }
-  h += '</div>';
+  h+='</div>';
 
-  // Recent products
-  const recent = prods.filter(p=>p.status==='approved').slice(-4).reverse();
-  h += '<h2 class="mb-2">Produits récents</h2>';
-  if (recent.length) {
-    h += '<div class="pgrid">';
-    recent.forEach(p => {
-      const s = users.find(u=>u.id===p.userId);
-      h += `<div class="pcard"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div></div></div>`;
-    });
-    h += '</div>';
-  } else {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucun produit disponible</div>';
-  }
-  ct.innerHTML = h;
+  const recent=prods.filter(p=>p.status==='approved').slice(-4).reverse();
+  h+='<h2 class="mb-2">Produits récents</h2>';
+  if(recent.length){
+    h+='<div class="pgrid">';
+    recent.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<div class="pcard"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div></div></div>`});
+    h+='</div>';
+  }else h+='<div class="card text-center" style="color:var(--text2)">Aucun produit disponible</div>';
+  ct.innerHTML=h;
 }
 
 // ============================================================
 // PAGE: PRODUITS
 // ============================================================
-function renderProduits(ct) {
-  const prods=S.get('products'), users=S.get('users');
-  let h = `<div class="flex-between mb-2"><div><h1 class="pg-title">Produits</h1><p class="pg-sub">Marketplace</p></div><button class="btn-primary" onclick="toggleEl('add-prod')"><i class="fas fa-plus"></i> Ajouter</button></div>`;
-
-  // Add form
-  h += `<div class="card hidden" id="add-prod">
-    <h3 class="mb-2">Nouveau Produit</h3>
+function renderProduits(ct){
+  const prods=S.get('products'),users=S.get('users');
+  let h=`<div class="flex-between mb-2"><div><h1 class="pg-title">Produits</h1><p class="pg-sub">Marketplace</p></div><button class="btn-primary" onclick="toggleEl('add-prod')"><i class="fas fa-plus"></i> Ajouter</button></div>`;
+  h+=`<div class="card hidden" id="add-prod"><h3 class="mb-2">Nouveau Produit</h3>
     <input id="p-name" placeholder="Nom du produit *">
     <textarea id="p-desc" placeholder="Description" rows="3"></textarea>
     <input id="p-price" type="number" placeholder="Prix (Ar) *">
     <select id="p-cat"><option value="">Catégorie</option><option>Électronique</option><option>Vêtements</option><option>Maison</option><option>Alimentation</option><option>Services</option><option>Autre</option></select>
-    <div class="flex"><button class="btn-success" onclick="addProduct()"><i class="fas fa-check"></i> Soumettre</button><button class="btn-danger" onclick="toggleEl('add-prod')"><i class="fas fa-times"></i> Annuler</button></div>
-  </div>`;
+    <div class="flex"><button class="btn-success" onclick="addProduct()"><i class="fas fa-check"></i> Soumettre</button><button class="btn-danger" onclick="toggleEl('add-prod')"><i class="fas fa-times"></i></button></div></div>`;
 
-  // My pending
-  const myPend = prods.filter(p=>p.userId===CU.id && p.status==='pending');
-  if (myPend.length) {
-    h += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> Mes produits en attente de validation</h3><div class="pgrid mb-3">';
-    myPend.forEach(p => {
-      h += `<div class="pcard" style="border-color:var(--warning);opacity:.7"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i><div style="position:absolute;top:8px;right:8px" class="tag tag-pending"><i class="fas fa-clock"></i> En attente</div></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--warning);font-size:12px"><i class="fas fa-hourglass-half"></i> Attente validation admin</div></div></div>`;
-    });
-    h += '</div>';
+  const myPend=prods.filter(p=>p.userId===CU.id&&p.status==='pending');
+  if(myPend.length){
+    h+='<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> En attente de validation</h3><div class="pgrid mb-3">';
+    myPend.forEach(p=>{h+=`<div class="pcard" style="border-color:var(--warning);opacity:.7"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i><div style="position:absolute;top:8px;right:8px" class="tag tag-pending"><i class="fas fa-clock"></i> En attente</div></div><div class="pinfo"><h3>${esc(p.name)}</h3><div class="price">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--warning);font-size:11px"><i class="fas fa-hourglass-half"></i> Validation admin en cours</div></div></div>`});
+    h+='</div>';
   }
 
-  // Approved
-  const approved = prods.filter(p=>p.status==='approved');
-  h += '<h3 class="mb-2"><i class="fas fa-check-circle" style="color:var(--success)"></i> Produits disponibles</h3>';
-  if (approved.length) {
-    h += '<div class="pgrid">';
-    approved.forEach(p => {
-      const s = users.find(u=>u.id===p.userId);
-      const mine = p.userId===CU.id;
-      h += `<div class="pcard"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><p style="color:var(--text2);font-size:11px;margin:4px 0">${esc(p.description||'')}</p><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div><div class="flex mt-1"><span class="tag tag-approved"><i class="fas fa-check"></i> Approuvé</span>${!mine?`<button class="btn-success btn-sm" onclick="buyProd('${p.id}')"><i class="fas fa-shopping-cart"></i> Acheter</button>`:''}</div></div></div>`;
+  const approved=prods.filter(p=>p.status==='approved');
+  h+='<h3 class="mb-2"><i class="fas fa-check-circle" style="color:var(--success)"></i> Disponibles</h3>';
+  if(approved.length){
+    h+='<div class="pgrid">';
+    approved.forEach(p=>{
+      const s=users.find(u=>u.id===p.userId);
+      const mine=p.userId===CU.id;
+      h+=`<div class="pcard"><div class="pimg"><i class="fas fa-${catIcon(p.category)}"></i></div><div class="pinfo"><h3>${esc(p.name)}</h3><p style="color:var(--text2);font-size:11px">${esc(p.description||'')}</p><div class="price">${Number(p.price).toLocaleString()} Ar</div><div class="seller"><i class="fas fa-user"></i> ${esc(s?s.name:'?')}</div><div class="flex mt-1"><span class="tag tag-approved">✓ Approuvé</span>${!mine?`<button class="btn-success btn-sm" onclick="buyProd('${p.id}')"><i class="fas fa-shopping-cart"></i> Acheter</button>`:''}</div></div></div>`;
     });
-    h += '</div>';
-  } else {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucun produit approuvé</div>';
-  }
-  ct.innerHTML = h;
+    h+='</div>';
+  }else h+='<div class="card text-center" style="color:var(--text2)">Aucun produit</div>';
+  ct.innerHTML=h;
 }
 
-function toggleEl(id) { document.getElementById(id).classList.toggle('hidden'); }
+function toggleEl(id){document.getElementById(id).classList.toggle('hidden')}
 
-function addProduct() {
+function addProduct(){
   const name=document.getElementById('p-name').value.trim();
   const desc=document.getElementById('p-desc').value.trim();
   const price=document.getElementById('p-price').value;
   const cat=document.getElementById('p-cat').value;
-  if (!name||!price) return alert('Nom et prix requis!');
-
-  let prods = S.get('products');
-  prods.push({id:uid(), userId:CU.id, name, description:desc, price:Number(price), category:cat||'Autre', status:'pending', createdAt:new Date().toISOString()});
-  S.set('products', prods);
-  alert('✅ Produit soumis! En attente de validation par l\'admin.');
+  if(!name||!price)return alert('Nom et prix requis!');
+  let prods=S.get('products');
+  prods.push({id:uid(),userId:CU.id,name,description:desc,price:Number(price),category:cat||'Autre',status:'pending',createdAt:new Date().toISOString()});
+  S.set('products',prods);
+  alert('✅ Produit soumis! En attente de validation admin.');
   renderAll();
 }
 
-function buyProd(pid) {
-  const prods=S.get('products');
-  const p=prods.find(x=>x.id===pid);
-  if (!p||p.userId===CU.id) return;
-  if (!confirm(`Acheter "${p.name}" pour ${Number(p.price).toLocaleString()} Ar ?`)) return;
-
+function buyProd(pid){
+  const prods=S.get('products');const p=prods.find(x=>x.id===pid);
+  if(!p||p.userId===CU.id)return;
+  if(!confirm(`Acheter "${p.name}" pour ${Number(p.price).toLocaleString()} Ar?`))return;
   let orders=S.get('orders');
-  orders.push({id:uid(), productId:pid, buyerId:CU.id, sellerId:p.userId, productName:p.name, price:p.price, status:'pending', createdAt:new Date().toISOString()});
-  S.set('orders', orders);
-  alert('✅ Commande passée! En attente d\'approbation admin.');
+  orders.push({id:uid(),productId:pid,buyerId:CU.id,sellerId:p.userId,productName:p.name,price:p.price,status:'pending',createdAt:new Date().toISOString()});
+  S.set('orders',orders);
+  alert('✅ Commande passée! Attente approbation admin.');
   renderAll();
 }
 
 // ============================================================
 // PAGE: FORUM
 // ============================================================
-function renderForum(ct) {
-  const posts=S.get('posts'), users=S.get('users'), comments=S.get('comments');
-  let h = `<div class="flex-between mb-2"><div><h1 class="pg-title">Forum</h1><p class="pg-sub">Discussions</p></div><button class="btn-primary" onclick="toggleEl('add-post')"><i class="fas fa-edit"></i> Nouveau Post</button></div>`;
+function renderForum(ct){
+  const posts=S.get('posts'),users=S.get('users'),comments=S.get('comments');
+  let h=`<div class="flex-between mb-2"><div><h1 class="pg-title">Forum</h1><p class="pg-sub">Discussions</p></div><button class="btn-primary" onclick="toggleEl('add-post')"><i class="fas fa-edit"></i> Nouveau Post</button></div>`;
+  h+=`<div class="card hidden" id="add-post"><h3 class="mb-2">Nouveau Post</h3>
+    <input id="pt-title" placeholder="Titre *"><textarea id="pt-content" placeholder="Contenu..." rows="4"></textarea>
+    <div class="flex"><button class="btn-success" onclick="addPost()"><i class="fas fa-paper-plane"></i> Publier</button><button class="btn-danger" onclick="toggleEl('add-post')"><i class="fas fa-times"></i></button></div></div>`;
 
-  h += `<div class="card hidden" id="add-post">
-    <h3 class="mb-2">Nouveau Post</h3>
-    <input id="pt-title" placeholder="Titre *">
-    <textarea id="pt-content" placeholder="Contenu..." rows="4"></textarea>
-    <div class="flex"><button class="btn-success" onclick="addPost()"><i class="fas fa-paper-plane"></i> Publier</button><button class="btn-danger" onclick="toggleEl('add-post')"><i class="fas fa-times"></i> Annuler</button></div>
-  </div>`;
+  if(!posts.length)h+='<div class="card text-center" style="color:var(--text2)">Aucun post. Soyez le premier!</div>';
 
-  if (!posts.length) {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucun post. Soyez le premier!</div>';
-  }
+  posts.slice().reverse().forEach(post=>{
+    const author=users.find(u=>u.id===post.userId);
+    const cmts=comments.filter(c=>c.postId===post.id&&c.status==='approved');
+    const myPending=comments.filter(c=>c.postId===post.id&&c.status==='pending'&&c.userId===CU.id);
 
-  posts.slice().reverse().forEach(post => {
-    const author = users.find(u=>u.id===post.userId);
-    const cmts = comments.filter(c=>c.postId===post.id && c.status==='approved');
-    const myCmtPending = comments.filter(c=>c.postId===post.id && c.status==='pending' && c.userId===CU.id);
-
-    h += `<div class="post"><div class="post-hd"><div class="avatar" style="width:36px;height:36px;font-size:14px">${(author?author.name:'?').charAt(0)}</div><div><strong>${esc(author?author.name:'Inconnu')}</strong><div style="font-size:11px;color:var(--text2)">${fdate(post.createdAt)}</div></div></div>
-      <h3 style="margin-bottom:6px">${esc(post.title)}</h3>
-      <div class="post-body">${esc(post.content)}</div>
+    h+=`<div class="post"><div class="post-hd"><div class="avatar" style="width:36px;height:36px;font-size:14px">${(author?author.name:'?').charAt(0)}</div><div><strong>${esc(author?author.name:'Inconnu')}</strong><div style="font-size:11px;color:var(--text2)">${fdate(post.createdAt)}</div></div></div>
+      <h3 style="margin-bottom:6px">${esc(post.title)}</h3><div class="post-body">${esc(post.content)}</div>
       <div><strong style="font-size:12px"><i class="fas fa-comments"></i> Commentaires (${cmts.length})</strong>`;
 
-    cmts.forEach(c => {
-      const ca=users.find(u=>u.id===c.userId);
-      h += `<div class="cmt"><div class="cmt-hd"><div class="avatar" style="width:22px;height:22px;font-size:9px">${(ca?ca.name:'?').charAt(0)}</div><strong>${esc(ca?ca.name:'?')}</strong><span style="color:var(--text2)">${fdate(c.createdAt)}</span></div>${esc(c.content)}</div>`;
-    });
+    cmts.forEach(c=>{const ca=users.find(u=>u.id===c.userId);h+=`<div class="cmt"><div class="cmt-hd"><div class="avatar" style="width:22px;height:22px;font-size:9px">${(ca?ca.name:'?').charAt(0)}</div><strong>${esc(ca?ca.name:'?')}</strong><span style="color:var(--text2)">${fdate(c.createdAt)}</span></div>${esc(c.content)}</div>`});
+    myPending.forEach(c=>{h+=`<div class="cmt" style="border-left-color:var(--warning);opacity:.5"><div class="cmt-hd"><span class="tag tag-pending"><i class="fas fa-clock"></i> En modération</span></div>${esc(c.content)}</div>`});
 
-    myCmtPending.forEach(c => {
-      h += `<div class="cmt" style="border-left-color:var(--warning);opacity:.5"><div class="cmt-hd"><span class="tag tag-pending"><i class="fas fa-clock"></i> En modération</span></div>${esc(c.content)}</div>`;
-    });
-
-    h += `</div><div style="display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--bg4)"><input id="cmt-${post.id}" placeholder="Écrire un commentaire..." style="margin:0;flex:1"><button class="btn-primary btn-sm" onclick="addComment('${post.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`;
+    h+=`</div><div style="display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--bg4)"><input id="cmt-${post.id}" placeholder="Écrire un commentaire..." style="margin:0;flex:1"><button class="btn-primary btn-sm" onclick="addComment('${post.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`;
   });
-  ct.innerHTML = h;
+  ct.innerHTML=h;
 }
 
-function addPost() {
+function addPost(){
   const title=document.getElementById('pt-title').value.trim();
   const content=document.getElementById('pt-content').value.trim();
-  if (!title||!content) return alert('Titre et contenu requis!');
+  if(!title||!content)return alert('Titre et contenu requis!');
   let posts=S.get('posts');
-  posts.push({id:uid(), userId:CU.id, title, content, createdAt:new Date().toISOString()});
-  S.set('posts', posts);
-  renderAll();
+  posts.push({id:uid(),userId:CU.id,title,content,createdAt:new Date().toISOString()});
+  S.set('posts',posts);renderAll();
 }
 
-function addComment(postId) {
+function addComment(postId){
   const el=document.getElementById('cmt-'+postId);
-  const txt=el.value.trim();
-  if (!txt) return;
+  const txt=el.value.trim();if(!txt)return;
   let cmts=S.get('comments');
-  cmts.push({id:uid(), postId, userId:CU.id, content:txt, status:'pending', createdAt:new Date().toISOString()});
-  S.set('comments', cmts);
-  el.value='';
-  alert('💬 Commentaire soumis! Visible après modération admin.');
-  renderAll();
+  cmts.push({id:uid(),postId,userId:CU.id,content:txt,status:'pending',createdAt:new Date().toISOString()});
+  S.set('comments',cmts);el.value='';
+  alert('💬 Commentaire soumis! Visible après modération.');renderAll();
 }
 
 // ============================================================
 // PAGE: PROFIL
 // ============================================================
-function renderProfil(ct) {
-  const users=S.get('users');
-  const me=users.find(u=>u.id===CU.id);
-  if (me) { CU.stars=me.stars; CU.withdrawReq=me.withdrawReq; }
-  document.getElementById('hdr-stars').textContent = CU.stars||0;
+function renderProfil(ct){
+  const users=S.get('users');const me=users.find(u=>u.id===CU.id);
+  if(me){CU.stars=me.stars;CU.withdrawReq=me.withdrawReq}
+  document.getElementById('hdr-stars').textContent=CU.stars||0;
+  const pct=Math.min(100,((CU.stars||0)/1000)*100);
+  const can=(CU.stars||0)>=1000;
 
-  const pct = Math.min(100, ((CU.stars||0)/1000)*100);
-  const can = (CU.stars||0)>=1000;
-
-  let h = `<h1 class="pg-title text-center">Mon Profil</h1><p class="pg-sub text-center">Informations personnelles</p>
+  let h=`<h1 class="pg-title text-center">Mon Profil</h1><p class="pg-sub text-center">Mes informations</p>
   <div class="prof">
     <div class="prof-av">${CU.name.charAt(0).toUpperCase()}</div>
     <h2>${esc(CU.name)}</h2>
     <p style="color:var(--text2);margin-bottom:14px">${CU.role==='admin'?'👑 Administrateur':'👤 Membre'}</p>
-    <div class="card" style="text-align:left;margin-top:14px">
-      <div style="margin-bottom:8px"><i class="fas fa-envelope" style="color:var(--primary2);width:20px"></i> ${esc(CU.email)}</div>
-      <div style="margin-bottom:8px"><i class="fas fa-phone" style="color:var(--secondary);width:20px"></i> ${esc(CU.phone||'Non renseigné')}</div>
-      <div style="margin-bottom:8px"><i class="fas fa-map-marker-alt" style="color:var(--danger);width:20px"></i> ${esc(CU.city||'Non renseigné')}</div>
-      <div><i class="fas fa-calendar" style="color:var(--success);width:20px"></i> Inscrit le ${fdate(CU.regAt||CU.registeredAt)}</div>
+    <div class="card" style="text-align:left">
+      <div style="margin-bottom:8px"><i class="fas fa-phone" style="color:var(--secondary);width:20px"></i> ${esc(CU.phone)}</div>
+      <div style="margin-bottom:8px"><i class="fas fa-map-marker-alt" style="color:var(--danger);width:20px"></i> ${esc(CU.city||'-')}</div>
+      <div style="margin-bottom:8px"><i class="fas fa-home" style="color:var(--primary2);width:20px"></i> ${esc(CU.quartier||'-')}</div>
+      <div><i class="fas fa-calendar" style="color:var(--success);width:20px"></i> Inscrit le ${fdate(CU.regAt)}</div>
     </div>
     <div class="card mt-2 text-center" ${can?'style="border-color:var(--gold)"':''}>
       <h3><i class="fas fa-star stars-display"></i> Mes Étoiles</h3>
       <div style="font-size:44px;font-weight:800;color:var(--gold);margin:14px 0">${CU.stars||0}</div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%">${Math.round(pct)}%</div></div>
-      <div style="color:var(--text2);font-size:12px;margin-bottom:14px">Objectif: 1000 ⭐ pour un retrait</div>
-      ${can && !CU.withdrawReq ? `<button class="btn-warning withdraw-glow" onclick="reqWithdraw()"><i class="fas fa-money-bill-wave"></i> Demander un Retrait</button>` : ''}
-      ${CU.withdrawReq ? '<div class="tag tag-pending" style="font-size:13px;padding:8px 18px"><i class="fas fa-clock"></i> Retrait en attente de validation</div>' : ''}
-      ${!can ? `<div style="color:var(--text2);font-size:12px">Il manque ${1000-(CU.stars||0)} étoiles</div>` : ''}
+      <div style="color:var(--text2);font-size:12px;margin-bottom:14px">Objectif: 1000 ⭐ pour retrait</div>
+      ${can&&!CU.withdrawReq?`<button class="btn-warning withdraw-glow" onclick="reqWithdraw()"><i class="fas fa-money-bill-wave"></i> Demander un Retrait</button>`:''}
+      ${CU.withdrawReq?'<div class="tag tag-pending" style="font-size:13px;padding:8px 18px"><i class="fas fa-clock"></i> Retrait en attente</div>':''}
+      ${!can?`<div style="color:var(--text2);font-size:12px">Il manque ${1000-(CU.stars||0)} étoiles</div>`:''}
     </div>
   </div>`;
-  ct.innerHTML = h;
+  ct.innerHTML=h;
 }
 
-function reqWithdraw() {
-  if (!confirm('Demander un retrait de vos étoiles?')) return;
-  let users=S.get('users');
-  let u=users.find(x=>x.id===CU.id);
-  if (u) { u.withdrawReq=true; CU.withdrawReq=true; S.set('users',users); }
-  renderAll();
+function reqWithdraw(){
+  if(!confirm('Demander un retrait?'))return;
+  let users=S.get('users');let u=users.find(x=>x.id===CU.id);
+  if(u){u.withdrawReq=true;CU.withdrawReq=true;S.set('users',users)}renderAll();
 }
 
 // ============================================================
 // PAGE: ROULETTE
 // ============================================================
-function renderRoulette(ct) {
-  const hist = S.get('rHistory');
-  let h = `<h1 class="pg-title text-center"><i class="fas fa-dice" style="color:var(--gold)"></i> Roulette MadaMarket</h1>
+function renderRoulettePage(ct){
+  const hist=S.get('rHistory');
+  let h=`<h1 class="pg-title text-center"><i class="fas fa-dice" style="color:var(--gold)"></i> Roulette MadaMarket</h1>
     <p class="pg-sub text-center">Toutes les heures, un membre actif gagne 20 étoiles!</p>
     <div class="card text-center" style="max-width:600px;margin:0 auto">
-      <div class="rl-timer">
-        <div>⏰ Prochaine roulette dans</div>
-        <span class="time" id="rl-cd">--:--</span>
-        <div style="margin-top:6px;font-size:11px">Heure Madagascar (UTC+3)</div>
-      </div>
-      <button class="demo-btn" onclick="startRoulette()">
-        <i class="fas fa-play-circle"></i> LANCER LA ROULETTE (Demo)
-      </button>
-      <p style="font-size:11px;color:var(--text2);margin-top:8px">En production, se lance automatiquement chaque heure</p>`;
-
-  h += '<div class="mt-3"><h3 class="mb-2"><i class="fas fa-history"></i> Historique des gains</h3>';
-  if (hist.length) {
-    h += '<div class="tw"><table><tr><th>🏆 Gagnant</th><th>Étoiles</th><th>Date</th></tr>';
-    hist.slice().reverse().slice(0,15).forEach(r => {
-      h += `<tr><td><strong>${esc(r.name)}</strong></td><td><span class="stars-display"><i class="fas fa-star"></i> +${r.stars}</span></td><td>${fdate(r.time)}</td></tr>`;
-    });
-    h += '</table></div>';
-  } else {
-    h += '<p style="color:var(--text2)">Aucun tirage effectué encore</p>';
-  }
-  h += '</div></div>';
-  ct.innerHTML = h;
-  updateCD();
+      <div class="rl-timer"><div>⏰ Prochaine roulette dans</div><span class="time" id="rl-cd">--:--</span><div style="margin-top:6px;font-size:11px">Heure Madagascar (UTC+3)</div></div>
+      <button class="demo-btn" onclick="startRoulette()"><i class="fas fa-play-circle"></i> LANCER LA ROULETTE</button>
+      <p style="font-size:11px;color:var(--text2)">Se lance automatiquement chaque heure</p>
+      <div class="mt-3"><h3 class="mb-2"><i class="fas fa-history"></i> Historique</h3>`;
+  if(hist.length){
+    h+='<div class="tw"><table><tr><th>🏆 Gagnant</th><th>Étoiles</th><th>Date</th></tr>';
+    hist.slice().reverse().slice(0,15).forEach(r=>{h+=`<tr><td><strong>${esc(r.name)}</strong></td><td><span class="stars-display"><i class="fas fa-star"></i> +${r.stars}</span></td><td>${fdate(r.time)}</td></tr>`});
+    h+='</table></div>';
+  }else h+='<p style="color:var(--text2)">Aucun tirage</p>';
+  h+='</div></div>';
+  ct.innerHTML=h;updateCD();
 }
 
-function updateCD() {
-  const now = mdTime();
-  const m = 59-now.getMinutes(), s = 59-now.getSeconds();
-  const el = document.getElementById('rl-cd');
-  if (el) el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+function updateCD(){
+  const now=mdTime();const m=59-now.getMinutes(),s=59-now.getSeconds();
+  const el=document.getElementById('rl-cd');
+  if(el)el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-setInterval(updateCD, 1000);
+setInterval(updateCD,1000);
 
-// Auto-roulette check
-setInterval(() => {
-  const now = mdTime();
-  if (now.getMinutes()===0 && now.getSeconds()===0) {
-    const last = S.getVal('lastRL');
-    if (last !== now.getHours()) {
-      S.setVal('lastRL', now.getHours());
-      if (CU) startRoulette();
-    }
+setInterval(()=>{
+  const now=mdTime();
+  if(now.getMinutes()===0&&now.getSeconds()===0){
+    const last=S.getVal('lastRL');
+    if(last!==now.getHours()){S.setVal('lastRL',now.getHours());if(CU)startRoulette();}
   }
-}, 1000);
+},1000);
 
-let rlRunning = false;
-function startRoulette() {
-  const users = S.get('users').filter(u=>u.role!=='admin' && u.status==='approved');
-  if (users.length < 1) return alert('Pas assez de membres actifs!');
-  if (rlRunning) return;
-  rlRunning = true;
-
-  // Disable ALL buttons
+let rlRunning=false;
+function startRoulette(){
+  const users=S.get('users').filter(u=>u.role!=='admin'&&u.status==='approved');
+  if(users.length<1)return alert('Pas assez de membres!');
+  if(rlRunning)return;rlRunning=true;
   document.querySelectorAll('button').forEach(b=>b.disabled=true);
 
-  const winner = users[Math.floor(Math.random()*users.length)];
-
-  const ov = document.getElementById('roulette-overlay');
-  const nd = document.getElementById('rl-names');
-  const st = document.getElementById('rl-status');
+  const winner=users[Math.floor(Math.random()*users.length)];
+  const ov=document.getElementById('roulette-overlay');
+  const nd=document.getElementById('rl-names');
+  const st=document.getElementById('rl-status');
   ov.classList.remove('hidden');
-  st.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Tirage en cours...';
+  st.innerHTML='<i class="fas fa-spinner fa-spin"></i> Tirage en cours...';
 
-  // Build names
-  let names = [];
-  for (let i=0; i<80; i++) names.push(users[i%users.length]);
-  const winPos = names.length - 6;
-  names[winPos] = winner;
+  let names=[];for(let i=0;i<80;i++)names.push(users[i%users.length]);
+  const winPos=names.length-6;names[winPos]=winner;
+  nd.innerHTML=names.map((u,i)=>`<div class="rl-name" data-i="${i}">${esc(u.name)}</div>`).join('');
 
-  nd.innerHTML = names.map((u,i)=>`<div class="rl-name" data-i="${i}">${esc(u.name)}</div>`).join('');
-
-  const target = winPos*50 - 125;
-  const start = Date.now();
-  const dur = 7000;
-
-  function anim() {
-    const t = Math.min(1, (Date.now()-start)/dur);
-    const e = 1 - Math.pow(1-t, 3);
-    nd.style.transform = `translateY(-${e*target}px)`;
-    if (t<1) { requestAnimationFrame(anim); }
-    else {
-      setTimeout(() => {
-        const we = nd.querySelector(`[data-i="${winPos}"]`);
-        if (we) we.classList.add('win');
-        st.innerHTML = `<div class="rl-result">🎉🎉🎉<br>${esc(winner.name)}<br>gagne 20 étoiles!<br>🎉🎉🎉</div>`;
-
-        // Award stars
-        let all = S.get('users');
-        let w = all.find(u=>u.id===winner.id);
-        if (w) { w.stars=(w.stars||0)+20; S.set('users',all); }
-        if (CU && CU.id===winner.id) { CU.stars=(CU.stars||0)+20; }
-
-        // History
-        let hist = S.get('rHistory');
-        hist.push({id:winner.id, name:winner.name, stars:20, time:new Date().toISOString()});
-        S.set('rHistory', hist);
-
-        launchConfetti();
-
-        setTimeout(() => {
-          ov.classList.add('hidden');
-          rlRunning=false;
-          document.querySelectorAll('button').forEach(b=>b.disabled=false);
-          renderAll();
-        }, 5000);
-      }, 500);
-    }
+  const target=winPos*50-125;const startT=Date.now();const dur=7000;
+  function anim(){
+    const t=Math.min(1,(Date.now()-startT)/dur);
+    nd.style.transform=`translateY(-${(1-Math.pow(1-t,3))*target}px)`;
+    if(t<1)requestAnimationFrame(anim);
+    else setTimeout(()=>{
+      const we=nd.querySelector(`[data-i="${winPos}"]`);if(we)we.classList.add('win');
+      st.innerHTML=`<div class="rl-result">🎉🎉🎉<br>${esc(winner.name)}<br>gagne 20 étoiles!<br>🎉🎉🎉</div>`;
+      let all=S.get('users');let w=all.find(u=>u.id===winner.id);
+      if(w){w.stars=(w.stars||0)+20;S.set('users',all)}
+      if(CU&&CU.id===winner.id)CU.stars=(CU.stars||0)+20;
+      let hist=S.get('rHistory');hist.push({id:winner.id,name:winner.name,stars:20,time:new Date().toISOString()});S.set('rHistory',hist);
+      launchConfetti();
+      setTimeout(()=>{ov.classList.add('hidden');rlRunning=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);renderAll()},5000);
+    },500);
   }
   requestAnimationFrame(anim);
 }
 
-function launchConfetti() {
+function launchConfetti(){
   const cols=['#ffd700','#7c5cfc','#00cec9','#e17055','#00b894','#fd79a8','#6c5ce7'];
-  for (let i=0;i<60;i++) {
-    const el=document.createElement('div');
-    el.className='confetti';
-    el.style.cssText=`left:${Math.random()*100}vw;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'0'};animation-delay:${Math.random()*2}s;animation-duration:${2+Math.random()*2}s;`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),5000);
-  }
+  for(let i=0;i<60;i++){const el=document.createElement('div');el.className='confetti';el.style.cssText=`left:${Math.random()*100}vw;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'0'};animation-delay:${Math.random()*2}s;animation-duration:${2+Math.random()*2}s;`;document.body.appendChild(el);setTimeout(()=>el.remove(),5000)}
 }
 
 // ============================================================
 // PAGE: ADMIN
 // ============================================================
-function renderAdmin(ct) {
-  if (CU.role!=='admin') { ct.innerHTML='<div class="card">Accès refusé</div>'; return; }
-  const p = pending();
-  let h = '<h1 class="pg-title"><i class="fas fa-shield-alt"></i> Administration</h1><p class="pg-sub">Gestion de la plateforme</p>';
-
-  // Stats
-  h += `<div class="stats">
+function renderAdmin(ct){
+  if(CU.role!=='admin'){ct.innerHTML='<div class="card">Accès refusé</div>';return}
+  const p=pending();
+  let h='<h1 class="pg-title"><i class="fas fa-shield-alt"></i> Administration</h1><p class="pg-sub">Gestion de la plateforme</p>';
+  h+=`<div class="stats">
     <div class="st red"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="val">${p.reg}</div><div class="lbl">Inscriptions</div></div>
     <div class="st purple"><div class="ico"><i class="fas fa-box"></i></div><div class="val">${p.prod}</div><div class="lbl">Produits</div></div>
     <div class="st teal"><div class="ico"><i class="fas fa-shopping-cart"></i></div><div class="val">${p.ord}</div><div class="lbl">Commandes</div></div>
     <div class="st gold"><div class="ico"><i class="fas fa-comment-dots"></i></div><div class="val">${p.cmt}</div><div class="lbl">Commentaires</div></div>
-    <div class="st green"><div class="ico"><i class="fas fa-money-bill-wave"></i></div><div class="val">${p.wdr}</div><div class="lbl">Retraits</div></div>
-  </div>`;
+    <div class="st green"><div class="ico"><i class="fas fa-money-bill-wave"></i></div><div class="val">${p.wdr}</div><div class="lbl">Retraits</div></div></div>`;
 
-  // Tabs
-  const tabs = [
+  const tabs=[
     {id:'notifs',icon:'bell',label:'Notifications',badge:p.total},
     {id:'inscriptions',icon:'user-clock',label:'Inscriptions',badge:p.reg},
     {id:'produits',icon:'box',label:'Produits',badge:p.prod},
@@ -897,308 +875,294 @@ function renderAdmin(ct) {
     {id:'forum',icon:'comments',label:'Forum',badge:p.cmt},
     {id:'etoiles',icon:'star',label:'Étoiles',badge:p.wdr},
   ];
-  h += '<div class="atabs">';
-  tabs.forEach(t => {
-    h += `<button class="atab ${curATab===t.id?'active':''}" onclick="curATab='${t.id}';renderAll()"><i class="fas fa-${t.icon}"></i> ${t.label}`;
-    if (t.badge && t.badge>0) h += `<span class="badge">${t.badge}</span>`;
-    h += '</button>';
-  });
-  h += '</div><div id="atab-content"></div>';
-  ct.innerHTML = h;
+  h+='<div class="atabs">';
+  tabs.forEach(t=>{h+=`<button class="atab ${curATab===t.id?'active':''}" onclick="curATab='${t.id}';renderAll()"><i class="fas fa-${t.icon}"></i> ${t.label}`;if(t.badge&&t.badge>0)h+=`<span class="badge">${t.badge}</span>`;h+='</button>'});
+  h+='</div><div id="atab-ct"></div>';
+  ct.innerHTML=h;
 
-  const ac = document.getElementById('atab-content');
-  switch(curATab) {
-    case 'notifs': adminNotifs(ac); break;
-    case 'inscriptions': adminInsc(ac); break;
-    case 'produits': adminProds(ac); break;
-    case 'membres': adminMembres(ac); break;
-    case 'commandes': adminOrders(ac); break;
-    case 'forum': adminForum(ac); break;
-    case 'etoiles': adminStars(ac); break;
+  const ac=document.getElementById('atab-ct');
+  switch(curATab){
+    case'notifs':adminNotifs(ac);break;
+    case'inscriptions':adminInsc(ac);break;
+    case'produits':adminProds(ac);break;
+    case'membres':adminMembres(ac);break;
+    case'commandes':adminOrders(ac);break;
+    case'forum':adminForum(ac);break;
+    case'etoiles':adminStars(ac);break;
   }
 }
 
-// --- ADMIN: Notifications ---
-function adminNotifs(el) {
-  const p = pending();
-  let h = '<h2 class="mb-2"><i class="fas fa-bell"></i> Centre de Notifications</h2>';
-  if (p.total===0) {
-    h += '<div class="card text-center" style="color:var(--success);padding:40px;font-size:16px"><i class="fas fa-check-circle" style="font-size:48px;display:block;margin-bottom:14px"></i>Tout est à jour! Aucune action requise.</div>';
-  } else {
-    if (p.reg) h += `<div class="card flex-between" style="border-left:4px solid var(--warning)"><div class="flex"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div><strong>${p.reg} inscription(s) en attente</strong><div style="color:var(--text2);font-size:11px">Utilisateurs à valider</div></div></div><button class="btn-warning btn-sm" onclick="curATab='inscriptions';renderAll()">Gérer →</button></div>`;
-    if (p.prod) h += `<div class="card flex-between" style="border-left:4px solid var(--primary)"><div class="flex"><div class="nico blue"><i class="fas fa-box"></i></div><div><strong>${p.prod} produit(s) en attente</strong><div style="color:var(--text2);font-size:11px">À approuver avant mise en vente</div></div></div><button class="btn-primary btn-sm" onclick="curATab='produits';renderAll()">Gérer →</button></div>`;
-    if (p.cmt) h += `<div class="card flex-between" style="border-left:4px solid var(--danger)"><div class="flex"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div><strong>${p.cmt} commentaire(s) à modérer</strong><div style="color:var(--text2);font-size:11px">Vérifier insultes et spam</div></div></div><button class="btn-danger btn-sm" onclick="curATab='forum';renderAll()">Modérer →</button></div>`;
-    if (p.ord) h += `<div class="card flex-between" style="border-left:4px solid var(--secondary)"><div class="flex"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div><strong>${p.ord} commande(s) en attente</strong><div style="color:var(--text2);font-size:11px">Ventes à approuver</div></div></div><button class="btn-secondary btn-sm" onclick="curATab='commandes';renderAll()">Gérer →</button></div>`;
-    if (p.wdr) h += `<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div><strong>${p.wdr} demande(s) de retrait</strong><div style="color:var(--text2);font-size:11px">Membres ayant ≥1000 étoiles</div></div></div><button class="btn-warning btn-sm" onclick="curATab='etoiles';renderAll()">Valider →</button></div>`;
+// --- ADMIN NOTIFS ---
+function adminNotifs(el){
+  const p=pending();
+  let h='<h2 class="mb-2"><i class="fas fa-bell"></i> Centre de Notifications</h2>';
+  if(p.total===0){h+='<div class="card text-center" style="color:var(--success);padding:40px;font-size:16px"><i class="fas fa-check-circle" style="font-size:48px;display:block;margin-bottom:14px"></i>Tout est à jour!</div>'
+  }else{
+    if(p.reg)h+=`<div class="card flex-between" style="border-left:4px solid var(--warning)"><div class="flex"><div class="nico orange"><i class="fas fa-user-clock"></i></div><div><strong>${p.reg} inscription(s)</strong><div style="color:var(--text2);font-size:11px">Validation téléphonique requise</div></div></div><button class="btn-warning btn-sm" onclick="curATab='inscriptions';renderAll()">Gérer →</button></div>`;
+    if(p.prod)h+=`<div class="card flex-between" style="border-left:4px solid var(--primary)"><div class="flex"><div class="nico blue"><i class="fas fa-box"></i></div><div><strong>${p.prod} produit(s)</strong><div style="color:var(--text2);font-size:11px">À approuver</div></div></div><button class="btn-primary btn-sm" onclick="curATab='produits';renderAll()">Gérer →</button></div>`;
+    if(p.cmt)h+=`<div class="card flex-between" style="border-left:4px solid var(--danger)"><div class="flex"><div class="nico red"><i class="fas fa-comment-dots"></i></div><div><strong>${p.cmt} commentaire(s)</strong><div style="color:var(--text2);font-size:11px">Vérifier insultes/spam</div></div></div><button class="btn-danger btn-sm" onclick="curATab='forum';renderAll()">Modérer →</button></div>`;
+    if(p.ord)h+=`<div class="card flex-between" style="border-left:4px solid var(--secondary)"><div class="flex"><div class="nico green"><i class="fas fa-shopping-cart"></i></div><div><strong>${p.ord} commande(s)</strong><div style="color:var(--text2);font-size:11px">Ventes à approuver</div></div></div><button class="btn-secondary btn-sm" onclick="curATab='commandes';renderAll()">Gérer →</button></div>`;
+    if(p.wdr)h+=`<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="nico orange"><i class="fas fa-money-bill-wave"></i></div><div><strong>${p.wdr} retrait(s)</strong><div style="color:var(--text2);font-size:11px">Étoiles à valider</div></div></div><button class="btn-warning btn-sm" onclick="curATab='etoiles';renderAll()">Valider →</button></div>`;
   }
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-// --- ADMIN: Inscriptions ---
-function adminInsc(el) {
-  const users = S.get('users').filter(u=>u.role!=='admin');
-  const pend = users.filter(u=>u.status==='pending');
-  let h = '<h2 class="mb-2"><i class="fas fa-user-clock"></i> Inscriptions en attente</h2>';
+// --- ADMIN INSCRIPTIONS ---
+function adminInsc(el){
+  const users=S.get('users').filter(u=>u.role!=='admin');
+  const pend=users.filter(u=>u.status==='pending');
+  let h='<h2 class="mb-2"><i class="fas fa-user-clock"></i> Inscriptions en attente</h2>';
+  h+='<p class="mb-2" style="color:var(--text2);font-size:12px"><i class="fas fa-info-circle"></i> Validez l\'identité par téléphone puis générez un mot de passe à communiquer au membre.</p>';
 
-  if (pend.length) {
-    h += '<div class="tw"><table><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Ville</th><th>Date</th><th>Actions</th></tr>';
-    pend.forEach(u => {
-      h += `<tr><td><div class="flex"><div class="avatar" style="width:28px;height:28px;font-size:11px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td><td>${esc(u.email)}</td><td>${esc(u.phone||'-')}</td><td>${esc(u.city||'-')}</td><td>${fdate(u.regAt)}</td><td><div class="flex"><button class="btn-success btn-sm" onclick="aUser('${u.id}','approve')"><i class="fas fa-check"></i> Valider</button><button class="btn-danger btn-sm" onclick="aUser('${u.id}','reject')"><i class="fas fa-times"></i> Refuser</button></div></td></tr>`;
+  if(pend.length){
+    pend.forEach(u=>{
+      h+=`<div class="card" style="border-left:4px solid var(--warning)" id="reg-${u.id}">
+        <div class="flex-between mb-2">
+          <div class="flex">
+            <div class="avatar">${u.name.charAt(0)}</div>
+            <div>
+              <strong style="font-size:16px">${esc(u.name)}</strong>
+              <div style="color:var(--text2);font-size:12px">Inscrit le ${fdate(u.regAt)}</div>
+            </div>
+          </div>
+          <span class="tag tag-pending"><i class="fas fa-clock"></i> En attente</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+          <div class="card" style="margin:0;padding:12px"><div style="color:var(--text2);font-size:11px"><i class="fas fa-phone"></i> Téléphone</div><div style="font-weight:700;font-size:15px;color:var(--secondary)">${esc(u.phone)}</div></div>
+          <div class="card" style="margin:0;padding:12px"><div style="color:var(--text2);font-size:11px"><i class="fas fa-map-marker-alt"></i> Ville</div><div style="font-weight:700">${esc(u.city||'-')}</div></div>
+          <div class="card" style="margin:0;padding:12px"><div style="color:var(--text2);font-size:11px"><i class="fas fa-home"></i> Quartier</div><div style="font-weight:700">${esc(u.quartier||'-')}</div></div>
+          <div class="card" style="margin:0;padding:12px"><div style="color:var(--text2);font-size:11px"><i class="fas fa-calendar"></i> Date</div><div style="font-weight:700">${fdate(u.regAt)}</div></div>
+        </div>
+        <div class="flex">
+          <button class="btn-success" onclick="approveRegistration('${u.id}')"><i class="fas fa-check-circle"></i> Valider & Générer mot de passe</button>
+          <button class="btn-danger btn-sm" onclick="rejectRegistration('${u.id}')"><i class="fas fa-times"></i> Refuser</button>
+        </div>
+        <div id="pwd-result-${u.id}"></div>
+      </div>`;
     });
-    h += '</table></div>';
-  } else {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucune inscription en attente</div>';
+  }else{
+    h+='<div class="card text-center" style="color:var(--success);padding:30px"><i class="fas fa-check-circle" style="font-size:36px;display:block;margin-bottom:10px"></i>Aucune inscription en attente</div>';
   }
 
-  const done = users.filter(u=>u.status!=='pending');
-  if (done.length) {
-    h += '<h3 class="mt-3 mb-2">Traitées</h3><div class="tw"><table><tr><th>Nom</th><th>Email</th><th>Statut</th></tr>';
-    done.forEach(u => {
-      h += `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td><span class="tag ${u.status==='approved'?'tag-approved':'tag-rejected'}">${u.status==='approved'?'✓ Approuvé':'✗ Refusé'}</span></td></tr>`;
-    });
-    h += '</table></div>';
+  const done=users.filter(u=>u.status!=='pending');
+  if(done.length){
+    h+='<h3 class="mt-3 mb-2">Membres validés / refusés</h3><div class="tw"><table><tr><th>Nom</th><th>Téléphone</th><th>Ville</th><th>Quartier</th><th>Statut</th></tr>';
+    done.forEach(u=>{h+=`<tr><td>${esc(u.name)}</td><td>${esc(u.phone)}</td><td>${esc(u.city||'-')}</td><td>${esc(u.quartier||'-')}</td><td><span class="tag ${u.status==='approved'?'tag-approved':'tag-rejected'}">${u.status==='approved'?'✓ Validé':'✗ Refusé'}</span></td></tr>`});
+    h+='</table></div>';
   }
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-function aUser(id, action) {
-  if (action==='reject' && !confirm('Refuser cette inscription?')) return;
-  let users = S.get('users');
-  let u = users.find(x=>x.id===id);
-  if (u) { u.status = action==='approve'?'approved':'rejected'; S.set('users',users); }
+function approveRegistration(userId){
+  const pwd=genPassword();
+  let users=S.get('users');
+  let u=users.find(x=>x.id===userId);
+  if(!u)return;
+
+  u.status='approved';
+  u.password=pwd;
+  S.set('users',users);
+
+  // Show password to admin
+  const resultEl=document.getElementById('pwd-result-'+userId);
+  if(resultEl){
+    resultEl.innerHTML=`
+      <div class="pwd-box mt-2">
+        <div style="color:var(--success);font-weight:700;margin-bottom:6px"><i class="fas fa-check-circle"></i> Inscription validée!</div>
+        <div style="color:var(--text2);font-size:12px">Mot de passe généré - À communiquer par téléphone au <strong>${esc(u.phone)}</strong></div>
+        <div class="pwd">${pwd}</div>
+        <div class="copy-hint">📞 Appelez ou envoyez ce mot de passe par SMS au membre</div>
+        <button class="btn-primary btn-sm mt-1" onclick="copyPwd('${pwd}')"><i class="fas fa-copy"></i> Copier</button>
+      </div>`;
+    // Hide action buttons
+    const card=document.getElementById('reg-'+userId);
+    if(card){
+      const btns=card.querySelectorAll('.flex > button');
+      btns.forEach(b=>b.style.display='none');
+    }
+  }
+
+  // Update badges
+  buildNav();
+  const p=pending();
+  lastPendingCount=p.total;
+  const bb=document.getElementById('bell-badge');
+  if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden');
+}
+
+function copyPwd(pwd){
+  navigator.clipboard.writeText(pwd).then(()=>alert('✅ Mot de passe copié: '+pwd)).catch(()=>prompt('Copiez ce mot de passe:',pwd));
+}
+
+function rejectRegistration(userId){
+  if(!confirm('Refuser cette inscription?'))return;
+  let users=S.get('users');let u=users.find(x=>x.id===userId);
+  if(u){u.status='rejected';S.set('users',users)}
   renderAll();
 }
 
-// --- ADMIN: Produits ---
-function adminProds(el) {
-  const prods=S.get('products'), users=S.get('users');
-  const pend = prods.filter(p=>p.status==='pending');
-  const appr = prods.filter(p=>p.status==='approved');
+// --- ADMIN PRODUITS ---
+function adminProds(el){
+  const prods=S.get('products'),users=S.get('users');
+  const pend=prods.filter(p=>p.status==='pending');
+  const appr=prods.filter(p=>p.status==='approved');
 
-  let h = '<h2 class="mb-2"><i class="fas fa-box"></i> Produits en attente</h2>';
-  if (pend.length) {
-    h += '<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Catégorie</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
-    pend.forEach(p => {
-      const s = users.find(u=>u.id===p.userId);
-      h += `<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td style="color:var(--secondary);font-weight:700">${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis">${esc(p.description||'-')}</td><td>${fdate(p.createdAt)}</td><td><div class="flex"><button class="btn-success btn-sm" onclick="aProd('${p.id}','approve')"><i class="fas fa-check"></i></button><button class="btn-danger btn-sm" onclick="aProd('${p.id}','reject')"><i class="fas fa-times"></i></button></div></td></tr>`;
+  let h='<h2 class="mb-2"><i class="fas fa-box"></i> Produits en attente</h2>';
+  if(pend.length){
+    h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Tél</th><th>Prix</th><th>Catégorie</th><th>Description</th><th>Date</th><th>Actions</th></tr>';
+    pend.forEach(p=>{
+      const s=users.find(u=>u.id===p.userId);
+      h+=`<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td>${esc(s?s.phone:'?')}</td><td style="color:var(--secondary);font-weight:700">${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td><td style="max-width:150px">${esc(p.description||'-')}</td><td>${fdate(p.createdAt)}</td><td><div class="flex"><button class="btn-success btn-sm" onclick="aProd('${p.id}','a')"><i class="fas fa-check"></i></button><button class="btn-danger btn-sm" onclick="aProd('${p.id}','r')"><i class="fas fa-times"></i></button></div></td></tr>`;
     });
-    h += '</table></div>';
-  } else {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucun produit en attente</div>';
-  }
+    h+='</table></div>';
+  }else h+='<div class="card text-center" style="color:var(--text2)">Aucun produit en attente</div>';
 
-  h += `<h3 class="mt-3 mb-2">Produits approuvés (${appr.length})</h3>`;
-  if (appr.length) {
-    h += '<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Catégorie</th></tr>';
-    appr.forEach(p => {
-      const s = users.find(u=>u.id===p.userId);
-      h += `<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td></tr>`;
-    });
-    h += '</table></div>';
+  h+=`<h3 class="mt-3 mb-2">Approuvés (${appr.length})</h3>`;
+  if(appr.length){
+    h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Catégorie</th></tr>';
+    appr.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()} Ar</td><td>${esc(p.category||'-')}</td></tr>`});
+    h+='</table></div>';
   }
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-function aProd(id, action) {
-  if (action==='reject' && !confirm('Refuser ce produit?')) return;
-  let prods = S.get('products');
-  let p = prods.find(x=>x.id===id);
-  if (p) { p.status = action==='approve'?'approved':'rejected'; S.set('products',prods); }
-  renderAll();
+function aProd(id,a){
+  if(a==='r'&&!confirm('Refuser?'))return;
+  let prods=S.get('products');let p=prods.find(x=>x.id===id);
+  if(p){p.status=a==='a'?'approved':'rejected';S.set('products',prods)}renderAll();
 }
 
-// --- ADMIN: Membres ---
-function adminMembres(el) {
-  const users = S.get('users').filter(u=>u.role!=='admin');
-  let h = '<h2 class="mb-2"><i class="fas fa-users"></i> Liste Complète des Membres</h2>';
-  h += '<div class="card mb-2"><input type="text" id="m-search" placeholder="🔍 Rechercher (nom, email, téléphone, ville)..." oninput="filterM()" style="margin:0"></div>';
-
-  h += '<div class="tw"><table><tr><th>#</th><th>Membre</th><th>Email</th><th>Mot de passe</th><th>Téléphone</th><th>Ville</th><th>Statut</th><th>Étoiles</th><th>En ligne</th><th>Inscrit le</th></tr>';
-  users.forEach((u,i) => {
-    h += `<tr class="mrow" data-s="${(u.name+u.email+u.phone+u.city).toLowerCase()}">
+// --- ADMIN MEMBRES ---
+function adminMembres(el){
+  const users=S.get('users').filter(u=>u.role!=='admin');
+  let h='<h2 class="mb-2"><i class="fas fa-users"></i> Tous les Membres</h2>';
+  h+='<div class="card mb-2"><input type="text" id="m-search" placeholder="🔍 Rechercher (nom, téléphone, ville, quartier)..." oninput="filterM()" style="margin:0"></div>';
+  h+='<div class="tw"><table><tr><th>#</th><th>Membre</th><th>Téléphone</th><th>Mot de passe</th><th>Ville</th><th>Quartier</th><th>Statut</th><th>⭐</th><th>En ligne</th><th>Inscrit</th></tr>';
+  users.forEach((u,i)=>{
+    h+=`<tr class="mrow" data-s="${(u.name+(u.phone||'')+(u.city||'')+(u.quartier||'')).toLowerCase()}">
       <td>${i+1}</td>
-      <td><div class="flex"><div class="avatar" style="width:28px;height:28px;font-size:11px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
-      <td>${esc(u.email)}</td>
-      <td style="font-family:monospace;font-size:11px;color:var(--text2)">${esc(u.password)}</td>
-      <td>${esc(u.phone||'-')}</td>
+      <td><div class="flex"><div class="avatar" style="width:26px;height:26px;font-size:10px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
+      <td style="color:var(--secondary)">${esc(u.phone||'-')}</td>
+      <td style="font-family:monospace;font-size:11px;color:var(--warning)">${u.password?esc(u.password):'<em style="color:var(--text2)">non défini</em>'}</td>
       <td>${esc(u.city||'-')}</td>
-      <td><span class="tag ${u.status==='approved'?'tag-approved':u.status==='pending'?'tag-pending':'tag-rejected'}">${u.status==='approved'?'✓':u.status==='pending'?'⏳':'✗'} ${u.status}</span></td>
+      <td>${esc(u.quartier||'-')}</td>
+      <td><span class="tag ${u.status==='approved'?'tag-approved':u.status==='pending'?'tag-pending':'tag-rejected'}">${u.status==='approved'?'✓':u.status==='pending'?'⏳':'✗'}</span></td>
       <td><span class="stars-display"><i class="fas fa-star"></i> ${u.stars||0}</span></td>
-      <td>${u.isActive?'<span style="color:var(--success)">● En ligne</span>':'<span style="color:var(--text2)">○ Hors ligne</span>'}</td>
-      <td>${fdate(u.regAt)}</td>
-    </tr>`;
+      <td>${u.isActive?'<span style="color:var(--success)">●</span>':'<span style="color:var(--text2)">○</span>'}</td>
+      <td>${fdate(u.regAt)}</td></tr>`;
   });
-  h += '</table></div>';
-  if (!users.length) h += '<div class="card text-center" style="color:var(--text2)">Aucun membre inscrit</div>';
-  el.innerHTML = h;
+  h+='</table></div>';
+  if(!users.length)h+='<div class="card text-center" style="color:var(--text2)">Aucun membre</div>';
+  el.innerHTML=h;
 }
 
-function filterM() {
-  const q = document.getElementById('m-search').value.toLowerCase();
-  document.querySelectorAll('.mrow').forEach(r => r.style.display = r.dataset.s.includes(q)?'':'none');
-}
+function filterM(){const q=document.getElementById('m-search').value.toLowerCase();document.querySelectorAll('.mrow').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}
 
-// --- ADMIN: Commandes ---
-function adminOrders(el) {
-  const orders=S.get('orders'), users=S.get('users');
-  const pend = orders.filter(o=>o.status==='pending');
-  const appr = orders.filter(o=>o.status==='approved');
+// --- ADMIN COMMANDES ---
+function adminOrders(el){
+  const orders=S.get('orders'),users=S.get('users');
+  const pend=orders.filter(o=>o.status==='pending');
+  const appr=orders.filter(o=>o.status==='approved');
 
-  let h = '<h2 class="mb-2"><i class="fas fa-shopping-cart"></i> Gestion des Commandes</h2>';
-
-  if (pend.length) {
-    h += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> En attente d\'approbation</h3>';
-    h += '<div class="tw"><table><tr><th>ID</th><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Date</th><th>Actions</th></tr>';
-    pend.forEach(o => {
-      const buyer = users.find(u=>u.id===o.buyerId);
-      const seller = users.find(u=>u.id===o.sellerId);
-      h += `<tr><td><code style="font-size:10px">${o.id.substr(0,8)}</code></td><td><strong>${esc(o.productName)}</strong></td><td>${esc(buyer?buyer.name:'-')}</td><td>${esc(seller?seller.name:'-')}</td><td style="color:var(--secondary);font-weight:700">${Number(o.price).toLocaleString()} Ar</td><td>${fdate(o.createdAt)}</td><td><button class="btn-success btn-sm" onclick="aOrder('${o.id}')"><i class="fas fa-check"></i> Approuver</button></td></tr>`;
+  let h='<h2 class="mb-2"><i class="fas fa-shopping-cart"></i> Commandes</h2>';
+  if(pend.length){
+    h+='<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-clock"></i> En attente</h3><div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Tél Acheteur</th><th>Vendeur</th><th>Tél Vendeur</th><th>Prix</th><th>Date</th><th>Action</th></tr>';
+    pend.forEach(o=>{
+      const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);
+      h+=`<tr><td><strong>${esc(o.productName)}</strong></td><td>${esc(b?b.name:'-')}</td><td style="color:var(--secondary)">${esc(b?b.phone:'-')}</td><td>${esc(s?s.name:'-')}</td><td style="color:var(--secondary)">${esc(s?s.phone:'-')}</td><td style="font-weight:700">${Number(o.price).toLocaleString()} Ar</td><td>${fdate(o.createdAt)}</td><td><button class="btn-success btn-sm" onclick="aOrder('${o.id}')"><i class="fas fa-check"></i> Approuver</button></td></tr>`;
     });
-    h += '</table></div>';
-  } else {
-    h += '<div class="card text-center" style="color:var(--text2)">Aucune commande en attente</div>';
-  }
+    h+='</table></div>';
+  }else h+='<div class="card text-center" style="color:var(--text2)">Aucune commande en attente</div>';
 
-  h += `<h3 class="mt-3 mb-2" style="color:var(--success)"><i class="fas fa-check-circle"></i> Commandes approuvées (${appr.length})</h3>`;
-  if (appr.length) {
-    h += '<div class="tw"><table><tr><th>ID</th><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Statut</th></tr>';
-    appr.forEach(o => {
-      const buyer = users.find(u=>u.id===o.buyerId);
-      const seller = users.find(u=>u.id===o.sellerId);
-      h += `<tr><td><code style="font-size:10px">${o.id.substr(0,8)}</code></td><td>${esc(o.productName)}</td><td>${esc(buyer?buyer.name:'-')}</td><td>${esc(seller?seller.name:'-')}</td><td>${Number(o.price).toLocaleString()} Ar</td><td><span class="tag tag-approved">✓ Approuvé</span></td></tr>`;
-    });
-    h += '</table></div>';
+  h+=`<h3 class="mt-3 mb-2" style="color:var(--success)">Approuvées (${appr.length})</h3>`;
+  if(appr.length){
+    h+='<div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Statut</th></tr>';
+    appr.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td>${esc(o.productName)}</td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td>${Number(o.price).toLocaleString()} Ar</td><td><span class="tag tag-approved">✓</span></td></tr>`});
+    h+='</table></div>';
   }
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-function aOrder(id) {
-  let orders=S.get('orders');
-  let o=orders.find(x=>x.id===id);
-  if (!o) return;
-  o.status='approved';
-  S.set('orders', orders);
-
-  // Mark product sold
-  let prods=S.get('products');
-  let p=prods.find(x=>x.id===o.productId);
-  if (p) { p.status='sold'; S.set('products',prods); }
-
-  // Award stars
+function aOrder(id){
+  let orders=S.get('orders');let o=orders.find(x=>x.id===id);if(!o)return;
+  o.status='approved';S.set('orders',orders);
+  let prods=S.get('products');let p=prods.find(x=>x.id===o.productId);
+  if(p){p.status='sold';S.set('products',prods)}
   let users=S.get('users');
   let seller=users.find(u=>u.id===o.sellerId);
   let buyer=users.find(u=>u.id===o.buyerId);
-  if (seller) seller.stars=(seller.stars||0)+10;
-  if (buyer) buyer.stars=(buyer.stars||0)+5;
-  S.set('users', users);
-
-  renderAll();
+  if(seller)seller.stars=(seller.stars||0)+10;
+  if(buyer)buyer.stars=(buyer.stars||0)+5;
+  S.set('users',users);renderAll();
 }
 
-// --- ADMIN: Forum ---
-function adminForum(el) {
-  const comments=S.get('comments'), posts=S.get('posts'), users=S.get('users');
-  const pend = comments.filter(c=>c.status==='pending');
-  const appr = comments.filter(c=>c.status==='approved');
+// --- ADMIN FORUM ---
+function adminForum(el){
+  const comments=S.get('comments'),posts=S.get('posts'),users=S.get('users');
+  const pend=comments.filter(c=>c.status==='pending');
+  const appr=comments.filter(c=>c.status==='approved');
 
-  let h = '<h2 class="mb-2"><i class="fas fa-comments"></i> Modération du Forum</h2>';
-  h += '<p class="mb-2" style="color:var(--text2);font-size:12px"><i class="fas fa-info-circle"></i> Les commentaires doivent être validés avant affichage pour éviter insultes et spam.</p>';
+  let h='<h2 class="mb-2"><i class="fas fa-comments"></i> Modération Forum</h2>';
+  h+='<p class="mb-2" style="color:var(--text2);font-size:12px"><i class="fas fa-shield-alt"></i> Validez chaque commentaire avant publication pour éviter insultes et spam.</p>';
 
-  if (pend.length) {
-    h += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-exclamation-triangle"></i> À modérer</h3>';
-    pend.forEach(c => {
-      const author = users.find(u=>u.id===c.userId);
-      const post = posts.find(p=>p.id===c.postId);
-      h += `<div class="card" style="border-left:4px solid var(--warning)">
-        <div class="flex-between mb-1">
-          <div class="flex"><div class="avatar" style="width:28px;height:28px;font-size:11px">${(author?author.name:'?').charAt(0)}</div><div><strong>${esc(author?author.name:'?')}</strong><div style="font-size:10px;color:var(--text2)">sur: "${esc(post?post.title:'?')}"</div></div></div>
-          <span style="font-size:10px;color:var(--text2)">${fdate(c.createdAt)}</span>
-        </div>
-        <div style="background:var(--bg3);padding:10px;border-radius:8px;margin:8px 0;font-size:13px">${esc(c.content)}</div>
-        <div class="flex"><button class="btn-success btn-sm" onclick="aCmt('${c.id}','approve')"><i class="fas fa-check"></i> Approuver</button><button class="btn-danger btn-sm" onclick="aCmt('${c.id}','delete')"><i class="fas fa-trash"></i> Supprimer</button></div>
-      </div>`;
+  if(pend.length){
+    h+='<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-exclamation-triangle"></i> À modérer</h3>';
+    pend.forEach(c=>{
+      const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);
+      h+=`<div class="card" style="border-left:4px solid var(--warning)">
+        <div class="flex-between mb-1"><div class="flex"><div class="avatar" style="width:28px;height:28px;font-size:11px">${(a?a.name:'?').charAt(0)}</div><div><strong>${esc(a?a.name:'?')}</strong> <span style="font-size:11px;color:var(--text2)">(${esc(a?a.phone:'')})</span><div style="font-size:10px;color:var(--text2)">sur: "${esc(p?p.title:'?')}"</div></div></div><span style="font-size:10px;color:var(--text2)">${fdate(c.createdAt)}</span></div>
+        <div style="background:var(--bg3);padding:10px;border-radius:8px;margin:8px 0;font-size:14px">${esc(c.content)}</div>
+        <div class="flex"><button class="btn-success btn-sm" onclick="aCmt('${c.id}','a')"><i class="fas fa-check"></i> Approuver</button><button class="btn-danger btn-sm" onclick="aCmt('${c.id}','d')"><i class="fas fa-trash"></i> Supprimer</button></div></div>`;
     });
-  } else {
-    h += '<div class="card text-center" style="color:var(--success)"><i class="fas fa-check-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Tous les commentaires sont modérés ✓</div>';
-  }
+  }else h+='<div class="card text-center" style="color:var(--success)"><i class="fas fa-check-circle" style="font-size:32px;display:block;margin-bottom:8px"></i>Tout est modéré ✓</div>';
 
-  h += `<h3 class="mt-3 mb-2">Approuvés récemment (${appr.length})</h3>`;
-  if (appr.length) {
-    h += '<div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Commentaire</th><th>Date</th></tr>';
-    appr.slice().reverse().slice(0,15).forEach(c => {
-      const a=users.find(u=>u.id===c.userId), p=posts.find(x=>x.id===c.postId);
-      h += `<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:250px">${esc(c.content)}</td><td>${fdate(c.createdAt)}</td></tr>`;
-    });
-    h += '</table></div>';
+  h+=`<h3 class="mt-3 mb-2">Approuvés (${appr.length})</h3>`;
+  if(appr.length){
+    h+='<div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Commentaire</th><th>Date</th></tr>';
+    appr.slice().reverse().slice(0,15).forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);h+=`<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:200px">${esc(c.content)}</td><td>${fdate(c.createdAt)}</td></tr>`});
+    h+='</table></div>';
   }
-  el.innerHTML = h;
+  el.innerHTML=h;
 }
 
-function aCmt(id, action) {
-  if (action==='delete' && !confirm('Supprimer ce commentaire?')) return;
-  let cmts = S.get('comments');
-  if (action==='approve') {
-    let c = cmts.find(x=>x.id===id);
-    if (c) {
-      c.status='approved';
-      // Award 1 star
-      let users=S.get('users');
-      let u=users.find(x=>x.id===c.userId);
-      if (u) { u.stars=(u.stars||0)+1; S.set('users',users); }
-    }
-  } else {
-    cmts = cmts.filter(c=>c.id!==id);
-  }
-  S.set('comments', cmts);
-  renderAll();
+function aCmt(id,a){
+  if(a==='d'&&!confirm('Supprimer?'))return;
+  let cmts=S.get('comments');
+  if(a==='a'){let c=cmts.find(x=>x.id===id);if(c){c.status='approved';let users=S.get('users');let u=users.find(x=>x.id===c.userId);if(u){u.stars=(u.stars||0)+1;S.set('users',users)}}}
+  else cmts=cmts.filter(c=>c.id!==id);
+  S.set('comments',cmts);renderAll();
 }
 
-// --- ADMIN: Étoiles ---
-function adminStars(el) {
-  const users = S.get('users').filter(u=>u.role!=='admin');
-  const sorted = [...users].sort((a,b)=>(b.stars||0)-(a.stars||0));
-  const wdrs = users.filter(u=>u.withdrawReq);
+// --- ADMIN ÉTOILES ---
+function adminStars(el){
+  const users=S.get('users').filter(u=>u.role!=='admin');
+  const sorted=[...users].sort((a,b)=>(b.stars||0)-(a.stars||0));
+  const wdrs=users.filter(u=>u.withdrawReq);
 
-  let h = '<h2 class="mb-2"><i class="fas fa-star" style="color:var(--gold)"></i> Classement Étoiles (décroissant)</h2>';
-
-  if (wdrs.length) {
-    h += '<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-money-bill-wave"></i> Demandes de retrait</h3>';
-    wdrs.forEach(u => {
-      h += `<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="avatar">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="color:var(--text2);font-size:11px">${esc(u.email)} | ${esc(u.phone||'-')}</div><div class="stars-display"><i class="fas fa-star"></i> ${u.stars||0} étoiles</div></div></div><div class="flex"><button class="btn-success btn-sm" onclick="aWdr('${u.id}','approve')"><i class="fas fa-check"></i> Valider Retrait</button><button class="btn-danger btn-sm" onclick="aWdr('${u.id}','reject')"><i class="fas fa-times"></i> Refuser</button></div></div>`;
-    });
+  let h='<h2 class="mb-2"><i class="fas fa-star" style="color:var(--gold)"></i> Étoiles</h2>';
+  if(wdrs.length){
+    h+='<h3 class="mb-2" style="color:var(--warning)"><i class="fas fa-money-bill-wave"></i> Retraits à valider</h3>';
+    wdrs.forEach(u=>{h+=`<div class="card flex-between" style="border-left:4px solid var(--gold)"><div class="flex"><div class="avatar">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div style="color:var(--text2);font-size:11px">${esc(u.phone)} | ${esc(u.city||'-')}</div><div class="stars-display"><i class="fas fa-star"></i> ${u.stars||0}</div></div></div><div class="flex"><button class="btn-success btn-sm" onclick="aWdr('${u.id}','a')"><i class="fas fa-check"></i> Valider</button><button class="btn-danger btn-sm" onclick="aWdr('${u.id}','r')"><i class="fas fa-times"></i> Refuser</button></div></div>`});
   }
 
-  h += '<h3 class="mt-3 mb-2">Classement complet</h3>';
-  h += '<div class="tw"><table><tr><th>Rang</th><th>Membre</th><th>Étoiles</th><th>Progression</th><th>Retrait</th></tr>';
-  sorted.forEach((u,i) => {
-    const pct = Math.min(100,((u.stars||0)/1000)*100);
-    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-    h += `<tr>
-      <td style="font-weight:700;font-size:${i<3?'18px':'13px'}">${medal}</td>
-      <td><div class="flex"><div class="avatar" style="width:28px;height:28px;font-size:11px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td>
-      <td><span class="stars-display" style="font-size:15px;font-weight:700"><i class="fas fa-star"></i> ${u.stars||0}</span></td>
-      <td><div class="progress-bar" style="height:14px;width:140px;display:inline-block"><div class="progress-fill" style="width:${pct}%;font-size:8px">${Math.round(pct)}%</div></div></td>
-      <td>${u.withdrawReq?'<span class="tag tag-pending">⏳ En cours</span>':(u.stars||0)>=1000?'<span class="tag tag-approved">✓ Éligible</span>':'-'}</td>
-    </tr>`;
+  h+='<h3 class="mt-3 mb-2">Classement (décroissant)</h3><div class="tw"><table><tr><th>Rang</th><th>Membre</th><th>⭐</th><th>Progression</th><th>Retrait</th></tr>';
+  sorted.forEach((u,i)=>{
+    const pct=Math.min(100,((u.stars||0)/1000)*100);
+    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+    h+=`<tr><td style="font-weight:700;font-size:${i<3?'16px':'13px'}">${medal}</td><td><div class="flex"><div class="avatar" style="width:26px;height:26px;font-size:10px">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div></td><td><span class="stars-display" style="font-weight:700"><i class="fas fa-star"></i> ${u.stars||0}</span></td><td><div class="progress-bar" style="height:12px;width:120px;display:inline-block"><div class="progress-fill" style="width:${pct}%;font-size:8px">${Math.round(pct)}%</div></div></td><td>${u.withdrawReq?'<span class="tag tag-pending">⏳</span>':(u.stars||0)>=1000?'<span class="tag tag-approved">✓ Éligible</span>':'-'}</td></tr>`;
   });
-  h += '</table></div>';
-  el.innerHTML = h;
+  h+='</table></div>';
+  el.innerHTML=h;
 }
 
-function aWdr(id, action) {
-  if (action==='approve' && !confirm('Valider le retrait? Les étoiles seront remises à 0.')) return;
-  let users=S.get('users');
-  let u=users.find(x=>x.id===id);
-  if (u) {
-    if (action==='approve') { u.stars=0; u.withdrawReq=false; }
-    else { u.withdrawReq=false; }
-    S.set('users', users);
-  }
-  renderAll();
+function aWdr(id,a){
+  if(a==='a'&&!confirm('Valider le retrait? Étoiles remises à 0.'))return;
+  let users=S.get('users');let u=users.find(x=>x.id===id);
+  if(u){if(a==='a'){u.stars=0}u.withdrawReq=false;S.set('users',users)}renderAll();
 }
 
 // ============================================================
-// BOOT
+// INIT
 // ============================================================
 initDB();
 restoreSession();
