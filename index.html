@@ -66,16 +66,24 @@ header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 14px;p
 .bell:hover{background:var(--bg3)}
 .bell .badge{position:absolute;top:-4px;right:-4px;animation:pls .8s infinite}
 
-/* URGENT FULL SCREEN NOTIF */
-#urgent{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9000;background:rgba(10,10,26,.94);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* LIVE PULSE - proves polling is alive */
+#livePulse{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:livep 1s infinite;margin-right:4px}
+@keyframes livep{0%,100%{opacity:1;box-shadow:0 0 4px var(--ok)}50%{opacity:.3;box-shadow:none}}
+
+/* URGENT BANNER - always visible when pending */
+#urgentBanner{position:fixed;top:56px;left:0;right:0;z-index:99;background:linear-gradient(90deg,#ff6b6b,#ffd700,#ff6b6b);background-size:200% 100%;animation:bannerSlide 2s linear infinite;padding:10px 20px;text-align:center;cursor:pointer;font-weight:800;color:#000;font-size:14px;box-shadow:0 4px 20px rgba(255,107,107,.4)}
+@keyframes bannerSlide{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+#urgentBanner:hover{filter:brightness(1.1)}
+
+/* URGENT FULLSCREEN */
+#urgentFS{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9000;background:rgba(10,10,26,.95);display:flex;align-items:center;justify-content:center}
 .ubox{background:var(--bg2);border:3px solid var(--gold);border-radius:20px;padding:28px;max-width:400px;width:90%;text-align:center;animation:popIn .3s ease;box-shadow:0 0 80px rgba(255,215,0,.3)}
-@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-.uico{font-size:56px;margin-bottom:10px;animation:shake .4s infinite}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.uico{font-size:60px;margin-bottom:10px;animation:shake .4s infinite}
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
 
 /* NOTIF DROPDOWN */
-.ndrop{position:absolute;top:calc(100% + 6px);right:-30px;width:300px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:200;max-height:450px;overflow-y:auto}
+.ndrop{position:absolute;top:calc(100% + 6px);right:-30px;width:300px;background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:200;max-height:400px;overflow-y:auto}
 .ndrop h3{padding:10px 14px;border-bottom:1px solid var(--bg4);font-size:12px;margin:0}
 .nitem{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:8px;align-items:flex-start;cursor:pointer}
 .nitem:hover{background:var(--bg3)}
@@ -89,60 +97,45 @@ header{background:var(--bg2);border-bottom:1px solid var(--bg4);padding:0 14px;p
 main{max-width:1400px;margin:0 auto;padding:18px}
 .pgt{font-size:18px;font-weight:700;margin-bottom:3px}
 .pgs{color:var(--txt2);font-size:11px;margin-bottom:18px}
-
-/* STATS */
 .sts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:18px}
 .stt{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:12px;text-align:center}
 .stt .si{font-size:18px;margin-bottom:2px}.stt .sv{font-size:20px;font-weight:800}.stt .sl{color:var(--txt2);font-size:9px;margin-top:2px}
-
-/* ADMIN TABS */
 .ats{display:flex;gap:2px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--bg4);padding-bottom:4px}
 .ats::-webkit-scrollbar{display:none}
 .at{padding:7px 10px;border-radius:8px 8px 0 0;background:transparent;color:var(--txt2);font-size:10px;font-weight:600;white-space:nowrap}
 .at:hover{background:var(--bg3);color:var(--txt);transform:none}
 .at.active{background:var(--bg3);color:var(--pri2);border-bottom:2px solid var(--pri)}
 .at .badge{margin-left:3px;font-size:8px;min-width:14px;height:14px}
-
-/* TABLE */
 .tw{overflow-x:auto}table{width:100%;border-collapse:collapse}
 th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--bg4);font-size:10px}
 th{color:var(--txt2);font-weight:600;background:var(--bg3);white-space:nowrap}
-
-/* PRODUCTS */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 .pc{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);overflow:hidden;transition:.3s}
 .pc:hover{border-color:var(--pri);transform:translateY(-2px)}
 .pimg{height:100px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--txt2);position:relative}
 .pi{padding:10px}.pi h3{font-size:12px}.pi .pr{color:var(--sec);font-size:15px;font-weight:800;margin:3px 0}
-
-/* FORUM */
 .po{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:14px;margin-bottom:10px}
 .cm{background:var(--bg3);border-radius:8px;padding:8px;margin:4px 0 4px 14px;border-left:3px solid var(--pri);font-size:11px}
-
-/* PROFILE */
 .prof{background:var(--bg2);border:1px solid var(--bg4);border-radius:20px;padding:26px;text-align:center;max-width:480px;margin:0 auto}
 .pav{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--sec));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;margin:0 auto 10px;color:#fff}
 .pbar{background:var(--bg);border-radius:20px;height:16px;overflow:hidden;margin:8px 0}
 .pfill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pri),var(--gold));display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;min-width:25px;color:#fff;transition:.5s}
 
 /* MEGA WHEEL */
-#mw-ov{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.mw-wrap{position:relative;display:inline-block}
-.mw-pointer{position:absolute;top:-5px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:30px solid var(--gold);filter:drop-shadow(0 2px 6px rgba(255,215,0,.5))}
-.mw-result{font-size:18px;color:var(--gold);font-weight:800;margin-top:16px;min-height:30px}
-canvas#megawheel{border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,.15)}
-
+#mwOv{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,15,.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.mwp{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:32px solid var(--gold);filter:drop-shadow(0 2px 8px rgba(255,215,0,.6))}
 .wglow{animation:glow 2s infinite}
 @keyframes glow{0%,100%{box-shadow:0 0 5px var(--gold)}50%{box-shadow:0 0 25px var(--gold)}}
 @keyframes confetti{0%{transform:translateY(-100vh) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .confetti{position:fixed;z-index:10000;animation:confetti 3s ease-in-out forwards}
 
-@media(max-width:768px){.sts{grid-template-columns:repeat(2,1fr)}.pgrid{grid-template-columns:1fr}main{padding:10px}.abox{padding:20px}.ndrop{right:-80px;width:260px}.logo{font-size:13px}.nav button{font-size:9px;padding:5px 6px}.prof{padding:16px}canvas#megawheel{width:280px!important;height:280px!important}}
+@media(max-width:768px){.sts{grid-template-columns:repeat(2,1fr)}.pgrid{grid-template-columns:1fr}main{padding:10px}.abox{padding:20px}.ndrop{right:-60px;width:260px}.logo{font-size:13px}.nav button{font-size:9px;padding:5px 6px}.prof{padding:16px}canvas.mwc{width:260px!important;height:260px!important}#urgentBanner{font-size:12px;padding:8px 14px}}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
 </style>
 </head>
 <body>
 
+<!-- AUTH -->
 <div id="auth">
 <div class="abox">
 <h1><i class="fas fa-store"></i> MadaMarket</h1>
@@ -153,15 +146,14 @@ canvas#megawheel{border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,.15)}
 <label class="fl"><i class="fas fa-phone"></i> Téléphone</label>
 <input type="tel" id="lph" placeholder="034 XX XXX XX">
 <label class="fl"><i class="fas fa-lock"></i> Mot de passe</label>
-<input type="password" id="lpw" placeholder="Votre mot de passe">
-<button class="bp bk" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
+<input type="password" id="lpw" placeholder="Mot de passe">
+<button class="bp bk" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Connexion</button>
 </div>
 <div id="f-reg" class="hidden">
-<div style="background:var(--bg3);border-radius:var(--r);padding:10px;margin-bottom:12px;font-size:10px;color:var(--txt2);line-height:1.6">
-<strong style="color:var(--sec)">3 étapes :</strong>
-1️⃣ Remplir → 2️⃣ Admin valide (instantané) → 3️⃣ Connexion
+<div style="background:var(--bg3);border-radius:var(--r);padding:10px;margin-bottom:12px;font-size:10px;color:var(--txt2);line-height:1.5">
+1️⃣ Remplir ci-dessous → 2️⃣ Admin valide → 3️⃣ Connexion avec tél + mdp
 </div>
-<label class="fl">Nom complet *</label><input id="rn" placeholder="Votre nom">
+<label class="fl">Nom complet *</label><input id="rn" placeholder="Nom">
 <label class="fl">Téléphone *</label><input type="tel" id="rp" placeholder="034 XX XXX XX">
 <label class="fl">Mot de passe *</label><input type="password" id="rpw" placeholder="Min 4 caractères">
 <label class="fl">Ville *</label><input id="rc" placeholder="Antananarivo">
@@ -174,14 +166,16 @@ canvas#megawheel{border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,.15)}
 </div>
 </div>
 
+<!-- APP -->
 <div id="app" class="hidden">
 <header><div class="hdr">
 <div class="logo"><i class="fas fa-store"></i> MadaMarket</div>
 <div class="nav" id="nav"></div>
 <div class="hr">
+<div id="livePulse" title="Surveillance active"></div>
 <span style="font-size:11px"><i class="fas fa-star" style="color:var(--gold)"></i> <span id="hst">0</span></span>
 <div style="position:relative" id="bw">
-<button class="bell" id="bb" onclick="tglN()"><i class="fas fa-bell"></i><span class="badge hidden" id="bbg">0</span></button>
+<button class="bell" onclick="tglN()"><i class="fas fa-bell"></i><span class="badge hidden" id="bbg">0</span></button>
 <div class="ndrop hidden" id="ndrop"></div>
 </div>
 <div class="av" id="hav">A</div>
@@ -189,32 +183,31 @@ canvas#megawheel{border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,.15)}
 <button class="xs bd" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
 </div>
 </div></header>
+<!-- Urgent banner placeholder - inserted dynamically -->
+<div id="bannerSlot"></div>
 <main id="ct"></main>
 </div>
 
 <!-- MEGA WHEEL OVERLAY -->
-<div id="mw-ov" class="hidden">
+<div id="mwOv" class="hidden">
 <div style="text-align:center;padding:10px">
 <div style="font-size:22px;font-weight:800;color:var(--gold);margin-bottom:4px"><i class="fas fa-trophy"></i> MEGA WHEEL</div>
 <div style="color:var(--txt2);font-size:12px;margin-bottom:14px">20 ⭐ à gagner!</div>
-<div class="mw-wrap">
-<div class="mw-pointer"></div>
-<canvas id="megawheel" width="340" height="340"></canvas>
+<div style="position:relative;display:inline-block">
+<div class="mwp"></div>
+<canvas id="mwCanvas" class="mwc" width="340" height="340" style="border-radius:50%"></canvas>
 </div>
-<div class="mw-result" id="mw-res"></div>
+<div id="mwRes" style="font-size:16px;margin-top:14px;min-height:30px"></div>
 </div>
 </div>
 
-<div id="urgentBox"></div>
+<!-- URGENT FS -->
+<div id="urgentFS" class="hidden"></div>
 
 <script>
-// ===== STORAGE =====
-const D={
-g(k){try{return JSON.parse(localStorage.getItem('mm_'+k))||[]}catch{return[]}},
-s(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))},
-gv(k){try{return JSON.parse(localStorage.getItem('mm_'+k))}catch{return null}},
-sv(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))}
-};
+// ============ STORAGE ============
+function LS(k){try{return JSON.parse(localStorage.getItem('mm_'+k))||[]}catch{return[]}}
+function SS(k,v){localStorage.setItem('mm_'+k,JSON.stringify(v))}
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,6);
 const fd=d=>d?new Date(d).toLocaleString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'-';
 const esc=s=>{if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML};
@@ -222,431 +215,450 @@ const np=p=>(p||'').replace(/[\s\-\.]/g,'');
 const ci=c=>({Électronique:'laptop',Vêtements:'tshirt',Maison:'home',Alimentation:'utensils',Services:'handshake'}[c]||'box');
 const mdT=()=>{const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+3*3600000)};
 
-let U=null,pg='accueil',at='notifs',lastPC=-1;
+// ============ STATE ============
+let U=null, pg='accueil', at='notifs';
+// Track last known counts separately per category
+let lastCounts={reg:0,prod:0,cmt:0,ord:0,wdr:0,total:0};
+let urgentShown=false;
 
-// ===== INSTANT CROSS-TAB COMMUNICATION =====
-let bc;
-try{bc=new BroadcastChannel('madamarket')}catch(e){bc=null}
-
-// Signal: called after EVERY data mutation
-function signal(){
-  const ts=Date.now();
-  localStorage.setItem('mm_sig',ts.toString());
-  try{if(bc)bc.postMessage({t:'upd',ts})}catch(e){}
-  // Same-tab immediate check
-  checkN();
+// ============ PENDING COUNT - reads fresh from localStorage every call ============
+function getPending(){
+  // ALWAYS read fresh from localStorage
+  const users=JSON.parse(localStorage.getItem('mm_users')||'[]');
+  const products=JSON.parse(localStorage.getItem('mm_products')||'[]');
+  const comments=JSON.parse(localStorage.getItem('mm_comments')||'[]');
+  const orders=JSON.parse(localStorage.getItem('mm_orders')||'[]');
+  const r={
+    reg:users.filter(x=>x.status==='pending'&&x.role!=='admin').length,
+    prod:products.filter(x=>x.status==='pending').length,
+    cmt:comments.filter(x=>x.status==='pending').length,
+    ord:orders.filter(x=>x.status==='pending').length,
+    wdr:users.filter(x=>x.withdrawReq).length
+  };
+  r.total=r.reg+r.prod+r.cmt+r.ord+r.wdr;
+  return r;
 }
 
-// Listen BroadcastChannel (INSTANT cross-tab)
-if(bc)bc.onmessage=()=>checkN();
+// ============ MASTER POLLING - 300ms - THE ONLY NOTIFICATION SYSTEM ============
+setInterval(function(){
+  if(!U)return;
+  if(U.role!=='admin')return;
 
-// Listen storage event (cross-tab backup)
-window.addEventListener('storage',e=>{if(e.key==='mm_sig')checkN()});
+  const p=getPending();
 
-// Polling backup (500ms)
-setInterval(checkN,500);
-
-// Check notifications
-function checkN(){
-  if(!U||U.role!=='admin')return;
-  const p=pc();
+  // Update badge always
   const bb=document.getElementById('bbg');
-  if(bb){if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden')}
-  if(p.total>lastPC&&lastPC>=0){
-    playBeep();
-    showUrgent(p);
-    buildNav();
-    if(pg==='admin')render();
-  }else if(p.total!==lastPC){
-    buildNav();
-    if(pg==='admin')render();
+  if(bb){
+    if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}
+    else{bb.classList.add('hidden')}
   }
-  lastPC=p.total;
+
+  // Update banner always
+  updateBanner(p);
+
+  // Check if counts increased
+  if(p.total>lastCounts.total){
+    console.log('🔔 NEW NOTIFICATION! was:'+lastCounts.total+' now:'+p.total);
+    beep();
+    if(!urgentShown){
+      urgentShown=true;
+      showUrgentFS(p);
+    }
+    buildNav();
+    // If on admin page, refresh it
+    if(pg==='admin'){
+      const ac=document.getElementById('atc');
+      if(ac)renderAdminTab(ac);
+    }
+  }
+
+  // If counts changed at all (decreased = admin handled something)
+  if(p.total!==lastCounts.total){
+    buildNav();
+  }
+
+  lastCounts={...p};
+},300);
+
+// ============ PERSISTENT BANNER ============
+function updateBanner(p){
+  const slot=document.getElementById('bannerSlot');
+  if(!slot)return;
+  if(!U||U.role!=='admin'){slot.innerHTML='';return}
+  if(p.total===0){slot.innerHTML='';return}
+
+  let parts=[];
+  if(p.reg)parts.push('👤'+p.reg+' inscription(s)');
+  if(p.prod)parts.push('📦'+p.prod+' produit(s)');
+  if(p.cmt)parts.push('💬'+p.cmt+' commentaire(s)');
+  if(p.ord)parts.push('🛒'+p.ord+' commande(s)');
+  if(p.wdr)parts.push('💰'+p.wdr+' retrait(s)');
+
+  slot.innerHTML=`<div id="urgentBanner" onclick="go('admin');at='${p.reg?'inscriptions':p.prod?'produits':p.cmt?'forum':'notifs'}';render()">
+    🔔 ${parts.join(' | ')} — CLIQUEZ POUR GÉRER
+  </div>`;
 }
 
-// Sound
-function playBeep(){
-try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);g.gain.value=.3;
-o.frequency.value=880;o.type='sine';o.start();
-o.frequency.linearRampToValueAtTime(1320,c.currentTime+.1);
-o.frequency.linearRampToValueAtTime(880,c.currentTime+.2);
-o.frequency.linearRampToValueAtTime(1320,c.currentTime+.3);
-g.gain.linearRampToValueAtTime(0,c.currentTime+.5);o.stop(c.currentTime+.5)}catch(e){}
+// ============ URGENT FULLSCREEN ============
+function showUrgentFS(p){
+  let parts=[];
+  if(p.reg)parts.push(`👤 ${p.reg} inscription(s) en attente`);
+  if(p.prod)parts.push(`📦 ${p.prod} produit(s) à approuver`);
+  if(p.cmt)parts.push(`💬 ${p.cmt} commentaire(s) à modérer`);
+  if(p.ord)parts.push(`🛒 ${p.ord} commande(s) à valider`);
+  if(p.wdr)parts.push(`💰 ${p.wdr} retrait(s) à valider`);
+  const tab=p.reg?'inscriptions':p.prod?'produits':p.cmt?'forum':p.ord?'commandes':'etoiles';
+
+  document.getElementById('urgentFS').innerHTML=`
+    <div class="ubox">
+      <div class="uico">🔔</div>
+      <div style="font-size:18px;font-weight:800;color:var(--gold);margin-bottom:8px">NOTIFICATION!</div>
+      <div style="color:var(--txt);font-size:14px;margin-bottom:16px;line-height:1.8">${parts.join('<br>')}</div>
+      <button class="bw" onclick="closeFS();at='${tab}';go('admin')" style="font-size:16px;padding:14px 30px"><i class="fas fa-arrow-right"></i> GÉRER</button>
+      <br><button class="xs" style="background:none;color:var(--txt2);margin-top:8px" onclick="closeFS()">Fermer</button>
+    </div>`;
+  document.getElementById('urgentFS').classList.remove('hidden');
+  setTimeout(closeFS,15000);
 }
 
-function tick(){
-try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);g.gain.value=.1;o.frequency.value=600+Math.random()*200;o.type='square';o.start();g.gain.linearRampToValueAtTime(0,c.currentTime+.03);o.stop(c.currentTime+.03)}catch(e){}
+function closeFS(){
+  document.getElementById('urgentFS').classList.add('hidden');
+  document.getElementById('urgentFS').innerHTML='';
+  urgentShown=false;
 }
 
-// Urgent popup
-function showUrgent(p){
-let parts=[];
-if(p.reg)parts.push(`👤 ${p.reg} inscription(s)`);
-if(p.prod)parts.push(`📦 ${p.prod} produit(s)`);
-if(p.cmt)parts.push(`💬 ${p.cmt} commentaire(s)`);
-if(p.ord)parts.push(`🛒 ${p.ord} commande(s)`);
-if(p.wdr)parts.push(`💰 ${p.wdr} retrait(s)`);
-const tab=p.reg?'inscriptions':p.prod?'produits':p.cmt?'forum':p.ord?'commandes':'etoiles';
-document.getElementById('urgentBox').innerHTML=`<div id="urgent">
-<div class="ubox"><div class="uico">🔔</div>
-<div style="font-size:18px;font-weight:800;color:var(--gold);margin-bottom:6px">NOTIFICATION!</div>
-<div style="color:var(--txt2);font-size:13px;margin-bottom:14px;line-height:1.6">${parts.join('<br>')}</div>
-<button class="bw" onclick="closeU();at='${tab}';go('admin')" style="font-size:15px;padding:12px 28px"><i class="fas fa-arrow-right"></i> GÉRER</button>
-<div style="margin-top:8px"><button class="xs" style="background:none;color:var(--txt2)" onclick="closeU()">Fermer</button></div>
-</div></div>`;
-setTimeout(closeU,12000);
-}
-function closeU(){document.getElementById('urgentBox').innerHTML=''}
+// ============ SOUND ============
+function beep(){
+try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);g.gain.value=.3;o.frequency.value=880;o.type='sine';o.start();o.frequency.linearRampToValueAtTime(1320,c.currentTime+.15);g.gain.linearRampToValueAtTime(0,c.currentTime+.4);o.stop(c.currentTime+.4)}catch(e){}}
+function tick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);g.gain.value=.08;o.frequency.value=500+Math.random()*300;o.type='square';o.start();g.gain.linearRampToValueAtTime(0,c.currentTime+.02);o.stop(c.currentTime+.02)}catch(e){}}
 
-// ===== INIT =====
+// ============ INIT ============
 function init(){
-let u=D.g('users');
-const ai=u.findIndex(x=>x.id==='admin001'||x.role==='admin');
-if(ai>=0){u[ai].password='admin123';u[ai].phone='0340000000';u[ai].role='admin';u[ai].status='approved'}
-else u.push({id:'admin001',name:'Admin',phone:'0340000000',city:'Antananarivo',quartier:'Centre',password:'admin123',role:'admin',status:'approved',stars:0,isActive:true,withdrawReq:false,regAt:new Date().toISOString()});
-D.s('users',u);
-['products','posts','comments','orders','rHist'].forEach(k=>{if(!localStorage.getItem('mm_'+k))D.s(k,[])});
+  let u=LS('users');
+  const ai=u.findIndex(x=>x.id==='admin001'||x.role==='admin');
+  if(ai>=0){u[ai].password='admin123';u[ai].phone='0340000000';u[ai].role='admin';u[ai].status='approved'}
+  else u.push({id:'admin001',name:'Admin',phone:'0340000000',city:'Antananarivo',quartier:'Centre',password:'admin123',role:'admin',status:'approved',stars:0,isActive:true,withdrawReq:false,regAt:new Date().toISOString()});
+  SS('users',u);
+  ['products','posts','comments','orders','rHist'].forEach(k=>{if(!localStorage.getItem('mm_'+k))SS(k,[])});
 }
-function resetAll(){if(!confirm('Supprimer toutes les données?'))return;Object.keys(localStorage).forEach(k=>{if(k.startsWith('mm_'))localStorage.removeItem(k)});localStorage.removeItem('mm_sig');location.reload()}
+function resetAll(){if(!confirm('Supprimer tout?'))return;Object.keys(localStorage).forEach(k=>{if(k.startsWith('mm_'))localStorage.removeItem(k)});location.reload()}
 
-// ===== AUTH =====
+// ============ AUTH ============
 function aTab(t){document.querySelectorAll('.atb div').forEach((d,i)=>d.classList.toggle('active',t==='login'?i===0:i===1));document.getElementById('f-login').classList.toggle('hidden',t!=='login');document.getElementById('f-reg').classList.toggle('hidden',t!=='register');document.getElementById('amsg').innerHTML=''}
 function amsg(m,t){document.getElementById('amsg').innerHTML=`<div class="amsg ${t}">${m}</div>`}
 
 function doLogin(){
-const ph=np(document.getElementById('lph').value),pw=document.getElementById('lpw').value;
-if(!ph||!pw)return amsg('Remplissez tout','err');
-const u=D.g('users').find(x=>np(x.phone)===ph&&x.password===pw);
-if(!u)return amsg('❌ Téléphone ou mot de passe incorrect','err');
-if(u.status==='pending')return amsg('⏳ En attente de validation admin (notification envoyée instantanément!)','warn');
-if(u.status==='rejected')return amsg('❌ Refusé','err');
-u.isActive=true;let all=D.g('users');let f=all.find(x=>x.id===u.id);if(f)f.isActive=true;D.s('users',all);
-U=u;D.sv('sess',u.id);lastPC=-1;
-document.getElementById('auth').classList.add('hidden');document.getElementById('app').classList.remove('hidden');render();
+  const ph=np(document.getElementById('lph').value),pw=document.getElementById('lpw').value;
+  if(!ph||!pw)return amsg('Remplissez tout','err');
+  const users=LS('users');
+  const u=users.find(x=>np(x.phone)===ph&&x.password===pw);
+  if(!u)return amsg('❌ Incorrect','err');
+  if(u.status==='pending')return amsg('⏳ En attente de validation admin','warn');
+  if(u.status==='rejected')return amsg('❌ Refusé','err');
+  u.isActive=true;let all=LS('users');let f=all.find(x=>x.id===u.id);if(f)f.isActive=true;SS('users',all);
+  U=u;SS('sess',U.id);
+
+  // KEY: Set lastCounts to 0 so admin sees ALL pending items as new
+  if(U.role==='admin'){
+    lastCounts={reg:0,prod:0,cmt:0,ord:0,wdr:0,total:0};
+    urgentShown=false;
+  }
+
+  document.getElementById('auth').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  render();
+
+  // Show notification immediately if admin has pending items
+  if(U.role==='admin'){
+    const p=getPending();
+    if(p.total>0){
+      beep();
+      showUrgentFS(p);
+    }
+    lastCounts={...p};
+  }
 }
 
 function doReg(){
-const nm=document.getElementById('rn').value.trim(),ph=np(document.getElementById('rp').value),pw=document.getElementById('rpw').value,ci=document.getElementById('rc').value.trim(),qt=document.getElementById('rq').value.trim();
-if(!nm||!ph||!pw||!ci||!qt)return amsg('Tous les champs *','err');
-if(ph.length<8)return amsg('Numéro invalide','err');
-if(pw.length<4)return amsg('MDP min 4 car.','err');
-let users=D.g('users');
-if(users.find(x=>np(x.phone)===ph))return amsg('Numéro déjà inscrit','err');
-users.push({id:uid(),name:nm,phone:ph,password:pw,city:ci,quartier:qt,role:'user',status:'pending',stars:0,isActive:false,withdrawReq:false,regAt:new Date().toISOString()});
-D.s('users',users);
-signal(); // INSTANT notification to admin!
-amsg(`✅ <strong>Envoyé!</strong><br>L'admin est notifié <strong>instantanément</strong>.<br>Après validation, connectez-vous avec:<br>📱 <strong>${esc(ph)}</strong> + votre MDP`,'ok');
-['rn','rp','rpw','rc','rq'].forEach(x=>document.getElementById(x).value='');
+  const nm=document.getElementById('rn').value.trim(),ph=np(document.getElementById('rp').value),pw=document.getElementById('rpw').value,ci2=document.getElementById('rc').value.trim(),qt=document.getElementById('rq').value.trim();
+  if(!nm||!ph||!pw||!ci2||!qt)return amsg('Tous les champs *','err');
+  if(ph.length<8)return amsg('Numéro invalide','err');
+  if(pw.length<4)return amsg('MDP min 4','err');
+  let users=LS('users');
+  if(users.find(x=>np(x.phone)===ph))return amsg('Numéro déjà inscrit','err');
+  users.push({id:uid(),name:nm,phone:ph,password:pw,city:ci2,quartier:qt,role:'user',status:'pending',stars:0,isActive:false,withdrawReq:false,regAt:new Date().toISOString()});
+  SS('users',users);
+  amsg(`✅ <strong>Envoyé!</strong> Après validation admin, connectez-vous avec tél + mdp`,'ok');
+  ['rn','rp','rpw','rc','rq'].forEach(x=>document.getElementById(x).value='');
 }
 
-function doLogout(){if(U){let u=D.g('users');let x=u.find(a=>a.id===U.id);if(x){x.isActive=false;D.s('users',u)}}U=null;D.sv('sess',null);lastPC=-1;document.getElementById('app').classList.add('hidden');document.getElementById('auth').classList.remove('hidden');document.getElementById('amsg').innerHTML='';document.getElementById('lph').value='';document.getElementById('lpw').value=''}
-function restore(){const sid=D.gv('sess');if(!sid)return;let users=D.g('users');const u=users.find(x=>x.id===sid);if(u&&u.status==='approved'){u.isActive=true;D.s('users',users);U=u;lastPC=-1;document.getElementById('auth').classList.add('hidden');document.getElementById('app').classList.remove('hidden');render()}}
+function doLogout(){
+  if(U){let u=LS('users');let x=u.find(a=>a.id===U.id);if(x){x.isActive=false;SS('users',u)}}
+  U=null;SS('sess',null);lastCounts={reg:0,prod:0,cmt:0,ord:0,wdr:0,total:0};
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('auth').classList.remove('hidden');
+  document.getElementById('amsg').innerHTML='';
+  document.getElementById('lph').value='';document.getElementById('lpw').value='';
+  document.getElementById('bannerSlot').innerHTML='';
+}
 
-// ===== PENDING =====
-function pc(){const u=D.g('users'),p=D.g('products'),c=D.g('comments'),o=D.g('orders');const r={reg:u.filter(x=>x.status==='pending'&&x.role!=='admin').length,prod:p.filter(x=>x.status==='pending').length,cmt:c.filter(x=>x.status==='pending').length,ord:o.filter(x=>x.status==='pending').length,wdr:u.filter(x=>x.withdrawReq).length};r.total=r.reg+r.prod+r.cmt+r.ord+r.wdr;return r}
+function restore(){
+  const sid=JSON.parse(localStorage.getItem('mm_sess')||'null');
+  if(!sid)return;
+  let users=LS('users');const u=users.find(x=>x.id===sid);
+  if(u&&u.status==='approved'){
+    u.isActive=true;SS('users',users);U=u;
+    if(U.role==='admin')lastCounts={reg:0,prod:0,cmt:0,ord:0,wdr:0,total:0};
+    document.getElementById('auth').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    render();
+    if(U.role==='admin'){
+      const p=getPending();
+      if(p.total>0){beep();showUrgentFS(p)}
+      lastCounts={...p};
+    }
+  }
+}
 
-// ===== NAV =====
+// ============ NAV ============
 function buildNav(){
-const isA=U&&U.role==='admin';const p=isA?pc():{total:0};
-const tabs=[{id:'accueil',ic:'home',lb:'Accueil'},{id:'produits',ic:'box',lb:'Produits'},{id:'forum',ic:'comments',lb:'Forum'},{id:'profil',ic:'user',lb:'Profil'},{id:'roulette',ic:'dharmachakra',lb:'Mega Wheel'}];
-if(isA)tabs.push({id:'admin',ic:'shield-alt',lb:'Admin',bd:p.total});
-let h='';tabs.forEach(t=>{h+=`<button class="${pg===t.id?'active':''}" onclick="go('${t.id}')"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.bd&&t.bd>0)h+=`<span class="nb">${t.bd}</span>`;h+='</button>'});
-document.getElementById('nav').innerHTML=h;
+  const isA=U&&U.role==='admin';const p=isA?getPending():{total:0};
+  const tabs=[{id:'accueil',ic:'home',lb:'Accueil'},{id:'produits',ic:'box',lb:'Produits'},{id:'forum',ic:'comments',lb:'Forum'},{id:'profil',ic:'user',lb:'Profil'},{id:'roulette',ic:'dharmachakra',lb:'Wheel'}];
+  if(isA)tabs.push({id:'admin',ic:'shield-alt',lb:'Admin',bd:p.total});
+  let h='';tabs.forEach(t=>{h+=`<button class="${pg===t.id?'active':''}" onclick="go('${t.id}')"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.bd&&t.bd>0)h+=`<span class="nb">${t.bd}</span>`;h+='</button>'});
+  document.getElementById('nav').innerHTML=h;
 }
 function go(p){pg=p;document.getElementById('ndrop').classList.add('hidden');render()}
 
-// ===== RENDER =====
+// ============ RENDER ============
 function render(){
-if(!U)return;const users=D.g('users');const f=users.find(x=>x.id===U.id);
-if(f){U.stars=f.stars;U.withdrawReq=f.withdrawReq}
-document.getElementById('hav').textContent=U.name.charAt(0).toUpperCase();
-document.getElementById('hnm').textContent=U.name;
-document.getElementById('hst').textContent=U.stars||0;
-document.getElementById('bw').style.display=U.role==='admin'?'block':'none';
-if(U.role==='admin'){const p=pc();const bb=document.getElementById('bbg');if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden');if(lastPC<0)lastPC=p.total}
-buildNav();const ct=document.getElementById('ct');
-({accueil:rAcc,produits:rProd,forum:rFor,profil:rProf,roulette:rWheel,admin:rAdm}[pg]||rAcc)(ct);
+  if(!U)return;
+  const users=LS('users');const f=users.find(x=>x.id===U.id);
+  if(f){U.stars=f.stars;U.withdrawReq=f.withdrawReq}
+  document.getElementById('hav').textContent=U.name.charAt(0).toUpperCase();
+  document.getElementById('hnm').textContent=U.name;
+  document.getElementById('hst').textContent=U.stars||0;
+  document.getElementById('bw').style.display=U.role==='admin'?'block':'none';
+  document.getElementById('livePulse').style.display=U.role==='admin'?'block':'none';
+  if(U.role==='admin'){const p=getPending();const bb=document.getElementById('bbg');if(p.total>0){bb.textContent=p.total;bb.classList.remove('hidden')}else bb.classList.add('hidden');updateBanner(p)}
+  buildNav();
+  const ct=document.getElementById('ct');
+  ({accueil:rAcc,produits:rProd,forum:rFor,profil:rProf,roulette:rWheel,admin:rAdm}[pg]||rAcc)(ct);
 }
 
-// ===== NOTIF DROPDOWN =====
+// ============ NOTIF DROPDOWN ============
 function tglN(){const d=document.getElementById('ndrop');d.classList.toggle('hidden');if(!d.classList.contains('hidden'))rND()}
 document.addEventListener('click',e=>{const w=document.getElementById('bw');if(w&&!w.contains(e.target))document.getElementById('ndrop').classList.add('hidden')});
-function rND(){const p=pc();let h='<h3>🔔 Notifications</h3>';if(!p.total)h+='<div class="nitem" style="justify-content:center;color:var(--ok);padding:14px">✅ RAS</div>';
+function rND(){const p=getPending();let h='<h3>🔔 Notifications</h3>';if(!p.total)h+='<div class="nitem" style="justify-content:center;color:var(--ok);padding:14px">✅ RAS</div>';
 else{if(p.reg)h+=ni('user-clock','or',p.reg+' inscription(s)','inscriptions');if(p.prod)h+=ni('box','bl',p.prod+' produit(s)','produits');if(p.cmt)h+=ni('comment-dots','rd',p.cmt+' commentaire(s)','forum');if(p.ord)h+=ni('shopping-cart','gn',p.ord+' commande(s)','commandes');if(p.wdr)h+=ni('money-bill-wave','or',p.wdr+' retrait(s)','etoiles')}
 document.getElementById('ndrop').innerHTML=h}
-function ni(ic,cl,tx,tb){return`<div class="nitem" onclick="go('admin');at='${tb}';render();tglN()"><div class="nico ${cl}"><i class="fas fa-${ic}"></i></div><div style="font-size:11px"><strong>${tx}</strong><br><small style="color:var(--txt2)">Cliquez →</small></div></div>`}
+function ni(ic,cl,tx,tb){return`<div class="nitem" onclick="go('admin');at='${tb}';render();tglN()"><div class="nico ${cl}"><i class="fas fa-${ic}"></i></div><div style="font-size:11px"><strong>${tx}</strong></div></div>`}
 
-// ===== ACCUEIL =====
+// ============ ACCUEIL ============
 function rAcc(ct){
-const users=D.g('users'),prods=D.g('products'),orders=D.g('orders');
+const users=LS('users'),prods=LS('products'),orders=LS('orders');
 let h='<h1 class="pgt">Tableau de Bord</h1><p class="pgs">Bienvenue '+esc(U.name)+'</p><div class="sts">';
-if(U.role==='admin'){const p=pc();h+=st('user-clock','err',p.reg,'Inscrip.')+st('box','pri2',p.prod,'Produits')+st('users','sec',users.filter(u=>u.role!=='admin').length,'Membres')+st('shopping-cart','ok',p.ord,'Commandes')+st('comment-dots','gold',p.cmt,'Commentaires')}
-else{h+=st('box','pri2',prods.filter(p=>p.userId===U.id).length,'Mes Produits')+st('shopping-cart','sec',orders.filter(o=>o.buyerId===U.id).length,'Commandes')+st('star','gold',U.stars||0,'Étoiles')+st('check-circle','ok',prods.filter(p=>p.status==='approved').length,'Dispo')}
-h+='</div>';const rec=prods.filter(p=>p.status==='approved').slice(-4).reverse();
-h+='<h2 class="mb2" style="font-size:16px">Récents</h2>';
+if(U.role==='admin'){const p=getPending();h+=st('user-clock','err',p.reg,'Inscrip.')+st('box','pri2',p.prod,'Produits')+st('users','sec',users.filter(u=>u.role!=='admin').length,'Membres')+st('shopping-cart','ok',p.ord,'Cmd')+st('comment-dots','gold',p.cmt,'Com.')}
+else h+=st('box','pri2',prods.filter(p=>p.userId===U.id).length,'Produits')+st('shopping-cart','sec',orders.filter(o=>o.buyerId===U.id).length,'Cmd')+st('star','gold',U.stars||0,'⭐')+st('check-circle','ok',prods.filter(p=>p.status==='approved').length,'Dispo');
+h+='</div>';
+const rec=prods.filter(p=>p.status==='approved').slice(-4).reverse();
+h+='<h2 class="mb2" style="font-size:15px">Récents</h2>';
 if(rec.length){h+='<div class="pgrid">';rec.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<div class="pc"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--txt2);font-size:9px">${esc(s?s.name:'?')}</div></div></div>`});h+='</div>'}
 else h+='<div class="card tc" style="color:var(--txt2)">Aucun produit</div>';ct.innerHTML=h;
 }
 function st(ic,col,val,lbl){return`<div class="stt"><div class="si" style="color:var(--${col})"><i class="fas fa-${ic}"></i></div><div class="sv" style="color:var(--${col})">${val}</div><div class="sl">${lbl}</div></div>`}
 
-// ===== PRODUITS =====
+// ============ PRODUITS ============
 function rProd(ct){
-const prods=D.g('products'),users=D.g('users');
-let h=`<div class="fb mb2"><h1 class="pgt">Produits</h1><button class="bp sm" onclick="tgl('ap')"><i class="fas fa-plus"></i> Ajouter</button></div>`;
-h+=`<div class="card hidden" id="ap"><h3 class="mb2" style="font-size:14px">Nouveau Produit</h3><input id="pn" placeholder="Nom *"><textarea id="pd" rows="2" placeholder="Description"></textarea><input id="pp" type="number" placeholder="Prix (Ar) *"><select id="pca"><option value="">Catégorie</option><option>Électronique</option><option>Vêtements</option><option>Maison</option><option>Alimentation</option><option>Services</option><option>Autre</option></select><div class="fx"><button class="bs sm" onclick="addPr()"><i class="fas fa-check"></i></button><button class="bd sm" onclick="tgl('ap')"><i class="fas fa-times"></i></button></div></div>`;
+const prods=LS('products'),users=LS('users');
+let h=`<div class="fb mb2"><h1 class="pgt">Produits</h1><button class="bp sm" onclick="tgl('ap')"><i class="fas fa-plus"></i></button></div>`;
+h+=`<div class="card hidden" id="ap"><input id="pn" placeholder="Nom *"><textarea id="pd" rows="2" placeholder="Description"></textarea><input id="pp" type="number" placeholder="Prix Ar *"><select id="pca"><option value="">Catégorie</option><option>Électronique</option><option>Vêtements</option><option>Maison</option><option>Alimentation</option><option>Services</option><option>Autre</option></select><div class="fx"><button class="bs sm" onclick="addPr()"><i class="fas fa-check"></i></button><button class="bd sm" onclick="tgl('ap')"><i class="fas fa-times"></i></button></div></div>`;
 const mp=prods.filter(p=>p.userId===U.id&&p.status==='pending');
-if(mp.length){h+='<h3 class="mb2" style="color:var(--warn);font-size:13px"><i class="fas fa-clock"></i> En attente</h3><div class="pgrid mb2">';mp.forEach(p=>{h+=`<div class="pc" style="border-color:var(--warn);opacity:.6"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i><span class="tag tp" style="position:absolute;top:4px;right:4px">⏳</span></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div></div></div>`});h+='</div>'}
-const ap=prods.filter(p=>p.status==='approved');h+='<h3 class="mb2" style="font-size:13px"><i class="fas fa-check-circle" style="color:var(--ok)"></i> Disponibles</h3>';
+if(mp.length){h+='<h3 class="mb2" style="color:var(--warn);font-size:12px">⏳ En attente</h3><div class="pgrid mb2">';mp.forEach(p=>{h+=`<div class="pc" style="opacity:.6;border-color:var(--warn)"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div></div></div>`});h+='</div>'}
+const ap=prods.filter(p=>p.status==='approved');
 if(ap.length){h+='<div class="pgrid">';ap.forEach(p=>{const s=users.find(u=>u.id===p.userId);const m=p.userId===U.id;h+=`<div class="pc"><div class="pimg"><i class="fas fa-${ci(p.category)}"></i></div><div class="pi"><h3>${esc(p.name)}</h3><div class="pr">${Number(p.price).toLocaleString()} Ar</div><div style="color:var(--txt2);font-size:9px">${esc(s?s.name:'?')}</div>${!m?`<button class="bs xs mt2" onclick="buyP('${p.id}')"><i class="fas fa-shopping-cart"></i></button>`:''}</div></div>`});h+='</div>'}
 else h+='<div class="card tc" style="color:var(--txt2)">Aucun</div>';ct.innerHTML=h;
 }
 function tgl(x){document.getElementById(x).classList.toggle('hidden')}
-function addPr(){const n=document.getElementById('pn').value.trim(),d=document.getElementById('pd').value.trim(),p=document.getElementById('pp').value,c=document.getElementById('pca').value;if(!n||!p)return alert('Nom+prix!');let pr=D.g('products');pr.push({id:uid(),userId:U.id,name:n,description:d,price:Number(p),category:c||'Autre',status:'pending',createdAt:new Date().toISOString()});D.s('products',pr);signal();alert('✅ Soumis!');render()}
-function buyP(pid){const pr=D.g('products'),p=pr.find(x=>x.id===pid);if(!p||p.userId===U.id)return;if(!confirm(`Acheter "${p.name}" ${Number(p.price).toLocaleString()} Ar?`))return;let o=D.g('orders');o.push({id:uid(),productId:pid,buyerId:U.id,sellerId:p.userId,productName:p.name,price:p.price,status:'pending',createdAt:new Date().toISOString()});D.s('orders',o);signal();alert('✅ Commande!');render()}
+function addPr(){const n=document.getElementById('pn').value.trim(),d=document.getElementById('pd').value.trim(),p=document.getElementById('pp').value,c=document.getElementById('pca').value;if(!n||!p)return alert('Nom+prix!');let pr=LS('products');pr.push({id:uid(),userId:U.id,name:n,description:d,price:Number(p),category:c||'Autre',status:'pending',createdAt:new Date().toISOString()});SS('products',pr);alert('✅ Soumis!');render()}
+function buyP(pid){const pr=LS('products'),p=pr.find(x=>x.id===pid);if(!p||p.userId===U.id)return;if(!confirm(`Acheter "${p.name}"?`))return;let o=LS('orders');o.push({id:uid(),productId:pid,buyerId:U.id,sellerId:p.userId,productName:p.name,price:p.price,status:'pending',createdAt:new Date().toISOString()});SS('orders',o);alert('✅ Commande!');render()}
 
-// ===== FORUM =====
+// ============ FORUM ============
 function rFor(ct){
-const posts=D.g('posts'),users=D.g('users'),cmts=D.g('comments');
+const posts=LS('posts'),users=LS('users'),cmts=LS('comments');
 let h=`<div class="fb mb2"><h1 class="pgt">Forum</h1><button class="bp sm" onclick="tgl('apo')"><i class="fas fa-edit"></i></button></div>`;
 h+=`<div class="card hidden" id="apo"><input id="ptt" placeholder="Titre *"><textarea id="ptc" rows="2" placeholder="Contenu..."></textarea><div class="fx"><button class="bs sm" onclick="addPo()"><i class="fas fa-paper-plane"></i></button><button class="bd sm" onclick="tgl('apo')"><i class="fas fa-times"></i></button></div></div>`;
 if(!posts.length)h+='<div class="card tc" style="color:var(--txt2)">Aucun post</div>';
 posts.slice().reverse().forEach(p=>{const a=users.find(u=>u.id===p.userId);const ac=cmts.filter(c=>c.postId===p.id&&c.status==='approved');const mc=cmts.filter(c=>c.postId===p.id&&c.status==='pending'&&c.userId===U.id);
-h+=`<div class="po"><div class="fx" style="margin-bottom:6px"><div class="av" style="width:24px;height:24px;font-size:9px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:11px">${esc(a?a.name:'?')}</strong><div style="font-size:8px;color:var(--txt2)">${fd(p.createdAt)}</div></div></div>
-<h3 style="font-size:12px;margin-bottom:3px">${esc(p.title)}</h3><div style="font-size:11px;margin-bottom:8px;line-height:1.4">${esc(p.content)}</div>
-<div><strong style="font-size:9px"><i class="fas fa-comments"></i> (${ac.length})</strong>`;
+h+=`<div class="po"><div class="fx" style="margin-bottom:6px"><div class="av" style="width:24px;height:24px;font-size:9px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:11px">${esc(a?a.name:'?')}</strong> <span style="font-size:8px;color:var(--txt2)">${fd(p.createdAt)}</span></div></div>
+<h3 style="font-size:12px">${esc(p.title)}</h3><div style="font-size:11px;margin:4px 0 8px;line-height:1.4">${esc(p.content)}</div>`;
 ac.forEach(c=>{const ca=users.find(u=>u.id===c.userId);h+=`<div class="cm"><strong style="font-size:9px">${esc(ca?ca.name:'?')}</strong> ${esc(c.content)}</div>`});
 mc.forEach(c=>{h+=`<div class="cm" style="border-left-color:var(--warn);opacity:.4"><span class="tag tp" style="font-size:8px">⏳</span> ${esc(c.content)}</div>`});
-h+=`</div><div class="fx" style="margin-top:6px;padding-top:4px;border-top:1px solid var(--bg4)"><input id="cm-${p.id}" placeholder="Commentaire..." style="margin:0;flex:1;padding:7px;font-size:10px"><button class="bp xs" onclick="addCm('${p.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`});
+h+=`<div class="fx" style="margin-top:6px;padding-top:4px;border-top:1px solid var(--bg4)"><input id="cm-${p.id}" placeholder="Commenter..." style="margin:0;flex:1;padding:7px;font-size:10px"><button class="bp xs" onclick="addCm('${p.id}')"><i class="fas fa-paper-plane"></i></button></div></div>`});
 ct.innerHTML=h;
 }
-function addPo(){const t=document.getElementById('ptt').value.trim(),c=document.getElementById('ptc').value.trim();if(!t||!c)return alert('Requis!');let p=D.g('posts');p.push({id:uid(),userId:U.id,title:t,content:c,createdAt:new Date().toISOString()});D.s('posts',p);render()}
-function addCm(pid){const el=document.getElementById('cm-'+pid);const t=el.value.trim();if(!t)return;let c=D.g('comments');c.push({id:uid(),postId:pid,userId:U.id,content:t,status:'pending',createdAt:new Date().toISOString()});D.s('comments',c);el.value='';signal();alert('💬 Attente modération');render()}
+function addPo(){const t=document.getElementById('ptt').value.trim(),c=document.getElementById('ptc').value.trim();if(!t||!c)return alert('Requis!');let p=LS('posts');p.push({id:uid(),userId:U.id,title:t,content:c,createdAt:new Date().toISOString()});SS('posts',p);render()}
+function addCm(pid){const el=document.getElementById('cm-'+pid);const t=el.value.trim();if(!t)return;let c=LS('comments');c.push({id:uid(),postId:pid,userId:U.id,content:t,status:'pending',createdAt:new Date().toISOString()});SS('comments',c);el.value='';alert('💬 Attente modération');render()}
 
-// ===== PROFIL =====
+// ============ PROFIL ============
 function rProf(ct){
-const u=D.g('users').find(x=>x.id===U.id);if(u){U.stars=u.stars;U.withdrawReq=u.withdrawReq}
-document.getElementById('hst').textContent=U.stars||0;
+const u=LS('users').find(x=>x.id===U.id);if(u){U.stars=u.stars;U.withdrawReq=u.withdrawReq}
 const pct=Math.min(100,((U.stars||0)/1000)*100),can=(U.stars||0)>=1000;
-let h=`<h1 class="pgt tc">Mon Profil</h1><div class="prof"><div class="pav">${U.name.charAt(0).toUpperCase()}</div><h2 style="font-size:18px">${esc(U.name)}</h2>
-<p style="color:var(--txt2);margin-bottom:8px;font-size:12px">${U.role==='admin'?'👑 Admin':'👤 Membre'}</p>
-<div class="card" style="text-align:left;font-size:12px"><div style="margin-bottom:4px"><i class="fas fa-phone" style="color:var(--sec);width:14px"></i> ${esc(U.phone)}</div><div style="margin-bottom:4px"><i class="fas fa-map-marker-alt" style="color:var(--err);width:14px"></i> ${esc(U.city||'-')}, ${esc(U.quartier||'-')}</div><div><i class="fas fa-calendar" style="color:var(--ok);width:14px"></i> ${fd(U.regAt)}</div></div>
+let h=`<h1 class="pgt tc">Profil</h1><div class="prof"><div class="pav">${U.name.charAt(0).toUpperCase()}</div><h2 style="font-size:18px">${esc(U.name)}</h2>
+<div class="card" style="text-align:left;font-size:12px"><div style="margin-bottom:4px">📱 ${esc(U.phone)}</div><div style="margin-bottom:4px">📍 ${esc(U.city||'-')}, ${esc(U.quartier||'-')}</div><div>📅 ${fd(U.regAt)}</div></div>
 <div class="card mt2 tc" ${can?'style="border-color:var(--gold)"':''}>
-<h3 style="font-size:14px"><i class="fas fa-star sd"></i> Étoiles</h3><div style="font-size:32px;font-weight:800;color:var(--gold);margin:8px 0">${U.stars||0}</div>
+<h3 style="font-size:14px">⭐ ${U.stars||0}</h3>
 <div class="pbar"><div class="pfill" style="width:${pct}%">${Math.round(pct)}%</div></div>
 ${can&&!U.withdrawReq?'<button class="bw wglow" onclick="reqW()"><i class="fas fa-money-bill-wave"></i> Retrait</button>':''}
-${U.withdrawReq?'<span class="tag tp" style="padding:6px 12px">⏳ En attente</span>':''}
+${U.withdrawReq?'<span class="tag tp">⏳ En attente</span>':''}
 ${!can?`<div style="color:var(--txt2);font-size:10px">Manque ${1000-(U.stars||0)}</div>`:''}</div></div>`;ct.innerHTML=h;
 }
-function reqW(){if(!confirm('Retrait?'))return;let u=D.g('users');let x=u.find(a=>a.id===U.id);if(x){x.withdrawReq=true;U.withdrawReq=true;D.s('users',u);signal()}render()}
+function reqW(){if(!confirm('Retrait?'))return;let u=LS('users');let x=u.find(a=>a.id===U.id);if(x){x.withdrawReq=true;U.withdrawReq=true;SS('users',u)}render()}
 
-// ===== MEGA WHEEL =====
-const COLORS=['#7c5cfc','#00cec9','#e17055','#00b894','#fdcb6e','#fd79a8','#6c5ce7','#74b9ff','#a29bfe','#ff7675','#55efc4','#fab1a0','#81ecec','#ffeaa7','#dfe6e9','#636e72'];
-
-function drawWheel(cvs,members,angle,highlight){
+// ============ MEGA WHEEL ============
+const WCOL=['#7c5cfc','#00cec9','#e17055','#00b894','#fdcb6e','#fd79a8','#6c5ce7','#74b9ff','#a29bfe','#ff7675','#55efc4','#fab1a0','#81ecec','#ffeaa7'];
+function drawW(cvs,members,angle,hiIdx){
 const ctx=cvs.getContext('2d');const W=cvs.width,H=cvs.height,cx=W/2,cy=H/2,R=Math.min(cx,cy)-20;
 ctx.clearRect(0,0,W,H);
-const n=members.length;const seg=Math.PI*2/n;
-
-// Outer glow ring
-ctx.beginPath();ctx.arc(cx,cy,R+12,0,Math.PI*2);
-const og=ctx.createRadialGradient(cx,cy,R,cx,cy,R+16);
-og.addColorStop(0,'rgba(255,215,0,.3)');og.addColorStop(1,'rgba(255,215,0,0)');
-ctx.fillStyle=og;ctx.fill();
-
-// LED lights
-for(let i=0;i<36;i++){const la=i*Math.PI*2/36+angle*.1;const lx=cx+(R+10)*Math.cos(la);const ly=cy+(R+10)*Math.sin(la);
-ctx.beginPath();ctx.arc(lx,ly,3,0,Math.PI*2);ctx.fillStyle=i%3===0?'#ffd700':i%3===1?'#ff6b6b':'#7c5cfc';ctx.fill()}
-
+const n=members.length,seg=Math.PI*2/n;
+// Outer LEDs
+for(let i=0;i<32;i++){const la=i*Math.PI*2/32+angle*.15;const lx=cx+(R+12)*Math.cos(la),ly=cy+(R+12)*Math.sin(la);ctx.beginPath();ctx.arc(lx,ly,3,0,Math.PI*2);ctx.fillStyle=i%3===0?'#ffd700':i%3===1?'#ff6b6b':'#7c5cfc';ctx.fill()}
 // Segments
-for(let i=0;i<n;i++){
-const a1=i*seg+angle-Math.PI/2;const a2=a1+seg;
-ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a1,a2);ctx.closePath();
-ctx.fillStyle=COLORS[i%COLORS.length];ctx.fill();
-ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=2;ctx.stroke();
-
-// Highlight winner segment
-if(highlight===i){ctx.fillStyle='rgba(255,215,0,.3)';ctx.fill();ctx.strokeStyle='#ffd700';ctx.lineWidth=3;ctx.stroke()}
-
-// Name
-ctx.save();ctx.translate(cx,cy);ctx.rotate(a1+seg/2);
-ctx.fillStyle='#fff';ctx.font=`bold ${Math.min(13,280/n)}px sans-serif`;ctx.textAlign='right';ctx.textBaseline='middle';
-ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=3;
-ctx.fillText(members[i].name.substring(0,9),R-14,0);
-ctx.shadowBlur=0;ctx.restore();
-}
-
-// Inner ring
-ctx.beginPath();ctx.arc(cx,cy,R*.15,0,Math.PI*2);
-const ig=ctx.createRadialGradient(cx,cy,0,cx,cy,R*.15);
-ig.addColorStop(0,'#ffd700');ig.addColorStop(1,'#e6a800');
-ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
-
-// Center text
-ctx.fillStyle='#000';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-ctx.fillText('MEGA',cx,cy-5);ctx.font='bold 8px sans-serif';ctx.fillText('WHEEL',cx,cy+6);
+for(let i=0;i<n;i++){const a1=i*seg+angle-Math.PI/2,a2=a1+seg;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a1,a2);ctx.closePath();ctx.fillStyle=WCOL[i%WCOL.length];ctx.fill();ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=2;ctx.stroke();
+if(hiIdx===i){ctx.fillStyle='rgba(255,215,0,.4)';ctx.fill();ctx.strokeStyle='#ffd700';ctx.lineWidth=3;ctx.stroke()}
+ctx.save();ctx.translate(cx,cy);ctx.rotate(a1+seg/2);ctx.fillStyle='#fff';ctx.font=`bold ${Math.min(12,220/n)}px sans-serif`;ctx.textAlign='right';ctx.textBaseline='middle';ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=3;ctx.fillText(members[i].name.substring(0,8),R-12,0);ctx.shadowBlur=0;ctx.restore()}
+// Center
+ctx.beginPath();ctx.arc(cx,cy,R*.14,0,Math.PI*2);const ig=ctx.createRadialGradient(cx,cy,0,cx,cy,R*.14);ig.addColorStop(0,'#ffd700');ig.addColorStop(1,'#cc9900');ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#000';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('MEGA',cx,cy-4);ctx.font='bold 7px sans-serif';ctx.fillText('WHEEL',cx,cy+5);
 }
 
 function rWheel(ct){
-const hist=D.g('rHist');const users=D.g('users').filter(u=>u.role!=='admin'&&u.status==='approved');
+const hist=LS('rHist');const users=LS('users').filter(u=>u.role!=='admin'&&u.status==='approved');
 let h=`<h1 class="pgt tc"><i class="fas fa-dharmachakra" style="color:var(--gold)"></i> Mega Wheel</h1>
-<p class="pgs tc">Chaque heure: un gagnant de 20⭐!</p>
-<div class="card tc" style="max-width:500px;margin:0 auto">
-<div style="background:var(--bg3);border-radius:var(--r);padding:10px;margin-bottom:12px">
-<div style="font-size:11px;color:var(--txt2)">⏰ Prochain tirage</div>
-<div id="rlcd" style="font-size:24px;font-weight:800;color:var(--sec);font-family:monospace">--:--</div>
-</div>
-<div style="position:relative;display:inline-block;margin-bottom:12px">
-<div class="mw-pointer"></div>
-<canvas id="previewWheel" width="300" height="300" style="border-radius:50%"></canvas>
-</div>
-<br>
-<button class="bw" onclick="startMW()" style="font-size:14px;padding:12px 30px;animation:pls 1.5s infinite"><i class="fas fa-play-circle"></i> LANCER LA ROUE</button>
-<p style="font-size:9px;color:var(--txt2);margin-top:6px">Auto chaque heure (UTC+3)</p>
-<div class="mt3"><h3 class="mb2" style="font-size:13px"><i class="fas fa-history"></i> Historique</h3>`;
+<p class="pgs tc">Chaque heure: 20⭐!</p>
+<div class="card tc" style="max-width:480px;margin:0 auto">
+<div style="background:var(--bg3);border-radius:var(--r);padding:10px;margin-bottom:10px"><span style="font-size:10px;color:var(--txt2)">⏰ Prochain</span><div id="rlcd" style="font-size:22px;font-weight:800;color:var(--sec);font-family:monospace">--:--</div></div>
+<div style="position:relative;display:inline-block;margin-bottom:10px"><div class="mwp"></div><canvas id="prevW" class="mwc" width="300" height="300" style="border-radius:50%"></canvas></div><br>
+<button class="bw" onclick="startMW()" style="font-size:14px;padding:10px 28px;animation:pls 1.5s infinite"><i class="fas fa-play-circle"></i> LANCER</button>
+<div class="mt3"><h3 class="mb2" style="font-size:12px"><i class="fas fa-history"></i> Historique</h3>`;
 if(hist.length){h+='<div class="tw"><table><tr><th>🏆</th><th>⭐</th><th>Date</th></tr>';hist.slice().reverse().slice(0,8).forEach(r=>{h+=`<tr><td><strong>${esc(r.name)}</strong></td><td class="sd">+${r.stars}</td><td>${fd(r.time)}</td></tr>`});h+='</table></div>'}
-else h+='<p style="color:var(--txt2);font-size:10px">Aucun tirage</p>';
+else h+='<p style="color:var(--txt2);font-size:10px">Aucun</p>';
 h+='</div></div>';ct.innerHTML=h;
-
-// Draw preview wheel
-setTimeout(()=>{
-const cvs=document.getElementById('previewWheel');
-if(cvs&&users.length>0)drawWheel(cvs,users,0,-1);
-},50);
-uCD();
+setTimeout(()=>{const c=document.getElementById('prevW');if(c&&users.length>0)drawW(c,users,0,-1)},50);uCD();
 }
-
 function uCD(){const n=mdT(),el=document.getElementById('rlcd');if(el)el.textContent=`${String(59-n.getMinutes()).padStart(2,'0')}:${String(59-n.getSeconds()).padStart(2,'0')}`}
 setInterval(uCD,1000);
-setInterval(()=>{const n=mdT();if(n.getMinutes()===0&&n.getSeconds()===0){const l=D.gv('lrl');if(l!==n.getHours()){D.sv('lrl',n.getHours());if(U)startMW()}}},1000);
+setInterval(()=>{const n=mdT();if(n.getMinutes()===0&&n.getSeconds()===0){const l=JSON.parse(localStorage.getItem('mm_lrl')||'null');if(l!==n.getHours()){localStorage.setItem('mm_lrl',n.getHours());if(U)startMW()}}},1000);
 
 let mwR=false;
 function startMW(){
-const users=D.g('users').filter(u=>u.role!=='admin'&&u.status==='approved');
+const users=LS('users').filter(u=>u.role!=='admin'&&u.status==='approved');
 if(users.length<2)return alert('Min 2 membres!');if(mwR)return;mwR=true;
 document.querySelectorAll('button').forEach(b=>b.disabled=true);
-
 const winIdx=Math.floor(Math.random()*users.length);
-const n=users.length;const segAngle=Math.PI*2/n;
-
-// Target: winner at top (pointer position)
-const targetAngle=-winIdx*segAngle-segAngle/2;
-const totalSpin=targetAngle+Math.PI*2*(6+Math.floor(Math.random()*4));
-
-const ov=document.getElementById('mw-ov');const res=document.getElementById('mw-res');
+const n=users.length,segA=Math.PI*2/n;
+const targetAngle=-winIdx*segA-segA/2;
+const totalSpin=targetAngle+Math.PI*2*(7+Math.floor(Math.random()*4));
+const ov=document.getElementById('mwOv'),res=document.getElementById('mwRes');
 ov.classList.remove('hidden');res.innerHTML='<i class="fas fa-spinner fa-spin"></i> La roue tourne...';
-
-const cvs=document.getElementById('megawheel');
-const dur=8000;const t0=Date.now();
-let lastSeg=-1;
-
-(function spin(){
-const elapsed=Date.now()-t0;const t=Math.min(1,elapsed/dur);
-// Ease out quart
-const e=1-Math.pow(1-t,4);
-const angle=e*totalSpin;
-drawWheel(cvs,users,angle,t>=1?winIdx:-1);
-
-// Tick sound
-const curSeg=Math.floor((((-angle%(Math.PI*2))+(Math.PI*2))%(Math.PI*2))/segAngle);
-if(curSeg!==lastSeg){tick();lastSeg=curSeg}
-
-if(t<1){requestAnimationFrame(spin)}
-else{
-  // Winner!
-  playBeep();
-  res.innerHTML=`<div style="animation:pls 1s infinite">🎉🎉🎉<br><span style="font-size:22px">${esc(users[winIdx].name)}</span><br>gagne <span style="font-size:24px">20⭐</span>!<br>🎉🎉🎉</div>`;
-
-  let all=D.g('users');let w=all.find(u=>u.id===users[winIdx].id);
-  if(w){w.stars=(w.stars||0)+20;D.s('users',all)}
-  if(U&&U.id===users[winIdx].id)U.stars=(U.stars||0)+20;
-  let hi=D.g('rHist');hi.push({id:users[winIdx].id,name:users[winIdx].name,stars:20,time:new Date().toISOString()});D.s('rHist',hi);
-  signal();confetti();
-
-  // Flash winner
-  let flash=0;const fi=setInterval(()=>{drawWheel(cvs,users,totalSpin,flash%2===0?winIdx:-1);flash++;if(flash>10)clearInterval(fi)},300);
-
-  setTimeout(()=>{ov.classList.add('hidden');mwR=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);render()},6000);
+const cvs=document.getElementById('mwCanvas');
+const dur=8000,t0=Date.now();let lastSeg=-1;
+(function spin(){const elapsed=Date.now()-t0;const t=Math.min(1,elapsed/dur);const e=1-Math.pow(1-t,4);const angle=e*totalSpin;
+drawW(cvs,users,angle,t>=1?winIdx:-1);
+const curSeg=Math.floor((((-angle%(Math.PI*2))+(Math.PI*2))%(Math.PI*2))/segA);if(curSeg!==lastSeg){tick();lastSeg=curSeg}
+if(t<1)requestAnimationFrame(spin);
+else{beep();
+res.innerHTML=`<div style="animation:pls 1s infinite;color:var(--gold)">🎉 ${esc(users[winIdx].name)} gagne 20⭐! 🎉</div>`;
+let all=LS('users');let w=all.find(u=>u.id===users[winIdx].id);if(w){w.stars=(w.stars||0)+20;SS('users',all)}
+if(U&&U.id===users[winIdx].id)U.stars=(U.stars||0)+20;
+let hi=LS('rHist');hi.push({id:users[winIdx].id,name:users[winIdx].name,stars:20,time:new Date().toISOString()});SS('rHist',hi);
+confetti();
+let fl=0;const fi=setInterval(()=>{drawW(cvs,users,totalSpin,fl%2===0?winIdx:-1);fl++;if(fl>12)clearInterval(fi)},250);
+setTimeout(()=>{ov.classList.add('hidden');mwR=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);render()},6000)}})();
 }
-})();
-}
-
 function confetti(){const c=['#ffd700','#7c5cfc','#00cec9','#e17055','#00b894','#fd79a8'];for(let i=0;i<50;i++){const e=document.createElement('div');e.className='confetti';e.style.cssText=`left:${Math.random()*100}vw;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${c[Math.floor(Math.random()*c.length)]};border-radius:${Math.random()>.5?'50%':'0'};animation-delay:${Math.random()*2}s;animation-duration:${2+Math.random()*2}s;`;document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
 
-// ===== ADMIN =====
+// ============ ADMIN ============
 function rAdm(ct){
 if(U.role!=='admin'){ct.innerHTML='Accès refusé';return}
-const p=pc();
+const p=getPending();
 let h='<h1 class="pgt"><i class="fas fa-shield-alt"></i> Admin</h1><div class="sts">'+st('user-clock','err',p.reg,'Inscrip.')+st('box','pri2',p.prod,'Produits')+st('shopping-cart','sec',p.ord,'Cmd')+st('comment-dots','gold',p.cmt,'Com.')+st('money-bill-wave','ok',p.wdr,'Retraits')+'</div>';
 const tabs=[{id:'notifs',ic:'bell',lb:'Notif',b:p.total},{id:'inscriptions',ic:'user-clock',lb:'Inscrip.',b:p.reg},{id:'produits',ic:'box',lb:'Produits',b:p.prod},{id:'membres',ic:'users',lb:'Membres'},{id:'commandes',ic:'shopping-cart',lb:'Cmd',b:p.ord},{id:'forum',ic:'comments',lb:'Forum',b:p.cmt},{id:'etoiles',ic:'star',lb:'⭐',b:p.wdr}];
 h+='<div class="ats">';tabs.forEach(t=>{h+=`<button class="at ${at===t.id?'active':''}" onclick="at='${t.id}';render()"><i class="fas fa-${t.ic}"></i> ${t.lb}`;if(t.b&&t.b>0)h+=`<span class="badge">${t.b}</span>`;h+='</button>'});h+='</div><div id="atc"></div>';ct.innerHTML=h;
-({notifs:aN,inscriptions:aI,produits:aP,membres:aM,commandes:aO,forum:aF,etoiles:aS}[at]||aN)(document.getElementById('atc'));
+renderAdminTab(document.getElementById('atc'));
 }
 
-function aN(el){const p=pc();let h='<h2 class="mb2" style="font-size:15px">🔔 Notifications</h2>';if(!p.total)h+='<div class="card tc" style="color:var(--ok);padding:24px">✅ Tout est à jour!</div>';
-else{if(p.reg)h+=nc('user-clock','warn',p.reg+' inscription(s)','Valider','inscriptions','bw');if(p.prod)h+=nc('box','pri',p.prod+' produit(s)','Approuver','produits','bp');if(p.cmt)h+=nc('comment-dots','err',p.cmt+' commentaire(s)','Modérer','forum','bd');if(p.ord)h+=nc('shopping-cart','ok',p.ord+' commande(s)','Approuver','commandes','bt');if(p.wdr)h+=nc('money-bill-wave','warn',p.wdr+' retrait(s)','Valider','etoiles','bw')}el.innerHTML=h}
-function nc(ic,col,txt,btn,tab,cls){return`<div class="card fb" style="border-left:4px solid var(--${col})"><div class="fx"><div class="nico ${col==='warn'?'or':col==='pri'?'bl':col==='err'?'rd':'gn'}"><i class="fas fa-${ic}"></i></div><strong style="font-size:12px">${txt}</strong></div><button class="${cls} sm" onclick="at='${tab}';render()">${btn} →</button></div>`}
+function renderAdminTab(ac){
+  if(!ac)return;
+  ({notifs:aN,inscriptions:aI,produits:aP,membres:aM,commandes:aO,forum:aF,etoiles:aS}[at]||aN)(ac);
+}
+
+function aN(el){const p=getPending();let h='<h2 class="mb2" style="font-size:15px">🔔 Notifications</h2>';if(!p.total)h+='<div class="card tc" style="color:var(--ok);padding:24px">✅ Tout à jour!</div>';
+else{if(p.reg)h+=nc('user-clock','warn',p.reg+' inscription(s)','VALIDER','inscriptions','bw');if(p.prod)h+=nc('box','pri',p.prod+' produit(s)','Approuver','produits','bp');if(p.cmt)h+=nc('comment-dots','err',p.cmt+' commentaire(s)','Modérer','forum','bd');if(p.ord)h+=nc('shopping-cart','ok',p.ord+' commande(s)','Approuver','commandes','bt');if(p.wdr)h+=nc('money-bill-wave','warn',p.wdr+' retrait(s)','Valider','etoiles','bw')}el.innerHTML=h}
+function nc(ic,col,txt,btn,tab,cls){return`<div class="card fb" style="border-left:4px solid var(--${col})"><div class="fx"><div class="nico ${col==='warn'?'or':col==='pri'?'bl':col==='err'?'rd':'gn'}"><i class="fas fa-${ic}"></i></div><strong style="font-size:13px">${txt}</strong></div><button class="${cls} sm" onclick="at='${tab}';render()">${btn} →</button></div>`}
 
 function aI(el){
-const users=D.g('users').filter(u=>u.role!=='admin');const pend=users.filter(u=>u.status==='pending');
+const users=LS('users').filter(u=>u.role!=='admin');const pend=users.filter(u=>u.status==='pending');
 let h='<h2 class="mb2" style="font-size:15px">👤 Inscriptions</h2>';
 if(pend.length){pend.forEach(u=>{h+=`<div class="card" style="border-left:4px solid var(--warn)">
 <div class="fb mb2"><div class="fx"><div class="av">${u.name.charAt(0)}</div><strong>${esc(u.name)}</strong></div><span class="tag tp">⏳</span></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px">
 <div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">📱 Tél</small><div style="font-weight:700;color:var(--sec)">${esc(u.phone)}</div></div>
 <div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">🔑 MDP</small><div style="font-weight:700;color:var(--gold);font-family:monospace">${esc(u.password||'-')}</div></div>
-<div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">🏙️</small><div style="font-weight:700">${esc(u.city||'-')}</div></div>
-<div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">🏠</small><div style="font-weight:700">${esc(u.quartier||'-')}</div></div></div>
+<div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">🏙️</small><div>${esc(u.city||'-')}</div></div>
+<div class="card" style="margin:0;padding:8px"><small style="color:var(--txt2)">🏠</small><div>${esc(u.quartier||'-')}</div></div></div>
 <div class="fx"><button class="bs" onclick="valU('${u.id}')"><i class="fas fa-check-circle"></i> VALIDER</button><button class="bd sm" onclick="rejU('${u.id}')"><i class="fas fa-times"></i></button></div></div>`})}
 else h+='<div class="card tc" style="color:var(--ok)">✅ Aucune</div>';
 const done=users.filter(u=>u.status!=='pending');
 if(done.length){h+='<h3 class="mt3 mb2" style="font-size:13px">Traités</h3><div class="tw"><table><tr><th>Nom</th><th>Tél</th><th>Statut</th></tr>';done.forEach(u=>{h+=`<tr><td>${esc(u.name)}</td><td>${esc(u.phone)}</td><td><span class="tag ${u.status==='approved'?'ta':'tr'}">${u.status==='approved'?'✓':'✗'}</span></td></tr>`});h+='</table></div>'}el.innerHTML=h}
-function valU(uid){let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.status='approved';D.s('users',u);signal();playBeep()}render()}
-function rejU(uid){if(!confirm('Refuser?'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.status='rejected';D.s('users',u);signal()}render()}
+function valU(uid){let u=LS('users');let x=u.find(a=>a.id===uid);if(x){x.status='approved';SS('users',u)}render()}
+function rejU(uid){if(!confirm('Refuser?'))return;let u=LS('users');let x=u.find(a=>a.id===uid);if(x){x.status='rejected';SS('users',u)}render()}
 
-function aP(el){const prods=D.g('products'),users=D.g('users');const pend=prods.filter(p=>p.status==='pending'),appr=prods.filter(p=>p.status==='approved');
+function aP(el){const prods=LS('products'),users=LS('users');const pend=prods.filter(p=>p.status==='pending'),appr=prods.filter(p=>p.status==='approved');
 let h='<h2 class="mb2" style="font-size:15px">📦 Produits</h2>';
-if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th>Date</th><th></th></tr>';pend.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td style="color:var(--sec)">${Number(p.price).toLocaleString()}</td><td>${fd(p.createdAt)}</td><td class="fx"><button class="bs xs" onclick="vP('${p.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rP('${p.id}')"><i class="fas fa-times"></i></button></td></tr>`});h+='</table></div>'}
+if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th><th></th></tr>';pend.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(s?s.name:'?')}</td><td style="color:var(--sec)">${Number(p.price).toLocaleString()}</td><td class="fx"><button class="bs xs" onclick="vP('${p.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rP('${p.id}')"><i class="fas fa-times"></i></button></td></tr>`});h+='</table></div>'}
 else h+='<div class="card tc" style="color:var(--txt2)">Aucun</div>';
-if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:13px">Approuvés (${appr.length})</h3><div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th></tr>`;appr.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
-function vP(i){let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='approved';D.s('products',p);signal()}render()}
-function rP(i){if(!confirm('Refuser?'))return;let p=D.g('products');let x=p.find(a=>a.id===i);if(x){x.status='rejected';D.s('products',p);signal()}render()}
+if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:12px">Approuvés (${appr.length})</h3><div class="tw"><table><tr><th>Produit</th><th>Vendeur</th><th>Prix</th></tr>`;appr.forEach(p=>{const s=users.find(u=>u.id===p.userId);h+=`<tr><td>${esc(p.name)}</td><td>${esc(s?s.name:'-')}</td><td>${Number(p.price).toLocaleString()}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
+function vP(i){let p=LS('products');let x=p.find(a=>a.id===i);if(x){x.status='approved';SS('products',p)}render()}
+function rP(i){if(!confirm('Refuser?'))return;let p=LS('products');let x=p.find(a=>a.id===i);if(x){x.status='rejected';SS('products',p)}render()}
 
-function aM(el){const users=D.g('users').filter(u=>u.role!=='admin');
+function aM(el){const users=LS('users').filter(u=>u.role!=='admin');
 let h='<h2 class="mb2" style="font-size:15px">👥 Membres</h2><div class="card mb2"><input id="ms" placeholder="🔍 Rechercher..." oninput="fM()" style="margin:0"></div>';
-h+='<div class="tw"><table><tr><th>#</th><th>Nom</th><th>Tél</th><th>MDP</th><th>Lieu</th><th>Statut</th><th>⭐</th><th>●</th></tr>';
-users.forEach((u,i)=>{h+=`<tr class="mr" data-s="${(u.name+(u.phone||'')+(u.city||'')).toLowerCase()}"><td>${i+1}</td><td><strong>${esc(u.name)}</strong></td><td style="color:var(--sec)">${esc(u.phone)}</td><td style="font-family:monospace;color:var(--warn);font-size:9px">${u.password||'-'}</td><td>${esc(u.city||'-')},${esc(u.quartier||'-')}</td><td><span class="tag ${u.status==='approved'?'ta':u.status==='pending'?'tp':'tr'}">${u.status==='approved'?'✓':'⏳'}</span></td><td class="sd">${u.stars||0}</td><td>${u.isActive?'<span style="color:var(--ok)">●</span>':'○'}</td></tr>`});
+h+='<div class="tw"><table><tr><th>#</th><th>Nom</th><th>Tél</th><th>MDP</th><th>Lieu</th><th>⭐</th><th>●</th></tr>';
+users.forEach((u,i)=>{h+=`<tr class="mr" data-s="${(u.name+(u.phone||'')+(u.city||'')).toLowerCase()}"><td>${i+1}</td><td><strong>${esc(u.name)}</strong></td><td style="color:var(--sec)">${esc(u.phone)}</td><td style="font-family:monospace;color:var(--warn);font-size:9px">${u.password||'-'}</td><td>${esc(u.city||'-')}</td><td class="sd">${u.stars||0}</td><td>${u.isActive?'<span style="color:var(--ok)">●</span>':'○'}</td></tr>`});
 h+='</table></div>';el.innerHTML=h}
 function fM(){const q=document.getElementById('ms').value.toLowerCase();document.querySelectorAll('.mr').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}
 
-function aO(el){const ords=D.g('orders'),users=D.g('users');const pend=ords.filter(o=>o.status==='pending'),appr=ords.filter(o=>o.status==='approved');
+function aO(el){const ords=LS('orders'),users=LS('users');const pend=ords.filter(o=>o.status==='pending'),appr=ords.filter(o=>o.status==='approved');
 let h='<h2 class="mb2" style="font-size:15px">🛒 Commandes</h2>';
-if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th></th></tr>';pend.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td><strong>${esc(o.productName)}</strong></td><td>${esc(b?b.name:'-')}<br><small style="color:var(--sec)">${esc(b?b.phone:'')}</small></td><td>${esc(s?s.name:'-')}<br><small style="color:var(--sec)">${esc(s?s.phone:'')}</small></td><td style="font-weight:700">${Number(o.price).toLocaleString()}</td><td><button class="bs xs" onclick="vO('${o.id}')"><i class="fas fa-check"></i></button></td></tr>`});h+='</table></div>'}
+if(pend.length){h+='<div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th></th></tr>';pend.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td><strong>${esc(o.productName)}</strong></td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td style="font-weight:700">${Number(o.price).toLocaleString()}</td><td><button class="bs xs" onclick="vO('${o.id}')"><i class="fas fa-check"></i></button></td></tr>`});h+='</table></div>'}
 else h+='<div class="card tc" style="color:var(--txt2)">Aucune</div>';
-if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:13px">Approuvées (${appr.length})</h3><div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th></tr>`;appr.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td>${esc(o.productName)}</td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td>${Number(o.price).toLocaleString()}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
-function vO(oid){let o=D.g('orders');let x=o.find(a=>a.id===oid);if(!x)return;x.status='approved';D.s('orders',o);let p=D.g('products');let pr=p.find(a=>a.id===x.productId);if(pr){pr.status='sold';D.s('products',p)}let u=D.g('users');let se=u.find(a=>a.id===x.sellerId),bu=u.find(a=>a.id===x.buyerId);if(se)se.stars=(se.stars||0)+10;if(bu)bu.stars=(bu.stars||0)+5;D.s('users',u);signal();render()}
+if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:12px">Approuvées (${appr.length})</h3><div class="tw"><table><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th></tr>`;appr.forEach(o=>{const b=users.find(u=>u.id===o.buyerId),s=users.find(u=>u.id===o.sellerId);h+=`<tr><td>${esc(o.productName)}</td><td>${esc(b?b.name:'-')}</td><td>${esc(s?s.name:'-')}</td><td>${Number(o.price).toLocaleString()}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
+function vO(oid){let o=LS('orders');let x=o.find(a=>a.id===oid);if(!x)return;x.status='approved';SS('orders',o);let p=LS('products');let pr=p.find(a=>a.id===x.productId);if(pr){pr.status='sold';SS('products',p)}let u=LS('users');let se=u.find(a=>a.id===x.sellerId),bu=u.find(a=>a.id===x.buyerId);if(se)se.stars=(se.stars||0)+10;if(bu)bu.stars=(bu.stars||0)+5;SS('users',u);render()}
 
-function aF(el){const cmts=D.g('comments'),posts=D.g('posts'),users=D.g('users');const pend=cmts.filter(c=>c.status==='pending'),appr=cmts.filter(c=>c.status==='approved');
+function aF(el){const cmts=LS('comments'),posts=LS('posts'),users=LS('users');const pend=cmts.filter(c=>c.status==='pending'),appr=cmts.filter(c=>c.status==='approved');
 let h='<h2 class="mb2" style="font-size:15px">💬 Modération</h2>';
 if(pend.length){pend.forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);
-h+=`<div class="card" style="border-left:4px solid var(--warn)"><div class="fb"><div class="fx"><div class="av" style="width:22px;height:22px;font-size:8px">${(a?a.name:'?').charAt(0)}</div><div><strong style="font-size:11px">${esc(a?a.name:'?')}</strong><div style="font-size:8px;color:var(--txt2)">sur "${esc(p?p.title:'?')}"</div></div></div></div>
+h+=`<div class="card" style="border-left:4px solid var(--warn)"><div class="fb"><div class="fx"><div class="av" style="width:22px;height:22px;font-size:8px">${(a?a.name:'?').charAt(0)}</div><strong style="font-size:11px">${esc(a?a.name:'?')}</strong></div><span style="font-size:8px;color:var(--txt2)">sur "${esc(p?p.title:'?')}"</span></div>
 <div style="background:var(--bg3);padding:8px;border-radius:8px;margin:6px 0;font-size:12px">${esc(c.content)}</div>
 <div class="fx"><button class="bs xs" onclick="vC('${c.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="dC('${c.id}')"><i class="fas fa-trash"></i></button></div></div>`})}
-else h+='<div class="card tc" style="color:var(--ok)">✅ Tout modéré</div>';
-if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:13px">Approuvés (${appr.length})</h3><div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Texte</th></tr>`;appr.slice().reverse().slice(0,8).forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);h+=`<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:120px">${esc(c.content)}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
-function vC(cid){let c=D.g('comments');let x=c.find(a=>a.id===cid);if(x){x.status='approved';let u=D.g('users');let au=u.find(a=>a.id===x.userId);if(au){au.stars=(au.stars||0)+1;D.s('users',u)}}D.s('comments',c);signal();render()}
-function dC(cid){if(!confirm('Supprimer?'))return;let c=D.g('comments');c=c.filter(x=>x.id!==cid);D.s('comments',c);signal();render()}
+else h+='<div class="card tc" style="color:var(--ok)">✅ Modéré</div>';
+if(appr.length){h+=`<h3 class="mt3 mb2" style="font-size:12px">Approuvés (${appr.length})</h3><div class="tw"><table><tr><th>Auteur</th><th>Post</th><th>Texte</th></tr>`;appr.slice().reverse().slice(0,8).forEach(c=>{const a=users.find(u=>u.id===c.userId),p=posts.find(x=>x.id===c.postId);h+=`<tr><td>${esc(a?a.name:'-')}</td><td>${esc(p?p.title:'-')}</td><td style="max-width:120px">${esc(c.content)}</td></tr>`});h+='</table></div>'}el.innerHTML=h}
+function vC(cid){let c=LS('comments');let x=c.find(a=>a.id===cid);if(x){x.status='approved';let u=LS('users');let au=u.find(a=>a.id===x.userId);if(au){au.stars=(au.stars||0)+1;SS('users',u)}}SS('comments',c);render()}
+function dC(cid){if(!confirm('Supprimer?'))return;let c=LS('comments');c=c.filter(x=>x.id!==cid);SS('comments',c);render()}
 
-function aS(el){const users=D.g('users').filter(u=>u.role!=='admin');const sorted=[...users].sort((a,b)=>(b.stars||0)-(a.stars||0));const wdrs=users.filter(u=>u.withdrawReq);
+function aS(el){const users=LS('users').filter(u=>u.role!=='admin');const sorted=[...users].sort((a,b)=>(b.stars||0)-(a.stars||0));const wdrs=users.filter(u=>u.withdrawReq);
 let h='<h2 class="mb2" style="font-size:15px">⭐ Étoiles</h2>';
-if(wdrs.length){wdrs.forEach(u=>{h+=`<div class="card fb" style="border-left:4px solid var(--gold)"><div class="fx"><div class="av">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div class="sd">${u.stars}⭐</div></div></div><div class="fx"><button class="bs sm" onclick="vW('${u.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rW('${u.id}')"><i class="fas fa-times"></i></button></div></div>`})}
-h+='<h3 class="mt2 mb2" style="font-size:13px">Classement</h3><div class="tw"><table><tr><th>#</th><th>Membre</th><th>⭐</th><th>%</th></tr>';
-sorted.forEach((u,i)=>{const p=Math.min(100,((u.stars||0)/1000)*100);h+=`<tr><td style="font-weight:700">${i<3?['🥇','🥈','🥉'][i]:i+1}</td><td><strong>${esc(u.name)}</strong></td><td class="sd" style="font-weight:700">${u.stars||0}</td><td><div class="pbar" style="height:8px;width:60px;display:inline-block;margin:0"><div class="pfill" style="width:${p}%"></div></div></td></tr>`});
+if(wdrs.length){wdrs.forEach(u=>{h+=`<div class="card fb" style="border-left:4px solid var(--gold)"><div class="fx"><div class="av">${u.name.charAt(0)}</div><div><strong>${esc(u.name)}</strong><div class="sd">${u.stars}⭐</div></div></div><div class="fx"><button class="bs sm" onclick="vW('${u.id}')"><i class="fas fa-check"></i></button><button class="bd xs" onclick="rW2('${u.id}')"><i class="fas fa-times"></i></button></div></div>`})}
+h+='<h3 class="mt2 mb2" style="font-size:12px">Classement</h3><div class="tw"><table><tr><th>#</th><th>Membre</th><th>⭐</th></tr>';
+sorted.forEach((u,i)=>{h+=`<tr><td style="font-weight:700">${i<3?['🥇','🥈','🥉'][i]:i+1}</td><td><strong>${esc(u.name)}</strong></td><td class="sd" style="font-weight:700">${u.stars||0}</td></tr>`});
 h+='</table></div>';el.innerHTML=h}
-function vW(uid){if(!confirm('Retrait? ⭐→0'))return;let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.stars=0;x.withdrawReq=false;D.s('users',u);signal()}render()}
-function rW(uid){let u=D.g('users');let x=u.find(a=>a.id===uid);if(x){x.withdrawReq=false;D.s('users',u);signal()}render()}
+function vW(uid){if(!confirm('Retrait? ⭐→0'))return;let u=LS('users');let x=u.find(a=>a.id===uid);if(x){x.stars=0;x.withdrawReq=false;SS('users',u)}render()}
+function rW2(uid){let u=LS('users');let x=u.find(a=>a.id===uid);if(x){x.withdrawReq=false;SS('users',u)}render()}
 
-// ===== BOOT =====
-init();restore();
+// ============ BOOT ============
+init();
+restore();
 </script>
 </body>
 </html>
