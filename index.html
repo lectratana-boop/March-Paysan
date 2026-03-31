@@ -5,197 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MadaMarket - Marketplace Madagascar</title>
 
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-/* (CSS IDENTIQUE — inchangé pour éviter surcharge ici) */
-/* 👉 Garde exactement ton CSS actuel */
+body{
+font-family:Segoe UI;
+background:#0a0a1a;
+color:#fff;
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+background:#12122a;
+padding:25px;
+border-radius:12px;
+width:300px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:8px;
+border:none;
+background:#1a1a3e;
+color:white;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#7c5cfc;
+color:white;
+cursor:pointer;
+}
+
+.hidden{display:none;}
 </style>
 </head>
 
 <body>
 
-<!-- ================= AUTH ================= -->
-<div id="auth">
-<!-- (Garde ton HTML existant ici inchangé) -->
+<div id="auth" class="card">
+<h2>MadaMarket</h2>
+
+<input id="phone" placeholder="Téléphone">
+<input id="pass" type="password" placeholder="Mot de passe">
+
+<button onclick="login()">Connexion</button>
+
+<hr>
+
+<h3>Inscription</h3>
+
+<input id="rname" placeholder="Nom">
+<input id="rphone" placeholder="Téléphone">
+<input id="rpass" type="password" placeholder="Mot de passe">
+
+<button onclick="register()">Créer compte</button>
+
 </div>
 
-<!-- ================= APP ================= -->
-<div id="app" class="hidden">
-<header id="hdr">
-<div class="hdr">
-<div class="logo"><i class="fas fa-store"></i> MadaMarket</div>
-<div class="nav" id="navEl"></div>
-<div class="hr">
-<span><i class="fas fa-star"></i> <span id="hStars">0</span></span>
-<div class="av" id="hAv">A</div>
-<span id="hNm"></span>
-<button onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
-</div>
-</div>
-</header>
-
-<main id="mainEl"></main>
+<div id="app" class="hidden card">
+<h2 id="welcome"></h2>
+<p>Bienvenue dans MadaMarket 🚀</p>
+<button onclick="logout()">Déconnexion</button>
 </div>
 
-<!-- ================= SCRIPT ================= -->
 <script>
 
-/* ================= DB ================= */
-const db={
-users:()=>JSON.parse(localStorage.getItem('u')||'[]'),
-products:()=>JSON.parse(localStorage.getItem('p')||'[]'),
-posts:()=>JSON.parse(localStorage.getItem('po')||'[]'),
-comments:()=>JSON.parse(localStorage.getItem('c')||'[]'),
-orders:()=>JSON.parse(localStorage.getItem('o')||'[]'),
-hist:()=>JSON.parse(localStorage.getItem('h')||'[]'),
-save:{
-users:v=>localStorage.setItem('u',JSON.stringify(v)),
-products:v=>localStorage.setItem('p',JSON.stringify(v)),
-posts:v=>localStorage.setItem('po',JSON.stringify(v)),
-comments:v=>localStorage.setItem('c',JSON.stringify(v)),
-orders:v=>localStorage.setItem('o',JSON.stringify(v)),
-hist:v=>localStorage.setItem('h',JSON.stringify(v))
+/* ===== DATABASE ===== */
+function getUsers(){
+return JSON.parse(localStorage.getItem("users")||"[]");
 }
-};
 
-/* ================= ADMIN SEED ================= */
+function saveUsers(u){
+localStorage.setItem("users",JSON.stringify(u));
+}
+
+/* ===== ADMIN AUTO ===== */
 (function(){
-let u=db.users();
-if(!u.find(x=>x.role==='admin')){
-u.push({id:'a1',name:'Admin',phone:'0340000000',password:'admin123',city:'Tana',quartier:'Centre',role:'admin',status:'approved',stars:0,ban:false});
-db.save.users(u);
+let u=getUsers();
+if(!u.find(x=>x.phone==="0340000000")){
+u.push({
+name:"Admin",
+phone:"0340000000",
+password:"admin123",
+role:"admin",
+status:"approved"
+});
+saveUsers(u);
 }
 })();
 
-/* ================= HELPERS ================= */
-const ID=()=>Math.random().toString(36).substr(2,9);
-const ESC=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
+/* ===== REGISTER ===== */
+function register(){
+let name=document.getElementById("rname").value;
+let phone=document.getElementById("rphone").value;
+let pass=document.getElementById("rpass").value;
 
-/* ================= STATE ================= */
-let ME=null;
-let PAGE='accueil';
-let lastTotal=0;
-
-/* ================= PENDING ================= */
-function pending(){
-const u=db.users(),p=db.products(),c=db.comments(),o=db.orders();
-return{
-reg:u.filter(x=>x.status==='pending'&&!x.ban).length,
-prod:p.filter(x=>x.status==='pending').length,
-cmt:c.filter(x=>x.status==='pending').length,
-ord:o.filter(x=>x.status==='pending').length,
-get total(){return this.reg+this.prod+this.cmt+this.ord}
-};
+if(!name||!phone||!pass){
+alert("Remplis tout");
+return;
 }
 
-/* ================= LOGIN ================= */
+let u=getUsers();
+u.push({
+name,
+phone,
+password:pass,
+role:"user",
+status:"pending"
+});
+
+saveUsers(u);
+
+alert("Inscription envoyée (attente admin)");
+}
+
+/* ===== LOGIN ===== */
 function login(){
-const ph=document.getElementById('lph').value;
-const pw=document.getElementById('lpw').value;
-const u=db.users().find(x=>x.phone===ph&&x.password===pw);
-if(!u) return alert('Erreur');
-if(u.ban) return alert('Compte banni');
-if(u.status!=='approved') return alert('En attente');
+let phone=document.getElementById("phone").value;
+let pass=document.getElementById("pass").value;
 
-ME=u;
-localStorage.setItem('session',u.id);
+let u=getUsers().find(x=>x.phone===phone && x.password===pass);
 
-if(u.role==='admin'){
-lastTotal=pending().total;
-if(lastTotal>0) beep();
+if(!u){
+alert("Erreur");
+return;
 }
 
-draw();
+if(u.status!=="approved"){
+alert("En attente validation admin");
+return;
 }
 
-/* ================= DRAW ================= */
-function draw(){
-if(!ME) return;
+localStorage.setItem("session",phone);
 
-const el=document.getElementById('mainEl');
-el.innerHTML="<h2>Bienvenue "+ESC(ME.name)+"</h2>";
+startApp(u);
 }
 
-/* ================= BEEP ================= */
-function beep(){
-try{
-const c=new(window.AudioContext||window.webkitAudioContext)();
-const o=c.createOscillator();
-const g=c.createGain();
-o.connect(g);g.connect(c.destination);
-o.frequency.value=800;
-o.start();
-g.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+0.3);
-}catch(e){}
+/* ===== APP ===== */
+function startApp(u){
+document.getElementById("auth").classList.add("hidden");
+document.getElementById("app").classList.remove("hidden");
+document.getElementById("welcome").innerText="Salut "+u.name;
 }
 
-/* ================= POLLING ================= */
-setInterval(()=>{
-if(!ME||ME.role!=='admin') return;
-
-const p=pending();
-
-if(p.total!==lastTotal){
-if(p.total>lastTotal) beep();
-lastTotal=p.total;
-draw();
-}
-
-/* ban check */
-const u=db.users().find(x=>x.id===ME.id);
-if(u && u.ban){
-alert('Compte banni');
-logout();
-}
-
-},300);
-
-/* ================= AUTO WHEEL ================= */
-setInterval(()=>{
-const now=new Date();
-const mdt=new Date(now.getTime()+now.getTimezoneOffset()*60000+3*3600000);
-if(mdt.getMinutes()===0 && mdt.getSeconds()===0){
-spinWheel();
-}
-},1000);
-
-/* ================= BUY ================= */
-function buyProd(pid){
-const prods=db.products();
-const p=prods.find(x=>x.id===pid);
-
-if(p.status!=='approved') return alert('Déjà vendu');
-
-let o=db.orders();
-o.push({id:ID(),productId:pid,status:'pending'});
-db.save.orders(o);
-
-draw();
-}
-
-/* ================= WITHDRAW ================= */
-function reqWithdraw(){
-let u=db.users();
-let me=u.find(x=>x.id===ME.id);
-
-if(me){
-me.withdraw='pending';
-db.save.users(u);
-}
-
-alert('Demande envoyée');
-draw();
-}
-
-/* ================= LOGOUT ================= */
+/* ===== LOGOUT ===== */
 function logout(){
-ME=null;
-localStorage.removeItem('session');
+localStorage.removeItem("session");
 location.reload();
 }
 
+/* ===== RESTORE ===== */
+(function(){
+let s=localStorage.getItem("session");
+if(!s) return;
+let u=getUsers().find(x=>x.phone===s);
+if(u && u.status==="approved"){
+startApp(u);
+}
+})();
+
 </script>
+
 </body>
 </html>
