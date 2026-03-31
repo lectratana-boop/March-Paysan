@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Variables */
         :root {
             --primary: #7c5cfc;
             --secondary: #00cec9;
@@ -32,7 +31,6 @@
             --border: #2a2a4a;
         }
 
-        /* Barre de notification critique */
         #adminAlert {
             position: fixed;
             top: 0;
@@ -60,7 +58,6 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* Container principal */
         #app {
             max-width: 1400px;
             margin: 0 auto;
@@ -68,7 +65,6 @@
             padding-top: 70px;
         }
 
-        /* Page de login */
         #loginPage {
             display: flex;
             align-items: center;
@@ -218,7 +214,6 @@
             width: auto;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -318,7 +313,6 @@
             font-size: 13px;
         }
 
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -368,7 +362,6 @@
             font-size: 14px;
         }
 
-        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -439,7 +432,6 @@
         .tag.approved { background: rgba(0, 184, 148, 0.2); color: var(--success); }
         .tag.sold { background: rgba(128, 128, 128, 0.2); color: #888; }
 
-        /* Section Headers */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -454,7 +446,6 @@
             color: white;
         }
 
-        /* Modal */
         .modal {
             position: fixed;
             top: 0;
@@ -497,7 +488,6 @@
             line-height: 1;
         }
 
-        /* Table */
         .table-container {
             background: var(--card);
             border-radius: 12px;
@@ -533,7 +523,6 @@
             background: rgba(124, 92, 252, 0.05);
         }
 
-        /* Posts */
         .post {
             background: var(--card);
             border-radius: 12px;
@@ -633,7 +622,6 @@
             font-size: 14px;
         }
 
-        /* Profile */
         .profile-header {
             background: var(--card);
             border-radius: 12px;
@@ -693,7 +681,6 @@
             font-weight: 500;
         }
 
-        /* Stars */
         .stars-section {
             background: var(--card);
             border-radius: 12px;
@@ -745,7 +732,6 @@
             50% { box-shadow: 0 0 40px var(--gold), 0 0 60px var(--gold); }
         }
 
-        /* Mega Wheel */
         .wheel-container {
             text-align: center;
             padding: 20px;
@@ -780,6 +766,7 @@
             border-right: 20px solid transparent;
             border-top: 40px solid var(--gold);
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+            z-index: 10;
         }
 
         .btn-spin {
@@ -833,7 +820,6 @@
             pointer-events: none;
         }
 
-        /* History */
         .history-section {
             background: var(--card);
             border-radius: 12px;
@@ -847,7 +833,6 @@
             color: white;
         }
 
-        /* Admin tabs */
         .admin-tabs {
             display: flex;
             gap: 8px;
@@ -892,7 +877,6 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        /* Notification cards */
         .notif-card {
             background: var(--card);
             border-radius: 12px;
@@ -937,7 +921,6 @@
             font-size: 13px;
         }
 
-        /* Registration card */
         .reg-card {
             background: var(--card);
             border-radius: 12px;
@@ -990,7 +973,6 @@
             flex-wrap: wrap;
         }
 
-        /* Search */
         .search-box {
             width: 100%;
             padding: 12px 16px;
@@ -1007,7 +989,6 @@
             border-color: var(--primary);
         }
 
-        /* Alert */
         .alert {
             padding: 16px;
             border-radius: 8px;
@@ -1021,7 +1002,6 @@
             border: 1px solid var(--warning);
         }
 
-        /* Leaderboard */
         .leaderboard-item {
             display: flex;
             align-items: center;
@@ -1060,7 +1040,6 @@
             font-weight: bold;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             nav .nav-links {
                 width: 100%;
@@ -1089,7 +1068,6 @@
             }
         }
 
-        /* Utilities */
         .mb-16 { margin-bottom: 16px; }
         .mb-24 { margin-bottom: 24px; }
         .text-center { text-align: center; }
@@ -1098,23 +1076,21 @@
     </style>
 </head>
 <body>
-    <!-- Alert barre admin -->
-    <div id="adminAlert" onclick="goToAdmin()"></div>
+    <div id="adminAlert"></div>
 
-    <!-- Page de login -->
     <div id="loginPage">
         <div class="login-card">
             <h1>🛍️ MadaMarket</h1>
             <h2>Marketplace Madagascar</h2>
             
             <div class="tabs">
-                <button class="tab active" onclick="switchAuthTab('login')">Connexion</button>
-                <button class="tab" onclick="switchAuthTab('register')">Inscription</button>
+                <button class="tab active" data-tab="login">Connexion</button>
+                <button class="tab" data-tab="register">Inscription</button>
             </div>
 
-            <!-- Form Connexion -->
-            <form id="loginForm" onsubmit="login(event)">
-                <div class="form-group">
+            <form id="loginForm">
+                <div class
+="form-group">
                     <label>📱 Téléphone</label>
                     <input type="tel" id="loginPhone" required placeholder="0340000000">
                 </div>
@@ -1125,8 +1101,7 @@
                 <button type="submit" class="btn btn-primary">Connexion</button>
             </form>
 
-            <!-- Form Inscription -->
-            <form id="registerForm" class="hidden" onsubmit="register(event)">
+            <form id="registerForm" class="hidden">
                 <div class="form-group">
                     <label>👤 Nom complet *</label>
                     <input type="text" id="regName" required>
@@ -1150,87 +1125,48 @@
                 <button type="submit" class="btn btn-success">S'inscrire</button>
             </form>
 
-            <button class="btn btn-secondary" onclick="resetSite()">🔄 Réinitialiser le site</button>
+            <button class="btn btn-secondary" id="resetBtn">🔄 Réinitialiser le site</button>
         </div>
     </div>
 
-    <!-- Navigation -->
     <nav id="mainNav" class="hidden">
         <div class="nav-container">
             <div class="logo">🛍️ MadaMarket</div>
             <div class="nav-links" id="navLinks"></div>
             <div class="user-info">
                 <div class="avatar" id="navAvatar"></div>
-                <button class="logout-btn" onclick="logout()">Déconnexion</button>
+                <button class="logout-btn" id="logoutBtn">Déconnexion</button>
             </div>
         </div>
     </nav>
 
-    <!-- App principal -->
     <div id="app" class="hidden"></div>
 
-    <!-- Modal générique -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <span class="modal-close" id="modalClose">&times;</span>
             <div id="modalBody"></div>
         </div>
     </div>
 
-    <!-- Overlay Wheel -->
     <div id="wheelOverlay" class="wheel-overlay">
         <div id="overlayWheelContent"></div>
     </div>
 
     <script>
-        // ====== GLOBALS ======
+        // GLOBALS
         let currentUser = null;
         let currentPage = 'home';
         let currentAdminTab = 'notifications';
         let audioCtx = null;
         let lastTotal = 0;
+        let wheelCanvas, wheelCtx;
+        let wheelSpinning = false;
+        let wheelRotation = 0;
+        let wheelParticipants = [];
+        let lastWheelTime = 0;
 
-        // ====== INITIALIZATION ======
-        function init() {
-            // Seed admin si inexistant
-            let users = getUsers();
-            if (!users.find(u => u.phone === '0340000000')) {
-                users.push({
-                    id: Date.now(),
-                    name: 'Administrateur',
-                    phone: '0340000000',
-                    password: 'admin123',
-                    city: 'Antananarivo',
-                    quartier: 'Centre',
-                    role: 'admin',
-                    status: 'approved',
-                    stars: 0,
-                    ban: false,
-                    regAt: Date.now()
-                });
-                setUsers(users);
-            }
-
-            // Restore session
-            const sessionId = localStorage.getItem('session');
-            if (sessionId) {
-                currentUser = users.find(u => u.id == sessionId);
-                if (currentUser && currentUser.status === 'approved' && !currentUser.ban) {
-                    showApp();
-                } else {
-                    localStorage.removeItem('session');
-                    currentUser = null;
-                }
-            }
-
-            // Start polling
-            startPolling();
-
-            // Check wheel auto
-            setInterval(checkWheelAuto, 5000);
-        }
-
-        // ====== STORAGE HELPERS ======
+        // STORAGE HELPERS
         function getUsers() {
             return JSON.parse(localStorage.getItem('u') || '[]');
         }
@@ -1268,7 +1204,7 @@
             localStorage.setItem('h', JSON.stringify(history));
         }
 
-        // ====== PENDING COUNTER (DIRECT READ) ======
+        // PENDING COUNTER (DIRECT READ)
         function pending() {
             const users = JSON.parse(localStorage.getItem('u') || '[]');
             const products = JSON.parse(localStorage.getItem('p') || '[]');
@@ -1279,19 +1215,43 @@
             const prod = products.filter(p => p.status === 'pending').length;
             const cmt = comments.filter(c => c.status === 'pending').length;
             const ord = orders.filter(o => o.status === 'pending').length;
-            const ban = 0; // placeholder
             
             return {
-                reg,
-                prod,
-                cmt,
-                ord,
-                ban,
+                reg, prod, cmt, ord, ban: 0,
                 total: reg + prod + cmt + ord
             };
         }
 
-        // ====== POLLING ======
+        // AUDIO
+        function beep() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.value = 800;
+                gain.gain.value = 0.3;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        function tick() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.value = 600;
+                gain.gain.value = 0.1;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
+        }
+
+        // POLLING
         function startPolling() {
             setInterval(() => {
                 const p = pending();
@@ -1312,32 +1272,7 @@
             });
         }
 
-        // ====== AUDIO ======
-        function beep() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.frequency.value = 800;
-            gain.gain.value = 0.3;
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
-        }
-
-        function tick() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.frequency.value = 600;
-            gain.gain.value = 0.1;
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        }
-
-        // ====== ADMIN ALERT BAR ======
+        // ADMIN ALERT BAR
         function updateAdminAlert() {
             const alert = document.getElementById('adminAlert');
             if (!currentUser || currentUser.role !== 'admin') {
@@ -1353,108 +1288,189 @@
             }
         }
 
-        function goToAdmin() {
-            currentPage = 'admin';
-            currentAdminTab = 'notifications';
-            draw();
+        // UTILITIES
+        function esc(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
         }
 
-        // ====== AUTH ======
-        function switchAuthTab(tab) {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (tab === 'login') {
-                document.getElementById('loginForm').classList.remove('hidden');
-                document.getElementById('registerForm').classList.add('hidden');
-            } else {
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('registerForm').classList.remove('hidden');
-            }
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
         }
 
-        function login(e) {
-            e.preventDefault();
-            const phone = document.getElementById('loginPhone').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            const users = getUsers();
-            const user = users.find(u => u.phone === phone && u.password === password);
-            
-            if (!user) {
-                alert('❌ Téléphone ou mot de passe incorrect');
-                return;
-            }
-            if (user.ban) {
-                alert('🚫 Compte banni. Contactez l\'administration.');
-                return;
-            }
-            if (user.status === 'pending') {
-                alert('⏳ Votre compte est en attente de validation par l\'administrateur.');
-                return;
-            }
-            if (user.status === 'rejected') {
-                alert('❌ Votre compte a été refusé.');
-                return;
-            }
-            
-            currentUser = user;
-            localStorage.setItem('session', user.id);
-            showApp();
-        }
-
-        function register(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const phone = document.getElementById('regPhone').value;
-            const password = document.getElementById('regPassword').value;
-            const city = document.getElementById('regCity').value;
-            const quartier = document.getElementById('regQuartier').value;
-            
-            const users = getUsers();
-            if (users.find(u => u.phone === phone)) {
-                alert('❌ Ce numéro de téléphone est déjà utilisé');
-                return;
-            }
-            
-            const newUser = {
-                id: Date.now(),
-                name,
-                phone,
-                password,
-                city,
-                quartier,
-                role: 'user',
-                status: 'pending',
-                stars: 0,
-                ban: false,
-                regAt: Date.now()
+        function getCategoryIcon(cat) {
+            const icons = {
+                'Électronique': 'fa-laptop',
+                'Vêtements': 'fa-tshirt',
+                'Maison': 'fa-home',
+                'Alimentation': 'fa-utensils',
+                'Services': 'fa-handshake',
+                'Autre': 'fa-box'
             };
-            
-            users.push(newUser);
-            setUsers(users);
-            
-            alert('✅ Inscription réussie ! Votre compte est en attente de validation par l\'administrateur.');
-            document.getElementById('registerForm').reset();
-            switchAuthTab('login');
-            document.querySelector('.tab').click();
+            return icons[cat] || 'fa-box';
         }
 
-        function logout() {
-            localStorage.removeItem('session');
-            currentUser = null;
-            currentPage = 'home';
-            document.getElementById('loginPage').classList.remove('hidden');
-            document.getElementById('mainNav').classList.add('hidden');
-            document.getElementById('app').classList.add('hidden');
-        }
-
-        function resetSite() {
-            if (confirm('⚠️ Voulez-vous vraiment réinitialiser tout le site ? Toutes les données seront perdues.')) {
-                localStorage.clear();
-                location.reload();
+        // INIT
+        function init() {
+            // Seed admin
+            let users = getUsers();
+            if (!users.find(u => u.phone === '0340000000')) {
+                users.push({
+                    id: Date.now(),
+                    name: 'Administrateur',
+                    phone: '0340000000',
+                    password: 'admin123',
+                    city: 'Antananarivo',
+                    quartier: 'Centre',
+                    role: 'admin',
+                    status: 'approved',
+                    stars: 0,
+                    ban: false,
+                    regAt: Date.now()
+                });
+                setUsers(users);
             }
+
+            // Restore session
+            const sessionId = localStorage.getItem('session');
+            if (sessionId) {
+                currentUser = users.find(u => u.id == sessionId);
+                if (currentUser && currentUser.status === 'approved' && !currentUser.ban) {
+                    showApp();
+                } else {
+                    localStorage.removeItem('session');
+                    currentUser = null;
+                }
+            }
+
+            // Start polling
+            startPolling();
+
+            // Check wheel auto
+            setInterval(checkWheelAuto, 5000);
+
+            // EVENT LISTENERS
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            // Auth tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabName = this.getAttribute('data-tab');
+                    if (tabName === 'login') {
+                        document.getElementById('loginForm').classList.remove('hidden');
+                        document.getElementById('registerForm').classList.add('hidden');
+                    } else {
+                        document.getElementById('loginForm').classList.add('hidden');
+                        document.getElementById('registerForm').classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const phone = document.getElementById('loginPhone').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                const users = getUsers();
+                const user = users.find(u => u.phone === phone && u.password === password);
+                
+                if (!user) {
+                    alert('❌ Téléphone ou mot de passe incorrect');
+                    return;
+                }
+                if (user.ban) {
+                    alert('🚫 Compte banni. Contactez l\'administration.');
+                    return;
+                }
+                if (user.status === 'pending') {
+                    alert('⏳ Votre compte est en attente de validation par l\'administrateur.');
+                    return;
+                }
+                if (user.status === 'rejected') {
+                    alert('❌ Votre compte a été refusé.');
+                    return;
+                }
+                
+                currentUser = user;
+                localStorage.setItem('session', user.id);
+                showApp();
+            });
+
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('regName').value;
+                const phone = document.getElementById('regPhone').value;
+                const password = document.getElementById('regPassword').value;
+                const city = document.getElementById('regCity').value;
+                const quartier = document.getElementById('regQuartier').value;
+                
+                const users = getUsers();
+                if (users.find(u => u.phone === phone)) {
+                    alert('❌ Ce numéro de téléphone est déjà utilisé');
+                    return;
+                }
+                
+                users.push({
+                    id: Date.now(),
+                    name, phone, password, city, quartier,
+                    role: 'user',
+                    status: 'pending',
+                    stars: 0,
+                    ban: false,
+                    regAt: Date.now()
+                });
+                setUsers(users);
+                
+                alert('✅ Inscription réussie ! Votre compte est en attente de validation par l\'administrateur.');
+                document.getElementById('registerForm').reset();
+                document.querySelector('.tab[data-tab="login"]').click();
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('⚠️ Voulez-vous vraiment réinitialiser tout le site ? Toutes les données seront perdues.')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('session');
+                currentUser = null;
+                currentPage = 'home';
+                document.getElementById('loginPage').classList.remove('hidden');
+                document.getElementById('mainNav').classList.add('hidden');
+                document.getElementById('app').classList.add('hidden');
+            });
+
+            // Modal close
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('modal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // Admin alert click
+            document.getElementById('adminAlert').addEventListener('click', function() {
+                currentPage = 'admin';
+                currentAdminTab = 'notifications';
+                draw();
+            });
         }
 
         function showApp() {
@@ -1464,18 +1480,18 @@
             draw();
         }
 
-        // ====== NAVIGATION ======
-        function navigateTo(page) {
+        // NAVIGATION
+        window.navigateTo = function(page) {
             currentPage = page;
             draw();
-        }
+        };
 
-        function switchAdminTab(tab) {
+        window.switchAdminTab = function(tab) {
             currentAdminTab = tab;
             draw();
-        }
+        };
 
-        // ====== MAIN DRAW ======
+        // DRAW
         function draw() {
             if (!currentUser) return;
             
@@ -1520,7 +1536,7 @@
                 app.innerHTML = drawProfile();
             } else if (currentPage === 'wheel') {
                 app.innerHTML = drawWheel();
-                initWheel();
+                setTimeout(initWheel, 100);
             } else if (currentPage === 'admin') {
                 app.innerHTML = drawAdmin();
             }
@@ -1528,12 +1544,11 @@
             updateAdminAlert();
         }
 
-        // ====== HOME PAGE ======
+        // HOME PAGE
         function drawHome() {
             const users = getUsers();
             const products = getProducts();
             const orders = getOrders();
-            const comments = getComments();
             const isAdmin = currentUser.role === 'admin';
             const p = pending();
             
@@ -1542,38 +1557,23 @@
                 stats = `
                     <div class="stat-card">
                         <div class="icon warning"><i class="fas fa-user-clock"></i></div>
-                        <div class="info">
-                            <h3>${p.reg}</h3>
-                            <p>Inscriptions en attente</p>
-                        </div>
+                        <div class="info"><h3>${p.reg}</h3><p>Inscriptions en attente</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon warning"><i class="fas fa-box"></i></div>
-                        <div class="info">
-                            <h3>${p.prod}</h3>
-                            <p>Produits en attente</p>
-                        </div>
+                        <div class="info"><h3>${p.prod}</h3><p>Produits en attente</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon primary"><i class="fas fa-users"></i></div>
-                        <div class="info">
-                            <h3>${users.filter(u => u.status === 'approved').length}</h3>
-                            <p>Membres total</p>
-                        </div>
+                        <div class="info"><h3>${users.filter(u => u.status === 'approved').length}</h3><p>Membres total</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon warning"><i class="fas fa-shopping-cart"></i></div>
-                        <div class="info">
-                            <h3>${p.ord}</h3>
-                            <p>Commandes en attente</p>
-                        </div>
+                        <div class="info"><h3>${p.ord}</h3><p>Commandes en attente</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon warning"><i class="fas fa-comment"></i></div>
-                        <div class="info">
-                            <h3>${p.cmt}</h3>
-                            <p>Commentaires en attente</p>
-                        </div>
+                        <div class="info"><h3>${p.cmt}</h3><p>Commentaires en attente</p></div>
                     </div>
                 `;
             } else {
@@ -1584,36 +1584,23 @@
                 stats = `
                     <div class="stat-card">
                         <div class="icon primary"><i class="fas fa-box"></i></div>
-                        <div class="info">
-                            <h3>${myProducts.length}</h3>
-                            <p>Mes produits</p>
-                        </div>
+                        <div class="info"><h3>${myProducts.length}</h3><p>Mes produits</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon secondary"><i class="fas fa-shopping-cart"></i></div>
-                        <div class="info">
-                            <h3>${myOrders.length}</h3>
-                            <p>Mes commandes</p>
-                        </div>
+                        <div class="info"><h3>${myOrders.length}</h3><p>Mes commandes</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon warning"><i class="fas fa-star"></i></div>
-                        <div class="info">
-                            <h3>${currentUser.stars}</h3>
-                            <p>Étoiles</p>
-                        </div>
+                        <div class="info"><h3>${currentUser.stars}</h3><p>Étoiles</p></div>
                     </div>
                     <div class="stat-card">
                         <div class="icon success"><i class="fas fa-store"></i></div>
-                        <div class="info">
-                            <h3>${availableProducts.length}</h3>
-                            <p>Produits disponibles</p>
-                        </div>
+                        <div class="info"><h3>${availableProducts.length}</h3><p>Produits disponibles</p></div>
                     </div>
                 `;
             }
             
-            // Recent products
             const recentProducts = products
                 .filter(p => p.status === 'approved')
                 .sort((a, b) => b.createdAt - a.createdAt)
@@ -1642,14 +1629,12 @@
             
             return `
                 <div class="stats-grid">${stats}</div>
-                <div class="section-header">
-                    <h2>Produits récents</h2>
-                </div>
+                <div class="section-header"><h2>Produits récents</h2></div>
                 <div class="cards-grid">${productsHtml || '<p class="text-muted">Aucun produit disponible</p>'}</div>
             `;
         }
 
-        // ====== PRODUCTS PAGE ======
+        // PRODUCTS PAGE
         function drawProducts() {
             const products = getProducts();
             const users = getUsers();
@@ -1663,26 +1648,20 @@
                 </div>
             `;
             
-            // My products
             if (myProducts.length > 0) {
-                html += `<h3 class="mb-16">Mes produits</h3>`;
-                html += '<div class="cards-grid">';
+                html += `<h3 class="mb-16">Mes produits</h3><div class="cards-grid">`;
                 myProducts.forEach(product => {
                     const icon = getCategoryIcon(product.category);
                     let statusTag = '';
-                    if (product.status === 'pending') statusTag = '<span class="tag pending">⏳ En attente de validation</span>';
+                    if (product.status === 'pending') statusTag = '<span class="tag pending">⏳ En attente</span>';
                     else if (product.status === 'approved') statusTag = '<span class="tag approved">✅ Approuvé</span>';
                     else if (product.status === 'sold') statusTag = '<span class="tag sold">✅ Vendu</span>';
-                    else if (product.status === 'rejected') statusTag = '<span class="tag pending">❌ Refusé</span>';
                     
                     html += `
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-icon"><i class="fas ${icon}"></i></div>
-                                <div>
-                                    <h3>${esc(product.name)}</h3>
-                                    ${statusTag}
-                                </div>
+                                <div><h3>${esc(product.name)}</h3>${statusTag}</div>
                             </div>
                             <p class="text-muted">${esc(product.description)}</p>
                             <div class="price">${product.price.toLocaleString()} Ar</div>
@@ -1692,9 +1671,7 @@
                 html += '</div>';
             }
             
-            // Other products
-            html += `<h3 class="mb-16" style="margin-top: 32px;">Produits disponibles</h3>`;
-            html += '<div class="cards-grid">';
+            html += `<h3 class="mb-16" style="margin-top: 32px;">Produits disponibles</h3><div class="cards-grid">`;
             otherProducts.forEach(product => {
                 const seller = users.find(u => u.id === product.userId);
                 const icon = getCategoryIcon(product.category);
@@ -1702,10 +1679,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon"><i class="fas ${icon}"></i></div>
-                            <div>
-                                <h3>${esc(product.name)}</h3>
-                                <span class="tag approved">🟢 Disponible</span>
-                            </div>
+                            <div><h3>${esc(product.name)}</h3><span class="tag approved">🟢 Disponible</span></div>
                         </div>
                         <p class="text-muted">${esc(product.description)}</p>
                         <div class="price">${product.price.toLocaleString()} Ar</div>
@@ -1717,29 +1691,16 @@
             html += '</div>';
             
             if (otherProducts.length === 0) {
-                html += '<p class="text-muted">Aucun produit disponible pour le moment</p>';
+                html += '<p class="text-muted">Aucun produit disponible</p>';
             }
             
             return html;
         }
 
-        function getCategoryIcon(cat) {
-            const icons = {
-                'Électronique': 'fa-laptop',
-                'Vêtements': 'fa-tshirt',
-                'Maison': 'fa-home',
-                'Alimentation': 'fa-utensils',
-                'Services': 'fa-handshake',
-                'Autre': 'fa-box'
-            };
-            return icons[cat] || 'fa-box';
-        }
-
-        function showAddProduct() {
-            const modal = document.getElementById('modalBody');
-            modal.innerHTML = `
+        window.showAddProduct = function() {
+            document.getElementById('modalBody').innerHTML = `
                 <h2>Ajouter un produit</h2>
-                <form onsubmit="addProduct(event)">
+                <form id="addProductForm">
                     <div class="form-group">
                         <label>Nom du produit *</label>
                         <input type="text" id="prodName" required>
@@ -1767,28 +1728,28 @@
                 </form>
             `;
             document.getElementById('modal').classList.add('show');
-        }
-
-        function addProduct(e) {
-            e.preventDefault();
-            const products = getProducts();
-            products.push({
-                id: Date.now(),
-                userId: currentUser.id,
-                name: document.getElementById('prodName').value,
-                description: document.getElementById('prodDesc').value,
-                price: parseInt(document.getElementById('prodPrice').value),
-                category: document.getElementById('prodCat').value,
-                status: 'pending',
-                createdAt: Date.now()
+            
+            document.getElementById('addProductForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const products = getProducts();
+                products.push({
+                    id: Date.now(),
+                    userId: currentUser.id,
+                    name: document.getElementById('prodName').value,
+                    description: document.getElementById('prodDesc').value,
+                    price: parseInt(document.getElementById('prodPrice').value),
+                    category: document.getElementById('prodCat').value,
+                    status: 'pending',
+                    createdAt: Date.now()
+                });
+                setProducts(products);
+                closeModal();
+                draw();
+                alert('✅ Produit ajouté ! En attente de validation.');
             });
-            setProducts(products);
-            closeModal();
-            draw();
-            alert('✅ Produit ajouté ! En attente de validation par l\'administrateur.');
-        }
+        };
 
-        function buyProduct(productId) {
+        window.buyProduct = function(productId) {
             const products = getProducts();
             const product = products.find(p => p.id === productId);
             if (!product || product.status !== 'approved') {
@@ -1809,12 +1770,12 @@
                     createdAt: Date.now()
                 });
                 setOrders(orders);
-                alert('✅ Commande créée ! En attente de validation par l\'administrateur.');
+                alert('✅ Commande créée ! En attente de validation.');
                 draw();
             }
-        }
+        };
 
-        // ====== FORUM PAGE ======
+        // FORUM PAGE
         function drawForum() {
             const posts = getPosts().sort((a, b) => b.createdAt - a.createdAt);
             const comments = getComments();
@@ -1849,7 +1810,6 @@
                             <h4 style="margin-bottom: 16px; color: white;">💬 Commentaires (${approvedComments.length})</h4>
                 `;
                 
-                // Approved comments
                 approvedComments.forEach(cmt => {
                     const cmtAuthor = users.find(u => u.id === cmt.userId);
                     html += `
@@ -1863,13 +1823,11 @@
                     `;
                 });
                 
-                // My pending comments
                 myPendingComments.forEach(cmt => {
                     html += `
                         <div class="comment pending">
                             <div class="avatar">${currentUser.name[0].toUpperCase()}</div>
-                            <div
- class="comment-content">
+                            <div class="comment-content">
                                 <div class="comment-author">${esc(currentUser.name)} <span class="tag pending">⏳ modération</span></div>
                                 <div class="comment-text">${esc(cmt.content)}</div>
                             </div>
@@ -1886,16 +1844,16 @@
             
             if (posts.length === 0) {
                 html += '<p class="text-muted">Aucun post pour le moment</p>';
+            
             }
             
             return html;
         }
 
-        function showNewPost() {
-            const modal = document.getElementById('modalBody');
-            modal.innerHTML = `
+        window.showNewPost = function() {
+            document.getElementById('modalBody').innerHTML = `
                 <h2>Nouveau post</h2>
-                <form onsubmit="addPost(event)">
+                <form id="newPostForm">
                     <div class="form-group">
                         <label>Titre *</label>
                         <input type="text" id="postTitle" required>
@@ -1908,28 +1866,27 @@
                 </form>
             `;
             document.getElementById('modal').classList.add('show');
-        }
-
-        function addPost(e) {
-            e.preventDefault();
-            const posts = getPosts();
-            posts.push({
-                id: Date.now(),
-                userId: currentUser.id,
-                title: document.getElementById('postTitle').value,
-                content: document.getElementById('postContent').value,
-                createdAt: Date.now()
+            
+            document.getElementById('newPostForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const posts = getPosts();
+                posts.push({
+                    id: Date.now(),
+                    userId: currentUser.id,
+                    title: document.getElementById('postTitle').value,
+                    content: document.getElementById('postContent').value,
+                    createdAt: Date.now()
+                });
+                setPosts(posts);
+                closeModal();
+                draw();
             });
-            setPosts(posts);
-            closeModal();
-            draw();
-        }
+        };
 
-        function showAddComment(postId) {
-            const modal = document.getElementById('modalBody');
-            modal.innerHTML = `
+        window.showAddComment = function(postId) {
+            document.getElementById('modalBody').innerHTML = `
                 <h2>Ajouter un commentaire</h2>
-                <form onsubmit="addComment(event, ${postId})">
+                <form id="addCommentForm">
                     <div class="form-group">
                         <label>Votre commentaire *</label>
                         <textarea id="commentContent" rows="4" required></textarea>
@@ -1938,31 +1895,30 @@
                 </form>
             `;
             document.getElementById('modal').classList.add('show');
-        }
-
-        function addComment(e, postId) {
-            e.preventDefault();
-            const comments = getComments();
-            comments.push({
-                id: Date.now(),
-                postId: postId,
-                userId: currentUser.id,
-                content: document.getElementById('commentContent').value,
-                status: 'pending',
-                createdAt: Date.now()
+            
+            document.getElementById('addCommentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const comments = getComments();
+                comments.push({
+                    id: Date.now(),
+                    postId: postId,
+                    userId: currentUser.id,
+                    content: document.getElementById('commentContent').value,
+                    status: 'pending',
+                    createdAt: Date.now()
+                });
+                setComments(comments);
+                closeModal();
+                draw();
+                alert('✅ Commentaire envoyé ! En attente de modération.');
             });
-            setComments(comments);
-            closeModal();
-            draw();
-            alert('✅ Commentaire envoyé ! En attente de modération.');
-        }
+        };
 
-        // ====== PROFILE PAGE ======
+        // PROFILE PAGE
         function drawProfile() {
             const users = getUsers();
             const orders = getOrders();
             
-            // Reload current user data
             currentUser = users.find(u => u.id === currentUser.id);
             
             const withdrawals = orders.filter(o => 
@@ -1971,10 +1927,9 @@
             );
             
             const pendingWithdrawal = withdrawals.find(w => w.status === 'pending');
-            
             const progress = Math.min((currentUser.stars / 1000) * 100, 100);
             
-            let html = `
+            return `
                 <div class="profile-header">
                     <div class="avatar">${currentUser.name[0].toUpperCase()}</div>
                     <h2>${esc(currentUser.name)}</h2>
@@ -2026,11 +1981,9 @@
                         </div>` : ''}
                 </div>
             `;
-            
-            return html;
         }
 
-        function requestWithdrawal() {
+        window.requestWithdrawal = function() {
             if (currentUser.stars < 1000) {
                 alert('❌ Vous devez avoir au moins 1000 étoiles');
                 return;
@@ -2049,18 +2002,12 @@
                     createdAt: Date.now()
                 });
                 setOrders(orders);
-                alert('✅ Demande de retrait envoyée ! En attente de validation.');
+                alert('✅ Demande de retrait envoyée !');
                 draw();
             }
-        }
+        };
 
-        // ====== WHEEL PAGE ======
-        let wheelCanvas, wheelCtx;
-        let wheelSpinning = false;
-        let wheelRotation = 0;
-        let wheelParticipants = [];
-        let lastWheelTime = 0;
-
+        // WHEEL PAGE
         function drawWheel() {
             const nextHour = getNextHour();
             const now = Date.now();
@@ -2130,7 +2077,6 @@
             
             drawWheelCanvas();
             
-            // Update countdown
             setInterval(() => {
                 if (wheelSpinning) return;
                 const nextHour = getNextHour();
@@ -2155,7 +2101,6 @@
             
             wheelCtx.clearRect(0, 0, 500, 500);
             
-            // Draw segments
             wheelParticipants.forEach((user, i) => {
                 const startAngle = i * segmentAngle + wheelRotation;
                 const endAngle = (i + 1) * segmentAngle + wheelRotation;
@@ -2172,7 +2117,6 @@
                 wheelCtx.lineWidth = 2;
                 wheelCtx.stroke();
                 
-                // Text
                 wheelCtx.save();
                 wheelCtx.translate(centerX, centerY);
                 wheelCtx.rotate(startAngle + segmentAngle / 2);
@@ -2183,7 +2127,6 @@
                 wheelCtx.restore();
             });
             
-            // LEDs animation
             const ledCount = 24;
             for (let i = 0; i < ledCount; i++) {
                 const angle = (i / ledCount) * Math.PI * 2 + wheelRotation * 0.5;
@@ -2196,7 +2139,6 @@
                 wheelCtx.fill();
             }
             
-            // Center circle
             wheelCtx.beginPath();
             wheelCtx.arc(centerX, centerY, 60, 0, Math.PI * 2);
             wheelCtx.fillStyle = '#ffd700';
@@ -2212,15 +2154,16 @@
             wheelCtx.fillText('WHEEL', centerX, centerY + 12);
         }
 
-        function manualSpin() {
+        window.manualSpin = function() {
             spinWheel();
-        }
+        };
 
         function spinWheel() {
             if (wheelSpinning || wheelParticipants.length === 0) return;
             
             wheelSpinning = true;
-            document.getElementById('spinBtn').disabled = true;
+            const btn = document.getElementById('spinBtn');
+            if (btn) btn.disabled = true;
             
             const winnerIndex = Math.floor(Math.random() * wheelParticipants.length);
             const winner = wheelParticipants[winnerIndex];
@@ -2230,7 +2173,6 @@
             const duration = 7000;
             const startTime = Date.now();
             
-            // Show overlay
             document.getElementById('wheelOverlay').classList.add('show');
             document.getElementById('overlayWheelContent').innerHTML = `
                 <div class="wheel-wrapper">
@@ -2250,7 +2192,6 @@
                 
                 wheelRotation = startRotation + targetRotation * eased;
                 
-                // Draw on overlay
                 const centerX = 250;
                 const centerY = 250;
                 const radius = 220;
@@ -2284,7 +2225,6 @@
                     overlayCtx.restore();
                 });
                 
-                // LEDs
                 const ledCount = 24;
                 for (let i = 0; i < ledCount; i++) {
                     const angle = (i / ledCount) * Math.PI * 2 + wheelRotation * 0.5;
@@ -2297,7 +2237,6 @@
                     overlayCtx.fill();
                 }
                 
-                // Center
                 overlayCtx.beginPath();
                 overlayCtx.arc(centerX, centerY, 60, 0, Math.PI * 2);
                 overlayCtx.fillStyle = '#ffd700';
@@ -2312,7 +2251,6 @@
                 overlayCtx.fillText('MEGA', centerX, centerY - 8);
                 overlayCtx.fillText('WHEEL', centerX, centerY + 12);
                 
-                // Tick sound
                 const currentSegment = Math.floor(((wheelRotation % (Math.PI * 2)) / (Math.PI * 2)) * wheelParticipants.length);
                 if (currentSegment !== lastSegment) {
                     tick();
@@ -2322,12 +2260,10 @@
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    // Winner!
                     beep();
                     flashWinner(overlayCtx, winnerIndex);
                     showConfetti();
                     
-                    // Update stars
                     const users = getUsers();
                     const winnerUser = users.find(u => u.id === winner.id);
                     if (winnerUser) {
@@ -2335,7 +2271,6 @@
                         setUsers(users);
                     }
                     
-                    // Save history
                     const history = getHistory();
                     history.push({
                         time: Date.now(),
@@ -2347,7 +2282,8 @@
                     setTimeout(() => {
                         document.getElementById('wheelOverlay').classList.remove('show');
                         wheelSpinning = false;
-                        document.getElementById('spinBtn').disabled = false;
+                        const btn = document.getElementById('spinBtn');
+                        if (btn) btn.disabled = false;
                         alert(`🎉 ${winner.name} a gagné 20 étoiles !`);
                         if (currentPage === 'wheel') draw();
                     }, 3000);
@@ -2433,7 +2369,7 @@
             }
         }
 
-        // ====== ADMIN PAGE ======
+        // ADMIN PAGE
         function drawAdmin() {
             if (currentUser.role !== 'admin') return '<p>Accès refusé</p>';
             
@@ -2483,7 +2419,7 @@
                         <div class="icon"><i class="fas fa-user-plus"></i></div>
                         <div class="info">
                             <h3>${p.reg} inscription(s) à valider</h3>
-                            <p>Nouveaux membres en attente d'approbation</p>
+                            <p>Nouveaux membres en attente</p>
                         </div>
                         <button class="btn btn-primary btn-sm">GÉRER →</button>
                     </div>
@@ -2494,7 +2430,7 @@
                         <div class="icon"><i class="fas fa-box"></i></div>
                         <div class="info">
                             <h3>${p.prod} produit(s) à valider</h3>
-                            <p>Nouveaux produits en attente d'approbation</p>
+                            <p>Nouveaux produits en attente</p>
                         </div>
                         <button class="btn btn-primary btn-sm">GÉRER →</button>
                     </div>
@@ -2505,7 +2441,7 @@
                         <div class="icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="info">
                             <h3>${p.ord} commande(s) à valider</h3>
-                            <p>Nouvelles commandes en attente de traitement</p>
+                            <p>Nouvelles commandes en attente</p>
                         </div>
                         <button class="btn btn-primary btn-sm">GÉRER →</button>
                     </div>
@@ -2516,7 +2452,7 @@
                         <div class="icon"><i class="fas fa-comment"></i></div>
                         <div class="info">
                             <h3>${p.cmt} commentaire(s) à modérer</h3>
-                            <p>Nouveaux commentaires en attente de modération</p>
+                            <p>Nouveaux commentaires en attente</p>
                         </div>
                         <button class="btn btn-primary btn-sm">GÉRER →</button>
                     </div>
@@ -2529,12 +2465,12 @@
 
         function drawAdminRegistrations() {
             const users = getUsers();
-            const pending = users.filter(u => u.status === 'pending');
+            const pendingUsers = users.filter(u => u.status === 'pending');
             const processed = users.filter(u => u.status !== 'pending' && u.role !== 'admin');
             
             let html = '<h3 class="mb-24">En attente de validation</h3>';
             
-            pending.forEach(user => {
+            pendingUsers.forEach(user => {
                 html += `
                     <div class="reg-card">
                         <div class="user-name">${esc(user.name)}</div>
@@ -2565,7 +2501,7 @@
                 `;
             });
             
-            if (pending.length === 0) {
+            if (pendingUsers.length === 0) {
                 html += '<p class="text-muted">Aucune inscription en attente</p>';
             }
             
@@ -2579,8 +2515,7 @@
                         <td><span class="tag ${user.status}">${user.status === 'approved' ? '✅ Approuvé' : '❌ Refusé'}</span></td>
                         <td>
                             ${user.ban ? 
-                                `<button class="btn btn-success btn-sm"
- onclick="unbanUser(${user.id})">Débannir</button>` :
+                                `<button class="btn btn-success btn-sm" onclick="unbanUser(${user.id})">Débannir</button>` :
                                 `<button class="btn btn-danger btn-sm" onclick="banUser(${user.id})">Bannir</button>`}
                         </td>
                     </tr>
@@ -2595,18 +2530,19 @@
         function drawAdminProducts() {
             const products = getProducts();
             const users = getUsers();
-            const pending = products.filter(p => p.status === 'pending');
+            const pendingProds = products.filter(p => p.status === 'pending');
             const approved = products.filter(p => p.status === 'approved' || p.status === 'sold');
             
             let html = '<h3 class="mb-16">Produits en attente</h3>';
             html += '<div class="table-container"><table><thead><tr><th>Nom</th><th>Vendeur</th><th>Prix</th><th>Actions</th></tr></thead><tbody>';
             
-            pending.forEach(product => {
+            pendingProds.forEach(product => {
                 const seller = users.find(u => u.id === product.userId);
                 html += `
                     <tr>
                         <td>${esc(product.name)}</td>
-                        <td>${esc(seller?.name || 'Inconnu')}</td>
+                        <td>${esc
+(seller?.name || 'Inconnu')}</td>
                         <td>${product.price.toLocaleString()} Ar</td>
                         <td>
                             <button class="btn btn-success btn-sm" onclick="approveProduct(${product.id})">✅ Approuver</button>
@@ -2616,7 +2552,7 @@
                 `;
             });
             
-            if (pending.length === 0) {
+            if (pendingProds.length === 0) {
                 html += '<tr><td colspan="4" style="text-align:center; color: #888;">Aucun produit en attente</td></tr>';
             }
             
@@ -2647,7 +2583,7 @@
             
             let html = `
                 <h3 class="mb-16">Tous les membres</h3>
-                <input type="text" class="search-box" id="memberSearch" placeholder="🔍 Rechercher un membre..." oninput="filterMembers()">
+                <input type="text" class="search-box" id="memberSearch" placeholder="🔍 Rechercher un membre...">
                 <div class="table-container">
                     <table id="membersTable">
                         <thead>
@@ -2686,29 +2622,33 @@
             
             html += '</tbody></table></div>';
             
+            setTimeout(() => {
+                const searchBox = document.getElementById('memberSearch');
+                if (searchBox) {
+                    searchBox.addEventListener('input', function() {
+                        const query = this.value.toLowerCase();
+                        const rows = document.querySelectorAll('.member-row');
+                        rows.forEach(row => {
+                            const search = row.getAttribute('data-search');
+                            row.style.display = search.includes(query) ? '' : 'none';
+                        });
+                    });
+                }
+            }, 100);
+            
             return html;
-        }
-
-        function filterMembers() {
-            const query = document.getElementById('memberSearch').value.toLowerCase();
-            const rows = document.querySelectorAll('.member-row');
-            rows.forEach(row => {
-                const search = row.getAttribute('data-search');
-                row.style.display = search.includes(query) ? '' : 'none';
-            });
         }
 
         function drawAdminOrders() {
             const orders = getOrders();
             const users = getUsers();
-            const products = getProducts();
-            const pending = orders.filter(o => o.status === 'pending');
+            const pendingOrds = orders.filter(o => o.status === 'pending');
             const approved = orders.filter(o => o.status === 'approved');
             
             let html = '<h3 class="mb-16">Commandes en attente</h3>';
             html += '<div class="table-container"><table><thead><tr><th>Produit</th><th>Acheteur</th><th>Vendeur</th><th>Prix</th><th>Actions</th></tr></thead><tbody>';
             
-            pending.forEach(order => {
+            pendingOrds.forEach(order => {
                 const buyer = users.find(u => u.id === order.buyerId);
                 const seller = users.find(u => u.id === order.sellerId);
                 
@@ -2739,7 +2679,7 @@
                 }
             });
             
-            if (pending.length === 0) {
+            if (pendingOrds.length === 0) {
                 html += '<tr><td colspan="5" style="text-align:center; color: #888;">Aucune commande en attente</td></tr>';
             }
             
@@ -2784,7 +2724,7 @@
             const comments = getComments();
             const users = getUsers();
             const posts = getPosts();
-            const pending = comments.filter(c => c.status === 'pending');
+            const pendingComments = comments.filter(c => c.status === 'pending');
             
             let html = `
                 <div class="alert warning">
@@ -2793,7 +2733,7 @@
                 <h3 class="mb-16">Commentaires en attente de modération</h3>
             `;
             
-            pending.forEach(comment => {
+            pendingComments.forEach(comment => {
                 const author = users.find(u => u.id === comment.userId);
                 const post = posts.find(p => p.id === comment.postId);
                 
@@ -2809,13 +2749,13 @@
                         <div class="actions">
                             <button class="btn btn-success" onclick="approveComment(${comment.id})">✅ Approuver</button>
                             <button class="btn btn-danger" onclick="deleteComment(${comment.id})">🗑️ Supprimer</button>
-                            <button class="btn btn-warning" onclick="banUserByComment(${comment.userId})">🚫 Bannir l'auteur</button>
+                            <button class="btn btn-warning" onclick="banUser(${comment.userId})">🚫 Bannir l'auteur</button>
                         </div>
                     </div>
                 `;
             });
             
-            if (pending.length === 0) {
+            if (pendingComments.length === 0) {
                 html += '<p class="text-muted">✅ Aucun commentaire en attente</p>';
             }
             
@@ -2850,8 +2790,8 @@
             return html;
         }
 
-        // ====== ADMIN ACTIONS ======
-        function approveUser(userId) {
+        // ADMIN ACTIONS
+        window.approveUser = function(userId) {
             const users = getUsers();
             const user = users.find(u => u.id === userId);
             if (user) {
@@ -2859,9 +2799,9 @@
                 setUsers(users);
                 draw();
             }
-        }
+        };
 
-        function rejectUser(userId) {
+        window.rejectUser = function(userId) {
             const users = getUsers();
             const user = users.find(u => u.id === userId);
             if (user) {
@@ -2869,9 +2809,9 @@
                 setUsers(users);
                 draw();
             }
-        }
+        };
 
-        function banUser(userId) {
+        window.banUser = function(userId) {
             if (confirm('Voulez-vous vraiment bannir cet utilisateur ?')) {
                 const users = getUsers();
                 const user = users.find(u => u.id === userId);
@@ -2881,9 +2821,9 @@
                     draw();
                 }
             }
-        }
+        };
 
-        function unbanUser(userId) {
+        window.unbanUser = function(userId) {
             const users = getUsers();
             const user = users.find(u => u.id === userId);
             if (user) {
@@ -2891,9 +2831,9 @@
                 setUsers(users);
                 draw();
             }
-        }
+        };
 
-        function approveProduct(productId) {
+        window.approveProduct = function(productId) {
             const products = getProducts();
             const product = products.find(p => p.id === productId);
             if (product) {
@@ -2901,9 +2841,9 @@
                 setProducts(products);
                 draw();
             }
-        }
+        };
 
-        function rejectProduct(productId) {
+        window.rejectProduct = function(productId) {
             const products = getProducts();
             const product = products.find(p => p.id === productId);
             if (product) {
@@ -2911,9 +2851,9 @@
                 setProducts(products);
                 draw();
             }
-        }
+        };
 
-        function approveOrder(orderId) {
+        window.approveOrder = function(orderId) {
             const orders = getOrders();
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
@@ -2921,7 +2861,6 @@
             order.status = 'approved';
             setOrders(orders);
             
-            // Update product to sold
             const products = getProducts();
             const product = products.find(p => p.id === order.productId);
             if (product) {
@@ -2929,7 +2868,6 @@
                 setProducts(products);
             }
             
-            // Give stars
             const users = getUsers();
             const seller = users.find(u => u.id === order.sellerId);
             const buyer = users.find(u => u.id === order.buyerId);
@@ -2939,9 +2877,9 @@
             
             setUsers(users);
             draw();
-        }
+        };
 
-        function approveWithdrawal(orderId) {
+        window.approveWithdrawal = function(orderId) {
             if (confirm('Confirmer le retrait de 1000 étoiles ?')) {
                 const orders = getOrders();
                 const order = orders.find(o => o.id === orderId);
@@ -2960,9 +2898,9 @@
                 draw();
                 alert('✅ Retrait approuvé');
             }
-        }
+        };
 
-        function approveComment(commentId) {
+        window.approveComment = function(commentId) {
             const comments = getComments();
             const comment = comments.find(c => c.id === commentId);
             if (!comment) return;
@@ -2970,7 +2908,6 @@
             comment.status = 'approved';
             setComments(comments);
             
-            // Give star to author
             const users = getUsers();
             const author = users.find(u => u.id === comment.userId);
             if (author) {
@@ -2979,47 +2916,23 @@
             }
             
             draw();
-        }
+        };
 
-        function deleteComment(commentId) {
+        window.deleteComment = function(commentId) {
             if (confirm('Supprimer ce commentaire ?')) {
                 let comments = getComments();
                 comments = comments.filter(c => c.id !== commentId);
                 setComments(comments);
                 draw();
             }
-        }
+        };
 
-        function banUserByComment(userId) {
-            if (confirm('Bannir cet utilisateur ?')) {
-                banUser(userId);
-            }
-        }
-
-        // ====== MODAL ======
+        // MODAL
         function closeModal() {
             document.getElementById('modal').classList.remove('show');
         }
 
-        // ====== UTILITIES ======
-        function esc(str) {
-            if (!str) return '';
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        function formatDate(timestamp) {
-            const date = new Date(timestamp);
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            return `${day}/${month}/${year} ${hours}:${minutes}`;
-        }
-
-        // ====== START ======
+        // START
         init();
     </script>
 </body>
